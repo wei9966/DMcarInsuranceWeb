@@ -13,7 +13,7 @@
                         <img src="../../static/images/corporation_1.png" alt="">
                         <button class="s-button-1" @click="adjustBrand">调整品牌</button>
                     </span>
-                    <img src="/images/icon-car.png" alt="" class="selectingoffer-car-img">
+                    <img src="../../static/images/icon-car.png" alt="" class="selectingoffer-car-img">
                     <span> 别克SGM7104LAA1轿车</span>
                 </h5>
                 <div class="row">
