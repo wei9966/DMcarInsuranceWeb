@@ -6,7 +6,10 @@
                     <div class="form-group">
                       <label for="" class="col-sm-4 control-label">车辆行驶城市：</label>
                       <div class="col-sm-6">
-                        <input type="text" class="form-control" id="" placeholder="上海" value="上海">
+                          <el-cascader
+                          v-model="values"
+                          :options="options"
+                        :props="props"></el-cascader>
                       </div>
                       <div class="col-sm-2">
                       <input type="button" class="form-control s-input-btnbg" id="" placeholder="">
@@ -45,6 +48,13 @@
 export default {
   data () {
     return {
+      values:[],
+      props:{
+        value:"baseAreaid",
+          label:"name",
+          children:"children"
+      },
+      options:[]
     }
   },
   methods: {
@@ -54,9 +64,20 @@ export default {
       // });
       this.$router.push('home')
       e.preventDefault()
+    },
+    getCity(){
+      this.axios.get('api/insuranceCity/selectTree').then(data=>{
+          this.options=data.data.data;
+          this.value=data.data.data.baseAreaid;
+          console.log(data.data.data);
+          
+      });
     }
+  },
+  created() {
+    this.getCity();
+  },
 
-  }
 }
 </script>
 

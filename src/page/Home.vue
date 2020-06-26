@@ -12,7 +12,15 @@
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         投保城市：
-                        <input type="text" name="" id="" class="form-control">
+                        <select name="pro" id="pro" v-model="parent2Id"  @change="selectCitys">
+                                <option v-for="city in citys" :value="getId(city)">{{city.name}}</option>
+                        </select>
+                        <select name="city" id="city" v-model="parent3Id" @change="selectCitys2">
+                                <option v-for="city in city2s" :value="getId(city)">{{city.name}}</option>
+                        </select>
+                        <select name="contr" id="contr" v-model="parent4Id">
+                            <option v-for="city in city3s" :value="getId(city)">{{city.name}}</option>
+                        </select>
                     </div>
                 </div>
 
@@ -186,10 +194,21 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+        parentId:0,
+        parent2Id:0,
+        parent3Id:0,
+        parent4Id:0,
+        citys:[
+    
+        ],
+        city2s:[],
+        city3s:[]
+    };
   },
   mounted() {
     this.init();
+    this.queryCity(this.parentId);
   },
   methods: {
     init() {
@@ -210,6 +229,26 @@ export default {
     },
      next: function(txt) {
         this.$router.push('selectingOffers')
+  },
+  queryCity(parentId){
+      this.axios.get('api/insuranceCity/selectCity',{params:{id:`${parentId}`}}).then(data=>{
+          this.citys=data.data.data;
+      });
+  },
+  getId(city){
+      return city.baseAreaid;
+  },
+  selectCitys(){
+      console.log(this.parentId);
+       this.axios.get('api/insuranceCity/selectCity',{params:{id:this.parent2Id}}).then(data=>{
+          this.city2s=data.data.data;
+      });
+  },
+  selectCitys2(){
+      console.log(this.parentId);
+       this.axios.get('api/insuranceCity/selectCity',{params:{id:this.parent3Id}}).then(data=>{
+          this.city3s=data.data.data;
+      });
   }
   }
 };
