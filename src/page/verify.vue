@@ -497,7 +497,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-1 text-right">
-							<input type="button" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
+							<input type="button" :checkbox="false" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
 						</div>
 						<div class="col-sm-6 text-left">
 							<p>保险人已明确条款内容、免除保险人责任条款含义及其法律后果</p>
@@ -533,16 +533,16 @@
 								<div class="container" style="width: auto;">
 									<ul class="nav">
 										<li class="active">
-											<a href="#relief">免责声明</a>
+											<a href="#clause0">车险条款</a>
 										</li>
 										<li class="">
-											<a href="#clause">车险条款</a>
+											<a href="#clause1">特别约定</a>
 										</li>
 										<li class="">
-											<a href="#statement">投保声明</a>
+											<a href="#clause2">投保声明</a>
 										</li>
 										<li class="">
-											<a href="#appoint">特别约定</a>
+											<a href="#clause3">免责声明</a>
 										</li>
 									</ul>
 								</div>
@@ -551,57 +551,18 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					<div data-spy="scroll" data-target="#navbarExample" data-offset="50" class="scrollspy-example">
-						<div class="row">
-							<span>综合业务 | </span>
-							<span>单程提车 | </span>
-							<span>摩托车，拖拉机 | </span>
-							<span>特种车</span>
-						</div>
-						<!-- #relief -->
-						<div class="row" id="relief">
-							<h4>机动车综合商业保险免责事项说明书</h4>
+					<div data-spy="scroll" 
+					data-target="#navbarExample" data-offset="50" 
+					class="scrollspy-example"
+					 >
+						<div v-for="(clause,index) in insuranceClause"
+						 class="row" :id="generateId(index)">
+							<h4>{{clause.clauseType}}</h4>
 							<p>尊敬的客户：</p>
-							<p class="s-text-indent">欢迎您选择大地保险公司投保机动车综合商业保险。当您投保本保险后，我公司将根据 您选择投保的主险和附加险险种，按照保险合同的约定，承担相应的保险赔偿责任。 风险是无处不在的。应对风险带来的损失，您可以采取控制的方式消除或减少，可以
-								采取自留的方式靠自身力量解决，还可以通过购买保险的方式将风险损失转移给保险公司。 但是，作为风险管理的技术之一，并不是所有的风险都适合或可以采用保险的方法来处理， 只有可保风险才是保险公司所能接受承保的风险。保险公司一般通过保险条款中的保险责
-								任条款和免除保险人责任条款对可保风险予以明确。免除保险人责任条款通过把保险人不 承保的情形和事由予以排除，使保险费率保持在合理的水平，减轻消费者的投保压力和保 费负担；同时有利于实现保险公司稳健经营。</p>
-							<p class="s-text-indent"> 本保险合同在保险责任的基础上，从风险控制角度出发，设置了免除保险人责任条款， 明确约定了保险人不承担保险赔偿责任的范围，或减轻保险人保险赔偿责任的情形、范围 和事由。为维护您的合法权益，在您填写投保单前，我公司就保险合同中的免除保险人责
-								任条款做出如下书面说明，请您注意阅读。同时，我公司工作人员会针对本免责事项说明 书的内容以及投保</p>
+							<p>
+								{{clause.clauseContent}}
+							</p>
 						</div>
-						<!-- #reliefend -->
-						<!-- #clause -->
-						<div class="row" id="clause">
-							<h4>车险条款</h4>
-							<p>尊敬的客户：</p>
-							<p class="s-text-indent">欢迎您选择大地保险公司投保机动车综合商业保险。当您投保本保险后，我公司将根据 您选择投保的主险和附加险险种，按照保险合同的约定，承担相应的保险赔偿责任。 风险是无处不在的。应对风险带来的损失，您可以采取控制的方式消除或减少，可以
-								采取自留的方式靠自身力量解决，还可以通过购买保险的方式将风险损失转移给保险公司。 但是，作为风险管理的技术之一，并不是所有的风险都适合或可以采用保险的方法来处理， 只有可保风险才是保险公司所能接受承保的风险。保险公司一般通过保险条款中的保险责
-								任条款和免除保险人责任条款对可保风险予以明确。免除保险人责任条款通过把保险人不 承保的情形和事由予以排除，使保险费率保持在合理的水平，减轻消费者的投保压力和保 费负担；同时有利于实现保险公司稳健经营。</p>
-							<p class="s-text-indent"> 本保险合同在保险责任的基础上，从风险控制角度出发，设置了免除保险人责任条款， 明确约定了保险人不承担保险赔偿责任的范围，或减轻保险人保险赔偿责任的情形、范围 和事由。为维护您的合法权益，在您填写投保单前，我公司就保险合同中的免除保险人责
-								任条款做出如下书面说明，请您注意阅读。同时，我公司工作人员会针对本免责事项说明 书的内容以及投保</p>
-						</div>
-						<!-- #clauseend -->
-						<!-- #statement -->
-						<div class="row" id="statement">
-							<h4>投保声明</h4>
-							<p>尊敬的客户：</p>
-							<p class="s-text-indent">欢迎您选择大地保险公司投保机动车综合商业保险。当您投保本保险后，我公司将根据 您选择投保的主险和附加险险种，按照保险合同的约定，承担相应的保险赔偿责任。 风险是无处不在的。应对风险带来的损失，您可以采取控制的方式消除或减少，可以
-								采取自留的方式靠自身力量解决，还可以通过购买保险的方式将风险损失转移给保险公司。 但是，作为风险管理的技术之一，并不是所有的风险都适合或可以采用保险的方法来处理， 只有可保风险才是保险公司所能接受承保的风险。保险公司一般通过保险条款中的保险责
-								任条款和免除保险人责任条款对可保风险予以明确。免除保险人责任条款通过把保险人不 承保的情形和事由予以排除，使保险费率保持在合理的水平，减轻消费者的投保压力和保 费负担；同时有利于实现保险公司稳健经营。</p>
-							<p class="s-text-indent"> 本保险合同在保险责任的基础上，从风险控制角度出发，设置了免除保险人责任条款， 明确约定了保险人不承担保险赔偿责任的范围，或减轻保险人保险赔偿责任的情形、范围 和事由。为维护您的合法权益，在您填写投保单前，我公司就保险合同中的免除保险人责
-								任条款做出如下书面说明，请您注意阅读。同时，我公司工作人员会针对本免责事项说明 书的内容以及投保</p>
-						</div>
-						<!-- #statement -->
-						<!-- #appoint -->
-						<div class="row" id="appoint">
-							<h4>特别约定</h4>
-							<p>尊敬的客户：</p>
-							<p class="s-text-indent">欢迎您选择大地保险公司投保机动车综合商业保险。当您投保本保险后，我公司将根据 您选择投保的主险和附加险险种，按照保险合同的约定，承担相应的保险赔偿责任。 风险是无处不在的。应对风险带来的损失，您可以采取控制的方式消除或减少，可以
-								采取自留的方式靠自身力量解决，还可以通过购买保险的方式将风险损失转移给保险公司。 但是，作为风险管理的技术之一，并不是所有的风险都适合或可以采用保险的方法来处理， 只有可保风险才是保险公司所能接受承保的风险。保险公司一般通过保险条款中的保险责
-								任条款和免除保险人责任条款对可保风险予以明确。免除保险人责任条款通过把保险人不 承保的情形和事由予以排除，使保险费率保持在合理的水平，减轻消费者的投保压力和保 费负担；同时有利于实现保险公司稳健经营。</p>
-							<p class="s-text-indent"> 本保险合同在保险责任的基础上，从风险控制角度出发，设置了免除保险人责任条款， 明确约定了保险人不承担保险赔偿责任的范围，或减轻保险人保险赔偿责任的情形、范围 和事由。为维护您的合法权益，在您填写投保单前，我公司就保险合同中的免除保险人责
-								任条款做出如下书面说明，请您注意阅读。同时，我公司工作人员会针对本免责事项说明 书的内容以及投保</p>
-						</div>
-						<!-- #appoint -->
 					</div>
 				</div>
 				<div class="modal-footer text-center">
@@ -619,7 +580,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+		insuranceClause:[]
+	};
   },
   mounted() {
     this.init();
@@ -642,8 +605,19 @@ export default {
     },
     last: function(txt) {
       this.$router.push("selectingOffers");
-    }
-  }
+	},
+	getClause(){
+		this.axios.get('/api/policy/insuranceClause/select').then(data=>{
+			this.insuranceClause=data.data.data;
+		});	
+	},
+	generateId(index){
+		return "clause"+index;
+	}
+  },
+  created() {
+	  this.getClause();
+}
 };
 </script>
 <style>
