@@ -1,7 +1,7 @@
 <template>
    <div class="main login">
-     <div class="s-form">  
-            <h5>车险在线报价</h5>
+     <div class="s-form">
+            <h5>缔梦车险在线报价</h5>
             <form class="form-horizontal">
                     <div class="form-group">
                       <label for="" class="col-sm-4 control-label">车辆行驶城市：</label>
@@ -35,23 +35,27 @@
                   </form>
         </div>
         <footer class="foots">
-            <p>车险出单平台  版权所有</p> 
+            <p>车险出单平台  版权所有</p>
             <p>Copyright@2017 Chexianchudanpingtai</p>
         </footer>
-    </div> 
+    </div>
 </template>
 
 <script>
 export default {
   data () {
     return {
-    };
+    }
   },
   methods: {
-     next: function(e) {
-            this.$router.push('home');
-            e.preventDefault()      
+    next (e) {
+      // this.axios.get('/api/user/user').then(data=>{
+      //     console.log(data.data);
+      // });
+      this.$router.push('home')
+      e.preventDefault()
     }
+
   }
 }
 </script>

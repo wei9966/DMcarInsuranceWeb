@@ -7,6 +7,11 @@ import router from './router'
 import header from './page/header.vue'
 import $ from 'jquery'
 import moment from 'moment'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import elementUi from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import { InfiniteScroll } from 'element-ui';
 
 import '../static/bootstrap-3.3.7-dist/css/bootstrap.min.css'
 import '../static/bootstrap-3.3.7-dist/css/bootstrap-datetimepicker.min.css'
@@ -17,6 +22,9 @@ import '../static/bootstrap-3.3.7-dist/js/app.js'
 import '../static/bootstrap-3.3.7-dist/js/bootstrap-datetimepicker.min.js'
 import '../static/bootstrap-3.3.7-dist/js/bootstrap-datepicker.zh-CN.js'
 import '../static/bootstrap-3.3.7-dist/js/bootstrap-switch.js'
+Vue.use(InfiniteScroll)
+Vue.use(VueAxios, axios)
+Vue.use(elementUi)
 Vue.config.productionTip = false
 Vue.component('my-header', header)
 /* eslint-disable no-new */

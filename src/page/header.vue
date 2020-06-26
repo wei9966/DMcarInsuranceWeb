@@ -4,7 +4,7 @@
         <div class="s_main1080">
         <div class="s-cursor" @click="goindex">
         <img src="../../static/images/logo.png">
-        <span>车险出单平台</span>
+        <span>缔梦车险出单平台</span>
         </div>
     </div>
     </header>
@@ -12,26 +12,26 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
-      home: ""
-    };
+      home: ''
+    }
   },
   watch: {
-    $route() {
-      if (this.$route.name !== "login") {
-        this.home = "home";
+    $route () {
+      if (this.$route.name !== 'login') {
+        this.home = 'home'
       } else {
-        this.home = "login";
+        this.home = 'login'
       }
     }
   },
   methods: {
-    goindex: function(e) {
-      this.$router.push(this.home);
+    goindex: function (e) {
+      this.$router.push(this.home)
     }
   }
-};
+}
 </script>
 <style>
 
