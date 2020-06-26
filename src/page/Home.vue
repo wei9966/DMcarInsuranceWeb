@@ -113,8 +113,20 @@
 
             </div>
             <div class="s-lines-style"></div>
+            
             <div class="row-s">
-                <h5>其它投保信息</h5>
+
+                <h5>其它投保信息</h5>  
+                <el-switch
+                           v-model="isShow"
+                           active-next="是"
+                           inactive-next="否">
+                    </el-switch>
+                <!-- <div style="position:absolute; margin-left:200px;margin-top:-40px"> 
+                     <input type="checkbox" v-model="isShow" name="my-checkbox" data-on-text="是" data-off-text="否" checked > 
+                    
+                </div> -->
+                <div>
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         起保日期：
@@ -137,16 +149,26 @@
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false">
-                                外国人永久居留证
+                                请选择
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a>Dropdown link</a>
+                                    <a>身份证</a>
                                 </li>
                                 <li>
-                                    <a>Dropdown link</a>
+                                    <a>临时身份证</a>
                                 </li>
+                                <li>
+                                    <a>驾驶证</a>
+                                </li>
+                                <li>
+                                    <a>外国人出入境证</a>
+                                </li>
+                                 <li>
+                                    <a>其他</a>
+                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -167,6 +189,7 @@
                 <div class="row-example_1-image example_3 ">
                     <img src="../../static/images/example_3.png">
                 </div>
+                </div>
             </div>
         </div>
         <div class="h_10"></div>
@@ -186,7 +209,34 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+         pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+         },
+         isShow:true
+    };
   },
   mounted() {
     this.init();
