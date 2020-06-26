@@ -504,9 +504,13 @@
 					<div class="row">
 						<div class="col-sm-1 text-right">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 							<input type="button" :checkbox="false" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
 >>>>>>> 3f8f4d1195942b6d49e7d9cab9048eb1cc48dd62
+=======
+							<input type="button" :checkbox="false" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
+>>>>>>> czx
 						</div>
 						<div class="col-sm-5 text-right">
 							<el-checkbox v-model="checked">保险人已明确条款内容、免除保险人责任条款含义及其法律后果</el-checkbox>
@@ -590,6 +594,7 @@
 export default {
   data() {
     return {
+<<<<<<< HEAD
 		insuranceClause:[],
 		checked:false,//判断是否点击了同意条款
 		isInsuranceInsured:true,//判断是否为同投保人
@@ -614,6 +619,9 @@ export default {
 		insuranceUserId:'',
 		insuranceInsuredId:'',
 		insuranceDrivingLicenseId:''
+=======
+		insuranceClause:[]
+>>>>>>> czx
 	};
   },
   mounted() {
@@ -649,11 +657,15 @@ export default {
 	getClause(){
 		this.axios.get('/api/policy/insuranceClause/select').then(data=>{
 			this.insuranceClause=data.data.data;
+<<<<<<< HEAD
 			console.log(this.insuranceClause);
+=======
+>>>>>>> czx
 		});	
 	},
 	generateId(index){
 		return "clause"+index;
+<<<<<<< HEAD
 	},
 	getMessage(){
 
@@ -675,6 +687,8 @@ export default {
 		this.axios.post('/api/policy/insuranceDrivingLicense/insertOne',this.insuranceDrivingLicense).then(data=>{
 				console.log("添加的行驶证车主",data.data.data);
 			});
+=======
+>>>>>>> czx
 	}
   },
   created() {

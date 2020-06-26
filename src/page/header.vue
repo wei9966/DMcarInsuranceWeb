@@ -5,6 +5,7 @@
         <div class="s-cursor" @click="goindex">
         <img src="../../static/images/logo.png">
         <span>缔梦车险出单平台</span>
+        <router-link to="sign" id="yonhu">用户中心</router-link>
         </div>
     </div>
     </header>
@@ -34,5 +35,9 @@ export default {
 }
 </script>
 <style>
-
+#yonhu{
+  position: absolute;
+  left: 90%;
+  top:20px
+}
 </style>
