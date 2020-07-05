@@ -675,6 +675,7 @@ export default {
 		this.axios.post('/api/policy/insuranceDrivingLicense/insertOne',this.insuranceDrivingLicense).then(data=>{
 				console.log("添加的行驶证车主",data.data.data);
 			});
+			
 	}
   },
   created() {
