@@ -42,6 +42,16 @@ export default new Router({
       path: '/brand',
       name: 'brand',
       component: resolve => require(['../page/brand.vue'], resolve)
+    },
+    {
+      path: '/sign',
+      name: 'sign',
+      component: resolve => require(['../page/Sign.vue'], resolve)
+    },
+    {
+      path: '/usercenter',
+      name: 'usercenter',
+      component: resolve => require(['../page/UserCenter.vue'], resolve)
     }
   ]
 })

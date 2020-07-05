@@ -226,6 +226,7 @@
 				<!--车辆信息end-->
 				<div class="row-s s-verify-table">
 					<h5>人员信息</h5>
+					<div v-model="insuranceUser">
 					<div class="row s-verify-title">
 						<div class="col-sm-6 text-left">
 							投保人
@@ -237,7 +238,7 @@
 							姓名:
 						</div>
 						<div class="col-sm-6 text-left">
-							<input type="text" name="" id="" class="form-control" placeholder="" value="张三">
+							<input type="text" name="" id="" v-model="insuranceUser.userName" class="form-control" placeholder="" value="张三">
 						</div>
 					</div>
 					<div class="row s-input-data-3">
@@ -248,21 +249,21 @@
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
 								 aria-expanded="false">
-									外国人永久居留证
+									居民身份证
 									<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu">
+								<!-- <ul class="dropdown-menu">
 									<li>
 										<a>Dropdown link</a>
 									</li>
 									<li>
 										<a>Dropdown link</a>
 									</li>
-								</ul>
+								</ul> -->
 							</div>
 						</div>
 						<div class="col-sm-4">
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" name="" v-model="insuranceUser.userCard" id="" class="form-control">
 						</div>
 
 					</div>
@@ -272,7 +273,7 @@
 						</div>
 						<div class="col-sm-6 text-left">
 
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" name="" id="" v-model="insuranceUser.userEmail" class="form-control">
 						</div>
 					</div>
 					<div class="row">
@@ -281,23 +282,25 @@
 						</div>
 						<div class="col-sm-9 text-left">
 
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" name="" v-model="insuranceUser.userAddress" id="" class="form-control">
 						</div>
+					</div>
 					</div>
 					<div class="row s-verify-title">
 						<div class="col-sm-6 text-left">
 							被保险人
-							<input type="button" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
+							<input type="checkbox" v-model="isInsuranceInsured" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
 							<span>同投保人</span>
 						</div>
 					</div>
-
+				<div v-show="!isInsuranceInsured">
+					<div v-model="insuranceInsured">
 					<div class="row">
 						<div class="col-sm-2 text-right">
 							姓名:
 						</div>
 						<div class="col-sm-6 text-left">
-							<input type="text" name="" id="" class="form-control" placeholder="" value="张三">
+							<input type="text" name="" v-model="insuranceInsured.insuredName" id="" class="form-control" placeholder="" value="张三">
 						</div>
 					</div>
 					<div class="row s-input-data-3">
@@ -308,21 +311,21 @@
 							<div class="btn-group" role="group">
 								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
 								 aria-expanded="false">
-									外国人永久居留证
+									居民身份证
 									<span class="caret"></span>
 								</button>
-								<ul class="dropdown-menu">
+								<!-- <ul class="dropdown-menu">
 									<li>
 										<a>Dropdown link</a>
 									</li>
 									<li>
 										<a>Dropdown link</a>
 									</li>
-								</ul>
+								</ul> -->
 							</div>
 						</div>
 						<div class="col-sm-4">
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" v-model="insuranceInsured.insuredCard" name="" id="" class="form-control">
 						</div>
 
 					</div>
@@ -332,7 +335,7 @@
 						</div>
 						<div class="col-sm-6 text-left">
 
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" name="" v-model="insuranceInsured.insuredEmail" id="" class="form-control">
 						</div>
 					</div>
 					<div class="row">
@@ -341,23 +344,25 @@
 						</div>
 						<div class="col-sm-9 text-left">
 
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" name="" id="" v-model="insuranceInsured.insuredAddress" class="form-control">
 						</div>
 					</div>
-
+					</div>	
+				</div>
 
 					<div class="row s-verify-title">
 						<div class="col-sm-6 text-left">
 							行驶证车主
 						</div>
 					</div>
+					<div v-model="insuranceDrivingLicense">
 					<div class="row">
 						<div class="col-sm-2 text-right">
 							姓名：
 						</div>
 						<div class="col-sm-6 text-left">
 
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" v-model="insuranceDrivingLicense.drivingLicenseName" name="" id="" class="form-control">
 						</div>
 					</div>
 					<div class="row">
@@ -366,13 +371,14 @@
 						</div>
 						<div class="col-sm-6 text-left">
 
-							<input type="text" name="" id="" class="form-control">
+							<input type="text" name="" id="" v-model="insuranceDrivingLicense.drivingLicenseCard" class="form-control">
 						</div>
+					</div>
 					</div>
 					<div class="s-lines-style"></div>
 					<h5>支付方式
 						<span class="s-check-span">
-							<button class="s-check-yes s-check S-Checkbox-Radio1" data-type='s-check-yes'>网上支付</button>
+							<button class="s-check-yes s-check S-Checkbox-Radio1" data-type='s-check-yes'>支付宝支付</button>
 							<button class="s-check S-Checkbox-Radio1" data-type='s-check-yes'>网上支付</button>
 						</span>
 					</h5>
@@ -457,7 +463,7 @@
 					<div class="row s-verify-title">
 						<div class="col-sm-6 text-left">
 							配送方式
-							<input type="button" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
+							<input type="checkbox" v-model="isInsuranceInsured" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
 							<span>同投保人</span>
 						</div>
 					</div>
@@ -466,9 +472,9 @@
 							领取方式：
 						</div>
 						<div class="col-sm-6 text-left">
-							<input type="button" name="pay" class="S-Checkbox-Radio1 s-checkbox s-checkbox-multiple2 s-checkbox-multiple2-active" id="pay"
+							<input type="radio" v-model="distribution" name="pay" class="S-Checkbox-Radio1 s-checkbox s-checkbox-multiple2 s-checkbox-multiple2-active" id="pay"
 							 value="" data-type='s-checkbox-multiple2-active' /> 免费送单
-							<input type="button" name="pay" class="S-Checkbox-Radio1 s-checkbox s-checkbox-multiple2" id="pay" value="" data-type='s-checkbox-multiple2-active'
+							<input type="radio" v-model="distribution" name="pay" class="S-Checkbox-Radio1 s-checkbox s-checkbox-multiple2" id="pay" value="" data-type='s-checkbox-multiple2-active'
 							/> 门店自取
 						</div>
 					</div>
@@ -498,9 +504,11 @@
 					<div class="row">
 						<div class="col-sm-1 text-right">
 							<input type="button" :checkbox="false" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
+							<input type="button" :checkbox="false" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
+
 						</div>
-						<div class="col-sm-6 text-left">
-							<p>保险人已明确条款内容、免除保险人责任条款含义及其法律后果</p>
+						<div class="col-sm-5 text-right">
+							<el-checkbox v-model="checked">保险人已明确条款内容、免除保险人责任条款含义及其法律后果</el-checkbox>
 						</div>
 					</div>
 					<div class="h_10"></div>
@@ -581,6 +589,30 @@
 export default {
   data() {
     return {
+		insuranceClause:[],
+		checked:false,//判断是否点击了同意条款
+		isInsuranceInsured:true,//判断是否为同投保人
+		distribution:false,
+		insuranceUser:{//投保人(用户)
+			userId:'13',
+			userName:'',
+			userCard:'',
+			userAddress:'',
+			userEmail:''
+		},
+		insuranceInsured:{//被保险人
+			insuredName:'',
+			insuredCard:'',
+			insuredAddress:'',
+			insuredEmael:''
+		},
+		insuranceDrivingLicense:{//行驶证车主
+			drivingLicenseName:'',
+			drivingLicenseCard:''
+		},
+		insuranceUserId:'',
+		insuranceInsuredId:'',
+		insuranceDrivingLicenseId:'',
 		insuranceClause:[]
 	};
   },
@@ -601,6 +633,14 @@ export default {
       });
     },
     next: function(txt) {
+		if (!this.checked) {
+			this.$message({
+          message: '请勾选确认协议',
+          type: 'warning'
+        });
+			return false;
+		}
+	this.addUserInfomation();
       this.$router.push("pay");
     },
     last: function(txt) {
@@ -609,10 +649,32 @@ export default {
 	getClause(){
 		this.axios.get('/api/policy/insuranceClause/select').then(data=>{
 			this.insuranceClause=data.data.data;
+			console.log(this.insuranceClause);
 		});	
 	},
 	generateId(index){
 		return "clause"+index;
+	},
+	getMessage(){
+
+	},
+	addUserInfomation(){
+		//更新投保人
+		if (!this.isInsuranceInsured) {
+			this.axios.post('/api/policy/feign/user/update',this.insuranceUser).then(data=>{
+				console.log("更新的投保人信息",data.data.data);
+			});
+		}
+		//添加被保险人
+		if (!this.isInsuranceInsured) {
+			this.axios.post('/api/policy/insuranceInsured/insertOne',this.insuranceInsured).then(data=>{
+				console.log("添加的被保险人",data.data.data);
+			});
+		}
+		//添加行驶证车主
+		this.axios.post('/api/policy/insuranceDrivingLicense/insertOne',this.insuranceDrivingLicense).then(data=>{
+				console.log("添加的行驶证车主",data.data.data);
+			});
 	}
   },
   created() {
