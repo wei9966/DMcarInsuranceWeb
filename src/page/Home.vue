@@ -6,20 +6,43 @@
         <div class="s_main1080 s_warp">
             <img src="../../static/images/setp1.png" alt="">
         </div>
-        <div class="s_main1080 main">
+        <div class="s_main1080 main" v-model="InsuranceCarInfo">
             <div class="row-s">
                 <h5>录入车辆信息</h5>
                 <div class="row">
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-12 text-left" style="margin-left:130px;">
                         投保城市：
-                        <input type="text" name="" id="" class="form-control">
+                         <el-select v-model="value" placeholder="请选择省份" @change="getClause1">
+                            <el-option
+                                v-for="item in city"
+                                :key="item.baseAreaid"
+                                :label="item.name"
+                                :value="item.baseAreaid">
+                            </el-option>
+                        </el-select>
+                        <el-select v-model="InsuranceCarInfo.cityId" placeholder="请选择市区" @change="getClause2">
+                            <el-option
+                                v-for="item in city1"
+                                :key="item.baseAreaid"
+                                :label="item.name"
+                                :value="item.baseAreaid">
+                            </el-option>
+                        </el-select>
+                        <el-select v-model="value2" placeholder="请选择县区" >
+                            <el-option
+                                v-for="item in city2"
+                                :key="item.baseAreaid"
+                                :label="item.name"
+                                :value="item.baseAreaid">
+                            </el-option>
+                        </el-select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         车牌号码：
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoCard" class="form-control">
                     </div>
 
                     <div class="checkbox col-sm-2">
@@ -34,7 +57,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-6 text-right">
-                        投保城市：
+                        投保人：
                         <input type="text" name="" id="" class="form-control">
                     </div>
                 </div>
@@ -43,16 +66,23 @@
             <div class="row-s">
                 <h5>车辆信息</h5>
                 <div class="row">
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-6 text-left" style="margin-left:102px;">
                         车辆注册日期：
-                        <input type="text" name="" id="" class="form-control form_datetime" placeholder="请输入开始时间">
+                        <el-date-picker
+                            v-model="InsuranceCarInfo.carInfoRegisterDate"
+                            align="right"
+                            type="date"
+                            placeholder="选择日期"
+                            :picker-options="pickerOptions"
+                             style="width: 306px;">
+                        </el-date-picker>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-sm-6 text-right">
-                        车架号/VIN码：
-                        <input type="text" name="" id="" class="form-control">
+                        车架号/车辆识别代号/VIN码：
+                        <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoFrameNo" class="form-control">
                     </div>
                     <div class="checkbox col-sm-4 error">
                         2002年后车架号为17位哦
@@ -61,7 +91,7 @@
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         发动机号：
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoEnigneNumber" class="form-control">
                     </div>
                     <div class="checkbox col-sm-4 error">
                         亲，您输入的发动机号不正确哦！
@@ -70,7 +100,7 @@
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         品牌型号：
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoConfigurationModel" class="form-control">
                     </div>
                     <div class="checkbox col-sm-4 error">
                         亲，请参考行驶证品牌型号填写!
@@ -79,29 +109,43 @@
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         配置型号：
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoBrand" class="form-control">
                     </div>
 
                 </div>
                 <div class="row">
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-6 text-left" style="margin-left:29px;">
                         购车发票日期：/初登日期：
-                        <input type="text" name="" id="" class="form-control  form_datetime" placeholder="请输入开始时间">
+                       <el-date-picker
+                            v-model="InsuranceCarInfo.carInfoDateFirst"
+                            align="right"
+                            type="date"
+                            placeholder="选择日期"
+                            :picker-options="pickerOptions"
+                             style="width: 306px;">
+                        </el-date-picker>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         是否过户车辆：
-                        <input type="checkbox" name="my-checkbox" data-on-text="是" data-off-text="否" checked>
+                        <input type="checkbox" name="my-checkbox" v-model="InsuranceCarInfo.carInfoTransfer" data-on-text="是" data-off-text="否" checked>
                         <!-- <input type="checkbox" class="btn-switch s_top"> -->
                         <span class="s-exmp-car s-tap-index" data-val ="example_2">如何区别过户车？</span>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-6 text-left" style="margin-left:130px;">
                         过户日期：
-                        <input type="text" name="" id="" class="form-control  form_datetime" placeholder="请输入开始时间">
+                        <el-date-picker
+                            v-model="InsuranceCarInfo.carInfoTransferDate"
+                            align="right"
+                            type="date"
+                            placeholder="选择日期"
+                            :picker-options="pickerOptions"
+                            style="width: 306px;">
+                        </el-date-picker>
                     </div>
                 </div>
                 <div class="row-example_1-image example_1">
@@ -121,7 +165,7 @@
                            v-model="isShow"
                            active-next="是"
                            inactive-next="否">
-                    </el-switch>
+                </el-switch>
                 <!-- <div style="position:absolute; margin-left:200px;margin-top:-40px"> 
                      <input type="checkbox" v-model="isShow" name="my-checkbox" data-on-text="是" data-off-text="否" checked > 
                     
@@ -210,6 +254,26 @@
 export default {
   data() {
     return {
+        value:'',
+        city:[],
+        value1:'',
+        city1:[],
+        value2:'',
+        city2:[],
+        InsuranceCarInfo:{
+            carInfoBrand:'',//车辆品牌型号
+            carInfoRegisterDate:'',//车辆注册日期
+            cityId:'',//车辆投保城市
+            carInfoCard:'',//车辆车牌号
+            carInfoFrameNo:'',//车辆车架号
+            carInfoEnigneNumber:'',//车辆发动机号
+            carInfoConfigurationModel:'',//车辆类型
+            carInfoDateFirst:'',//初登日期
+            carInfoTransfer:'',//是否过户车辆
+            carInfoTransferDate:'',//过户日期
+            userId:'',//用户id
+        },
+
          pickerOptions: {
           disabledDate(time) {
             return time.getTime() > Date.now();
@@ -240,6 +304,9 @@ export default {
   },
   mounted() {
     this.init();
+    this.getClause();
+    this.getClause1();
+    this.getClause2();
   },
   methods: {
     init() {
@@ -259,9 +326,29 @@ export default {
 	    })
     },
      next: function(txt) {
-        this.$router.push('selectingOffers')
+          this.axios.post('/api/insuranceCity/insuranceCarInfo/insertOne',this.InsuranceCarInfo).then(data=>{
+            
+         });
+        // this.$router.push('selectingOffers')
+    },
+    getClause(){
+        this.axios.get('/api/insuranceCity/insuranceCity/selectOne2',{params:{parentid:0}}).then(data=>{
+            this.city=data.data.data
+         });
+      },
+      getClause1(data){
+        this.axios.get('/api/insuranceCity/insuranceCity/selectOne2',{params:{parentid:data}}).then(data=>{
+            this.city1=data.data.data
+         });
+      },
+      getClause2(data){
+        this.value2='',
+        this.axios.get('/api/insuranceCity/insuranceCity/selectOne2',{params:{parentid:data}}).then(data=>{
+            this.city2=data.data.data
+         });
+      }
   }
-  }
+  
 };
 </script>
 <style>
