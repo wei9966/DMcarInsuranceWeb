@@ -360,7 +360,7 @@ export default {
         this.$router.push({
         name: "selectingOffers",
         path: "/selectingOffers",
-        dmt: {
+        params: {
           carInfoCard: this.InsuranceCarInfo.carInfoCard,
           carInfoOwner: this.InsuranceCarInfo.carInfoOwner,
           carInfoTransfer: this.InsuranceCarInfo.carInfoTransfer,
