@@ -374,22 +374,12 @@ export default {
         var mydropdown = new app.customdropdown($(this));
       });
     },
-<<<<<<< HEAD
-     next: function(txt) {
-          this.axios.post('/api/insuranceCity/insuranceCarInfo/insertOne',this.InsuranceCarInfo).then(data=>{
-              
-         });
-        this.$router.push('selectingOffers')
-=======
     next: function(txt) {
-      this.axios
-        .post(
-          "/api/insuranceCity/insuranceCarInfo/insertOne",
+      this.axios.post("/api/insuranceCity/insuranceCarInfo/insertOne",
           this.InsuranceCarInfo
         )
         .then(data => {});
       // this.$router.push('selectingOffers')
->>>>>>> 2077c8aa26a49e6b4831d11f70ace65c9014603f
     },
     getClause() {
       this.axios
