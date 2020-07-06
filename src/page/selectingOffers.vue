@@ -19,7 +19,7 @@
         <div class="row">
           <div class="col-sm-3 text-left">
             车主:
-            <span>*填写行驶证上的车主姓名</span>
+            <span>{{this.carInfoCard}}</span>
           </div>
           <div class="col-sm-2 text-left">
             是否过户:
@@ -62,10 +62,10 @@
                 <!-- <input type="checkbox" class="btn-switch postion_ab"> -->
               </span>
               <span class="span-sel2">投保</span>
-              <p>
+              <!-- <p>
                 生效日期：
                 <input type="text" name id class="form-control form_datetime" placeholder />
-              </p>
+              </p> -->
             </div>
             <div v-show="myCheckbox" class="content">
               <h4>保障项目</h4>
@@ -80,51 +80,54 @@
 
           <!--option1-->
           <div
-            @click="dynamicPrice1"
-            class="col-sm-3 s-option s-right-sol s-border-left s-active S-Checkbox-Radio1"
+            @click="dynamicPrice1($event)"
+            class="col-sm-3 s-option s-right-sol s-border-left S-Checkbox-Radio1"
+            id="fangan1"
             data-type="s-active"
           >
-            <div class="title">
-              <h2>推荐方案 86%</h2>
-              <h1>
-                ￥
-                <i>{{discountPrice1}}元</i>
-              </h1>
-              <h3>市场：{{taocanPrice1}}元</h3>
-            </div>
-            <div v-show="myCheckbox" class="content">
-              <div class="row titles">
-                <div class="col-sm-6 text-center">
-                  <span>保额</span>
-                  <div
-                    class="includeGroup"
-                    v-for="(value,key,index) in insuranceInserIncludeOption1"
-                    v-if="index>2 && index<len+3"
-                  >
-                    <span
-                      class="text-center include1 panel"
-                      style="width:90px;display:inline-block;line-height: 21px;"
-                      v-if="value==1"
-                    >投保</span>
-                    <span
-                      class="include1 panel"
-                      style="width:90px;display:inline-block;line-height: 21px;"
-                      v-else="value==0"
-                    >不投保</span>
-                  </div>
-                </div>
-                <div class="col-sm-6 text-center">
-                  <span>保费(元)</span>
-                  <div
-                    v-for="item in carInsurs"
-                    class="text-center"
-                    style="margin-top:1.8px;margin-bottom:2.7px;"
-                  >
-                    <span style="color:#FF7F16">{{item.ciMoney}}</span>
-                  </div>
-                </div>
+            <div>
+              <div class="title">
+                <h2>推荐方案 86%</h2>
+                <h1>
+                  ￥
+                  <i>{{discountPrice1}}元</i>
+                </h1>
+                <h3>市场：{{taocanPrice1}}元</h3>
               </div>
-              <div class="row"></div>
+              <div v-show="myCheckbox" class="content">
+                <div class="row titles">
+                  <div class="col-sm-6 text-center">
+                    <span>保额</span>
+                    <div
+                      class="includeGroup"
+                      v-for="(value,key,index) in insuranceInserIncludeOption1"
+                      v-if="index>2 && index<len+3"
+                    >
+                      <span
+                        class="text-center include1 panel"
+                        style="width:90px;display:inline-block;line-height: 21px;"
+                        v-if="value==1"
+                      >投保</span>
+                      <span
+                        class="include1 panel"
+                        style="width:90px;display:inline-block;line-height: 21px;"
+                        v-else="value==0"
+                      >不投保</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 text-center">
+                    <span>保费(元)</span>
+                    <div
+                      v-for="item in carInsurs"
+                      class="text-center"
+                      style="margin-top:1.8px;margin-bottom:2.7px;"
+                    >
+                      <span style="color:#FF7F16">{{item.ciMoney}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row"></div>
+              </div>
             </div>
           </div>
           <!--option2-->
@@ -186,8 +189,8 @@
             <div class="title">
               <h2>私人订制 56%</h2>
               <h1>
-                ￥{{taocanPrice3}}
-                <i></i>
+                ￥
+                <i>{{taocanPrice3}}</i>
               </h1>
               <h3></h3>
             </div>
@@ -216,7 +219,11 @@
                   </div>
                   <div class="col-sm-6 text-center">
                     <span>保费(元)</span>
-                    <div v-for="item in carInsurs" class="text-center" style="margin-top:1.8px;margin-bottom:2.7px;" >
+                    <div
+                      v-for="item in carInsurs"
+                      class="text-center"
+                      style="margin-top:1.8px;margin-bottom:2.7px;"
+                    >
                       <span style="color:#FF7F16">{{item.ciMoney}}</span>
                     </div>
                   </div>
@@ -385,6 +392,7 @@ export default {
       this.carInfoFrameNo = routerParams4;
       var routerParams5 = this.$route.params.carInfoEnigneNumber;
       this.carInfoEnigneNumber = routerParams5;
+      console.log("传过来的参数",this.$route.params.carInfoCard);
       },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
@@ -568,7 +576,7 @@ export default {
       }
     },
     // 动态传递价格
-    dynamicPrice1() {
+    dynamicPrice1($event) {
       this.flagByTaoCanId = 1;
       this.totalPriceShangYe = this.discountPrice1;
     },
@@ -587,11 +595,14 @@ export default {
   },
   created() {
     this.getinsur();
+    
+    this.getinsuranceInserJiaoQiang();
+    this.getinsuranceInserCheChuan();
+  },
+  beforeMount(){
     this.getInsuranceInserIncludeOption1();
     this.getInsuranceInserIncludeOption2();
     this.getInsuranceInserIncludeOption3();
-    this.getinsuranceInserJiaoQiang();
-    this.getinsuranceInserCheChuan();
   },
   computed: {
     discountPrice1() {
