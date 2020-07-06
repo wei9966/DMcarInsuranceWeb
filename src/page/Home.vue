@@ -263,12 +263,12 @@ export default {
       city: [],
       value1: "",
       city1: [],
-      value2: "",
+      value2: "", 
       city2: [],
       InsuranceCarInfo: {
         carInfoBrand: "", // 车辆品牌型号
-        carInfoRegisterDate: "", //车辆注册日期
-        cityId: "", //车辆投保城市
+        carInfoRegisterDate: "", // 车辆注册日期
+        cityId: "", // 车辆投保城市
         carInfoCard: "", //车辆车牌号
         carInfoOwner:"", //车辆所有人
         carInfoFrameNo: "", //车辆车架号
