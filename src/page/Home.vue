@@ -77,8 +77,11 @@
                              style="width: 306px;">
                         </el-date-picker>
                     </div>
+                    <div class="checkbox col-sm-2 s-tap-index" data-val ="example_1" style="position: absolute;left:540px;">
+                        <img src="../../static/images/icon-c.png" alt="">
+                    </div>
                 </div>
-
+                 
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         车架号/车辆识别代号/VIN码：
@@ -158,23 +161,33 @@
             </div>
             <div class="s-lines-style"></div>
             
-            <div class="row-s">
+             <div class="row-s">
 
                 <h5>其它投保信息</h5>  
+                <div style="position:absolute; margin-left:200px;margin-top:-40px">
                 <el-switch
                            v-model="isShow"
-                           active-next="是"
-                           inactive-next="否">
+                           active-text="是"
+                           inactive-text="否">
                 </el-switch>
                 <!-- <div style="position:absolute; margin-left:200px;margin-top:-40px"> 
                      <input type="checkbox" v-model="isShow" name="my-checkbox" data-on-text="是" data-off-text="否" checked > 
                     
                 </div> -->
-                <div>
+                </div>
+                <div v-show="isShow">
                 <div class="row">
                     <div class="col-sm-6 text-right">
                         起保日期：
-                        <input type="text" name="" id="" class="form-control form_datetime" placeholder="请输入开始时间">
+                        <!-- <input type="text" name="" id="" class="form-control form_datetime" placeholder="请输入开始时间"> -->
+                        <el-date-picker
+                                style="width:308px"
+                                v-model="value1"
+                                align="right"
+                                type="date"
+                                placeholder="选择日期"
+                                :picker-options="pickerOptions">
+                    </el-date-picker>
                     </div>
                     <div class="checkbox col-sm-2 s-tap-index" data-val ="example_3">
                         <img src="../../static/images/icon-c.png" alt="">
@@ -217,10 +230,11 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <input type="text" name="" id="" class="form-control">
+                        <!-- <input type="text" name="" id="" class="form-control"> -->
+                        <el-input v-model="firstLetter"  placeholder="" ></el-input>
                     </div>
                     <div class="checkbox col-sm-4 error">
-                        身份证号不正确，请重新输入
+                        身份证号不正确，请重新输入 
                     </div>
                 </div>
                 <div class="row">
@@ -256,7 +270,6 @@ export default {
     return {
         value:'',
         city:[],
-        value1:'',
         city1:[],
         value2:'',
         city2:[],
@@ -299,7 +312,8 @@ export default {
             }
           }]
          },
-         isShow:true
+         isShow:true,
+         value1:'',
     };
   },
   mounted() {
@@ -307,6 +321,7 @@ export default {
     this.getClause();
     this.getClause1();
     this.getClause2();
+    this.otherinfo();
   },
   methods: {
     init() {
@@ -346,7 +361,16 @@ export default {
         this.axios.get('/api/insuranceCity/insuranceCity/selectOne2',{params:{parentid:data}}).then(data=>{
             this.city2=data.data.data
          });
-      }
+      },
+    otherinfo(){
+       this.axios.get('api/otherInsur/info/selectTwo',{params:{id:3}}).then(data=>{
+            // console.log("返回的数据",data.data);
+            // for (let index = 0; index < data.length; index++) {
+            //     console.log("遍历的数据",data.data[index]);
+                
+            // }
+       });
+   }
   }
   
 };
