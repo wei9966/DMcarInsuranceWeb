@@ -11,7 +11,10 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import elementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import { InfiniteScroll } from 'element-ui';
+import {
+  InfiniteScroll
+} from 'element-ui';
+
 
 import '../static/bootstrap-3.3.7-dist/css/bootstrap.min.css'
 import '../static/bootstrap-3.3.7-dist/css/bootstrap-datetimepicker.min.css'
@@ -31,6 +34,9 @@ Vue.component('my-header', header)
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+
+    App
+  },
   template: '<App/>'
 })
