@@ -335,6 +335,11 @@
 export default {
   data() {
     return {
+      carInfoCard:'',
+      carInfoOwner:'',
+      carInfoTransfer:'',
+      carInfoFrameNo:'',
+      carInfoEnigneNumber:'',
       carInsurs: [],
       myCheckbox: false,
       value1: true,
@@ -355,10 +360,32 @@ export default {
       // totalMoney: 0
     };
   },
+   name: "",
+  watch: {
+    //监测路由变化
+    $route: "getParams"
+  },
+  created() {
+    this.getParams();
+  },
   mounted() {
     this.init();
   },
   methods: {
+    getParams() {
+      //取到路由带过来的参数
+      var routerParams1 = this.$route.dmt.carInfoCard;
+      //将数据放在当前组件的数据内
+      this.carInfoCard = routerParams1;
+      var routerParams2 = this.$route.dmt.carInfoOwner;
+      this.carInfoOwner = routerParams2;
+      var routerParams3 = this.$route.dmt.carInfoTransfer;
+      this.carInfoTransfer = routerParams3;
+      var routerParams4 = this.$route.dmt.carInfoFrameNo;
+      this.carInfoFrameNo = routerParams4;
+      var routerParams5 = this.$route.dmt.carInfoEnigneNumber;
+      this.carInfoEnigneNumber = routerParams5;
+      },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
       app._toggle();
