@@ -266,7 +266,7 @@ export default {
       value2: "",
       city2: [],
       InsuranceCarInfo: {
-        carInfoBrand: "", //车辆品牌型号
+        carInfoBrand: "", // 车辆品牌型号
         carInfoRegisterDate: "", //车辆注册日期
         cityId: "", //车辆投保城市
         carInfoCard: "", //车辆车牌号
