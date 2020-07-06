@@ -119,9 +119,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6 text-right">
+          <div class="col-sm-6 text-left" style="margin-left:102px;">
             是否过户车辆：
-            <input type="checkbox" name="my-checkbox" v-model="InsuranceCarInfo.carInfoTransfer"  data-on-text="是" data-off-text="否" checked/>
+            <el-switch
+              style="left:10px;"
+              v-model="flag1"
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              active-text="是"
+              inactive-text="否">
+            </el-switch>
+            <!-- <input type="checkbox" name="my-checkbox" v-model="InsuranceCarInfo.carInfoTransfer"  data-on-text="是" data-off-text="否" checked/> -->
             <!-- <input type="checkbox" class="btn-switch s_top"> -->
             <span class="s-exmp-car s-tap-index" data-val="example_2">如何区别过户车？</span>
           </div>
@@ -258,6 +266,7 @@ export default {
         carInfoTransferDate: "", //过户日期
         userId: "" //用户id
       },
+      flag1:true,
 
       pickerOptions: {
         disabledDate(time) {
@@ -288,7 +297,6 @@ export default {
           }]
          },
          isShow:true,
-         value1:'',
     };
   },
   mounted() {
@@ -331,11 +339,21 @@ export default {
       });
     },
     next: function(txt) {
+      console.log("点击了下一页");
+      if (this.flag1==true) {
+        this.InsuranceCarInfo.carInfoTransfer=1;
+      }else{
+        this.InsuranceCarInfo.carInfoTransfer=0;
+      }
       this.axios
         .post("/api/insuranceCity/insuranceCarInfo/insertOne",this.InsuranceCarInfo)
-        .then(data => {});
+        .then(data => {
+          console.log();
+          
+        });
          //传值下一个页面
          console.log(this.InsuranceCarInfo);
+         console.log("asdas"+this.InsuranceCarInfo.carInfoTransfer);
          
          this.Home()
       //  this.$router.push('selectingOffers')
