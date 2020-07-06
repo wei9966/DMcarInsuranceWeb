@@ -390,7 +390,7 @@ export default {
           "/api/insuranceCity/insuranceCarInfo/insertOne",
           this.InsuranceCarInfo
         )
-        .then(data => {});//
+        .then(data => {});
       // this.$router.push("selectingOffers");
       this.Home();
     },
