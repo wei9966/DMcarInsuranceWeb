@@ -502,11 +502,10 @@
 							</span>为保障您的权益，请仔细阅读条款内容，特别是条款中责任免除部分</h3>
 					</div>
 					<div class="row">
-						<div class="col-sm-1 text-right">
+						<!-- <div class="col-sm-1 text-right">
 							<input type="button" :checkbox="false" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
 							<input type="button" :checkbox="false" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
-
-						</div>
+						</div> -->
 						<div class="col-sm-5 text-right">
 							<el-checkbox v-model="checked">保险人已明确条款内容、免除保险人责任条款含义及其法律后果</el-checkbox>
 						</div>

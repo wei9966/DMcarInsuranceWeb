@@ -327,9 +327,9 @@ export default {
     },
      next: function(txt) {
           this.axios.post('/api/insuranceCity/insuranceCarInfo/insertOne',this.InsuranceCarInfo).then(data=>{
-            
+              
          });
-        // this.$router.push('selectingOffers')
+        this.$router.push('selectingOffers')
     },
     getClause(){
         this.axios.get('/api/insuranceCity/insuranceCity/selectOne2',{params:{parentid:0}}).then(data=>{
