@@ -122,14 +122,14 @@
           <div class="col-sm-6 text-left" style="margin-left:102px;">
             是否过户车辆：
             <el-switch
-              style="left:10px;"
+              style="display:blank;left:10px;"
               v-model="flag1"
               active-color="#13ce66"
               inactive-color="#ff4949"
               active-text="是"
               inactive-text="否">
             </el-switch>
-            <!-- <input type="checkbox" name="my-checkbox" v-model="InsuranceCarInfo.carInfoTransfer"  data-on-text="是" data-off-text="否" checked/> -->
+            <!-- <input type="checkbox" name="my-checkbox" v-model="InsuranceCarInfo.carInfoTransfer"  data-on-text="是" data-off-text="否" checked/> --> 
             <!-- <input type="checkbox" class="btn-switch s_top"> -->
             <span class="s-exmp-car s-tap-index" data-val="example_2">如何区别过户车？</span>
           </div>
