@@ -589,6 +589,7 @@
 export default {
   data() {
     return {
+		totalMoney: 0,//保险总金额
 		insuranceClause:[],
 		checked:false,//判断是否点击了同意条款
 		isInsuranceInsured:true,//判断是否为同投保人
@@ -616,10 +617,20 @@ export default {
 		insuranceClause:[]
 	};
   },
+  watch: {
+    //监测路由变化
+    $route: "getParams"
+  },
   mounted() {
     this.init();
   },
   methods: {
+	getParams(){
+		// 取到路由带过来的参数
+		var totalMoney=this.$route.params.totalMoney;
+		this.totalMoney=totalMoney;
+		console.log("总金额",this.totalMoney);
+	},
     init() {
       $(".panel-info .panel-collapse").on("shown.bs.collapse", function(e) {
         $("#" + this.id + "-text").text("收起");
@@ -641,12 +652,20 @@ export default {
 			return false;
 		}
 	this.addUserInfomation();
-      this.$router.push("pay");
-    },
+	//   this.$router.push("pay");
+	  this.$router.push({
+		  name:"pay",
+		  path:"/pay",
+		  params:{
+			  totalMoney: this.totalMoney
+		  }
+	  });
+	},
     last: function(txt) {
       this.$router.push("selectingOffers");
 	},
 	getClause(){
+		
 		this.axios.get('/api/policy/insuranceClause/select').then(data=>{
 			this.insuranceClause=data.data.data;
 			console.log(this.insuranceClause);
@@ -679,6 +698,7 @@ export default {
   },
   created() {
 	  this.getClause();
+	  this.getParams();
 }
 };
 </script>
