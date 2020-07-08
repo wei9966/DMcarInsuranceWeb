@@ -158,7 +158,7 @@
       <div class="row-s">
         <h5>其它投保信息</h5>
           <div style="position:absolute; margin-left:200px;margin-top:-40px">
-        <el-switch v-model="isShow" active-text="是" inactive-text="否"></el-switch>
+        <el-switch v-model="isShow" active-text="是" inactive-text="否" ></el-switch>
         <!-- <div style="position:absolute; margin-left:200px;margin-top:-40px"> 
                      <input type="checkbox" v-model="isShow" name="my-checkbox" data-on-text="是" data-off-text="否" checked > 
                     
@@ -176,7 +176,9 @@
                                 align="right"
                                 type="date"
                                 placeholder="选择日期"
-                                :picker-options="pickerOptions">
+                                :picker-options="pickerOptions"
+                                
+                                >
                     </el-date-picker>
             </div>
             <div class="checkbox col-sm-2 s-tap-index" data-val="example_3">
@@ -186,7 +188,7 @@
           <div class="row">
             <div class="col-sm-6 text-right">
               车主姓名：
-              <input type="text" name id class="form-control" v-model="z_name"/>
+              <input type="text" name id class="form-control" v-model="z_name" :disabled="true"/>
             </div>
           </div>
           <div class="row s-input-data-3">
@@ -223,7 +225,7 @@
               </div>
             </div>
             <div class="col-sm-4">
-              <input type="text" name id class="form-control"  v-model="z_idCard"/>
+              <input type="text" name id class="form-control"  v-model="z_idCard" :disabled="true"/>
             </div>
             <div class="checkbox col-sm-4 error">
                 <!-- 身份证号不正确，请重新输入 -->
@@ -232,7 +234,7 @@
           <div class="row">
             <div class="col-sm-6 text-right">
               Email：
-              <input type="text" name id class="form-control"  v-model="z_Email"/>
+              <input type="text" name id class="form-control"  v-model="z_Email" :disabled="true"/>
             </div>
           </div>
           <div class="row-example_1-image example_3">
