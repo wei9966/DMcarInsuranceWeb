@@ -99,7 +99,7 @@ export default {
     //获取验证码
     getCode2() {
       this.axios
-        .post("/api/third/message/sendMessage?phoneNumber=" + this.Phone)
+        .post("/api/third/message/sendMessage?phoneNumber=" + this.getphone)
         .then(data => {
           console.log(data);
           this.msgCode = data.data.data;
