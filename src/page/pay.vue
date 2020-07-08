@@ -67,13 +67,27 @@
 export default {
   data () {
     return {
+        totalMoney: 0
     };
   },
+  watch: {
+    //监测路由变化
+    $route: "getParams"
+  },
   methods: {
+      getParams(){
+		// 取到路由带过来的参数
+		var totalMoney=this.$route.params.totalMoney;
+		this.totalMoney=totalMoney;
+		console.log("总金额",this.totalMoney);
+	},
       detial:function(){
           this.$router.push("insuranceDetial");
       }
-  }
+  },
+  created() {
+      this.getParams();
+  },
 }
 
 </script>

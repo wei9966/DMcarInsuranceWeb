@@ -626,7 +626,6 @@ export default {
   },
   methods: {
 	getParams(){
-		
 		// 取到路由带过来的参数
 		var totalMoney=this.$route.params.totalMoney;
 		this.totalMoney=totalMoney;
@@ -653,8 +652,15 @@ export default {
 			return false;
 		}
 	this.addUserInfomation();
-      this.$router.push("pay");
-    },
+	//   this.$router.push("pay");
+	  this.$router.push({
+		  name:"pay",
+		  path:"/pay",
+		  params:{
+			  totalMoney: this.totalMoney
+		  }
+	  });
+	},
     last: function(txt) {
       this.$router.push("selectingOffers");
 	},
