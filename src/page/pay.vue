@@ -49,27 +49,42 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      totalMoney: 0 // 保险总金额
+    };
+  },
+  watch: {
+    //监测路由变化
+    $route: "getParams"
   },
   methods: {
-         pay() {
-       this.axios
-            .post("/api/insurance/pay/payorder")
-            .then(data => {
-                console.log(data);
-                // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
-                const divForm = document.getElementsByTagName('div')
-                if (divForm.length) {
-                    document.body.removeChild(divForm[0])
-                }
-                const div = document.createElement('div')
-                div.innerHTML = data.data // data就是接口返回的form 表单字符串
-                document.body.appendChild(div)
-                document.forms[0].setAttribute('target', '_self') // 新开窗口跳转
-                document.forms[0].submit()
-            });
-            
+    getParams() {
+      // 取到路由带过来的参数
+      var totalMoney = this.$route.params.totalMoney;
+      this.totalMoney = totalMoney;
+      console.log("总金额", this.totalMoney);
+    },
+    detial: function() {
+      this.$router.push("insuranceDetial");
+    },
+    pay() {
+      this.axios.post("/api/insurance/pay/payorder").then(data => {
+        console.log(data);
+        // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
+        const divForm = document.getElementsByTagName("div");
+        if (divForm.length) {
+          document.body.removeChild(divForm[0]);
+        }
+        const div = document.createElement("div");
+        div.innerHTML = data.data; // data就是接口返回的form 表单字符串
+        document.body.appendChild(div);
+        document.forms[0].setAttribute("target", "_self"); // 新开窗口跳转
+        document.forms[0].submit();
+      });
     }
+  },
+  created() {
+    this.getParams();
   }
 };
 </script>
