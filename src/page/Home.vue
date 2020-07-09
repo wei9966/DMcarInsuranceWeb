@@ -465,11 +465,12 @@ export default {
         name: "selectingOffers",
         path: "/selectingOffers",
         params: {
-          carInfoCard: this.InsuranceCarInfo.carInfoCard,
-          carInfoOwner: this.InsuranceCarInfo.carInfoOwner,
-          carInfoTransfer: this.InsuranceCarInfo.carInfoTransfer,
-          carInfoFrameNo: this.InsuranceCarInfo.carInfoFrameNo,
-          carInfoEnigneNumber:this.InsuranceCarInfo.carInfoEnigneNumber
+          InsuranceCarInfo: this.InsuranceCarInfo,
+          // carInfoCard: this.InsuranceCarInfo.carInfoCard,
+          // carInfoOwner: this.InsuranceCarInfo.carInfoOwner,
+          // carInfoTransfer: this.InsuranceCarInfo.carInfoTransfer,
+          // carInfoFrameNo: this.InsuranceCarInfo.carInfoFrameNo,
+          // carInfoEnigneNumber:this.InsuranceCarInfo.carInfoEnigneNumber
         }
       });
     },
