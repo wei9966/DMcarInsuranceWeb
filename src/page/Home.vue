@@ -40,25 +40,38 @@
         </div>
 
         <div class="row">
-          <div class="col-sm-6 text-right">
+          <div class="col-sm-6 text-left" style="margin-left:130px;" >
             车牌号码：
-            <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoCard" class="form-control" />
+              <el-input
+                placeholder="请输入车牌号码"
+                v-model="InsuranceCarInfo.carInfoCard"
+                :disabled="damutou"
+                style="width:306px;">
+              </el-input>
+            <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoCard" class="form-control" disabled="false" /> -->
           </div>
-
-          <div class="checkbox col-sm-2">
+        </div>
+        <div style="position: absolute;left:500px;top:120px;">
+           <div class="checkbox col-sm-2">
             <label>
-              <input type="checkbox" class="s-checkbox" />新车未上牌
+              <el-checkbox v-model="checked" @change="dmtChange2">新车未上牌</el-checkbox>
+              <!-- <input type="checkbox" class="s-checkbox" @change="dmtChange2" />新车未上牌 -->
             </label>
           </div>
-
-          <div class="col-sm-4 indexes">
+          <div class="col-sm-4 indexes" style="margin-left:80px;width:400px">
             <input type="button" class="form-control s-input-btnbg" id value="信息检索" placeholder /> 只支持上海车牌和续保使用信息检索
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6 text-right">
+          <div class="col-sm-6 text-left" style="margin-left:116px;">
             车辆所有人：
-            <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoOwner" class="form-control" />
+            <el-input
+              placeholder="请输入车辆所有人"
+              v-model="InsuranceCarInfo.carInfoOwner"
+              :disabled="damutou"
+              style="width:306px;">
+            </el-input>
+            <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoOwner" class="form-control" disabled="damutou" /> -->
           </div>
         </div>
       </div>
@@ -83,28 +96,48 @@
         <div class="row">
           <div class="col-sm-6 text-right">
             车架号/车辆识别代号/VIN码：
-            <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoFrameNo" class="form-control"/>
+            <el-input
+                placeholder="请输入车辆识别代号"
+                v-model="InsuranceCarInfo.carInfoFrameNo"
+                style="width:306px;">
+            </el-input>
+            <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoFrameNo" class="form-control"/> -->
           </div>
           <div class="checkbox col-sm-4 error">2002年后车架号为17位哦</div>
         </div>
         <div class="row">
           <div class="col-sm-6 text-right">
             发动机号：
-            <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoEnigneNumber" class="form-control"/>
+            <el-input
+                placeholder="请输入发动机号"
+                v-model="InsuranceCarInfo.carInfoEnigneNumber"
+                style="width:306px;">
+            </el-input>
+            <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoEnigneNumber" class="form-control"/> -->
           </div>
           <div class="checkbox col-sm-4 error">亲，您输入的发动机号不正确哦！</div>
         </div>
         <div class="row">
           <div class="col-sm-6 text-right">
             品牌型号：
-            <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoConfigurationModel" class="form-control"/>
+             <el-input
+                placeholder="请输入品牌型号"
+                v-model="InsuranceCarInfo.carInfoBrand"
+                style="width:306px;">
+            </el-input>
+            <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoConfigurationModel" class="form-control"/> -->
           </div>
           <div class="checkbox col-sm-4 error">亲，请参考行驶证品牌型号填写!</div>
         </div>
         <div class="row">
           <div class="col-sm-6 text-right">
-            配置型号：
-            <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoBrand" class="form-control"/>
+            车辆类型：
+             <el-input
+                placeholder="请输入车辆类型"
+                v-model="InsuranceCarInfo.carInfoConfigurationModel"
+                style="width:306px;">
+            </el-input>
+            <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoBrand" class="form-control"/> -->
           </div>
         </div>
         <div class="row">
@@ -122,14 +155,15 @@
           <div class="col-sm-6 text-left" style="margin-left:102px;">
             是否过户车辆：
             <el-switch
-              style="left:10px;"
+              style="display:blank;left:10px;"
               v-model="flag1"
               active-color="#13ce66"
               inactive-color="#ff4949"
               active-text="是"
-              inactive-text="否">
+              inactive-text="否"
+               @change="dmtChange">
             </el-switch>
-            <!-- <input type="checkbox" name="my-checkbox" v-model="InsuranceCarInfo.carInfoTransfer"  data-on-text="是" data-off-text="否" checked/> -->
+            <!-- <input type="checkbox" name="my-checkbox" v-model="InsuranceCarInfo.carInfoTransfer"  data-on-text="是" data-off-text="否" checked/> --> 
             <!-- <input type="checkbox" class="btn-switch s_top"> -->
             <span class="s-exmp-car s-tap-index" data-val="example_2">如何区别过户车？</span>
           </div>
@@ -142,7 +176,8 @@
               v-model="InsuranceCarInfo.carInfoTransferDate"
               type="date"
               placeholder="选择日期"
-              style="width: 306px;">
+              style="width: 306px;"
+              :disabled="dmt">
             </el-date-picker>
           </div>
         </div>
@@ -171,13 +206,13 @@
               起保日期：
               <!-- <input type="text" name="" id="" class="form-control form_datetime" placeholder="请输入开始时间"/> -->
               <el-date-picker
-                                style="width:308px"
-                                v-model="value3"
-                                align="right"
-                                type="date"
-                                placeholder="选择日期"
-                                :picker-options="pickerOptions">
-                    </el-date-picker>
+                  style="width:308px"
+                  v-model="value3"
+                   align="right"
+                   type="date"
+                  placeholder="选择日期"
+                   :picker-options="pickerOptions">
+               </el-date-picker>
             </div>
             <div class="checkbox col-sm-2 s-tap-index" data-val="example_3">
               <img src="../../static/images/icon-c.png" alt />
@@ -278,6 +313,7 @@ export default {
         carInfoTransfer: "", //是否过户车辆
         carInfoTransferDate: "", //过户日期
         userId: "", //用户id
+      },
         z_name:"",//车主姓名
         z_idCard:"",//车主身份证
         z_Email:"",//车主emali
@@ -294,10 +330,10 @@ export default {
         userAddress: "", //地址
         userCard: "" //身份证
       },
-
-      },
+      checked:false,
       flag1:true,
-
+      dmt:false,
+      damutou:false,
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -356,6 +392,20 @@ export default {
       //将数据放在当前组件的数据内
       this.id = routerParams;
     },
+    dmtChange(data){
+        if(data==false){
+          this.dmt=true
+        }else{
+          this.dmt=false
+        }
+    },
+    dmtChange2(data){
+        if(data==false){
+          this.damutou=false
+        }else{
+          this.damutou=true
+        }
+    },
     init() {
       $("[name='my-checkbox']").bootstrapSwitch();
       app._toggle();
@@ -398,6 +448,8 @@ export default {
          });
       },
       getClause1(data){
+        this.InsuranceCarInfo.cityId='',
+               this.value2='',
         this.axios.get('/api/insuranceCity/insuranceCity/selectOne2',{params:{parentid:data}}).then(data=>{
             this.city1=data.data.data
          });
@@ -453,5 +505,4 @@ export default {
 };
 </script>
 <style>
-
 </style>
