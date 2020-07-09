@@ -412,11 +412,29 @@ export default {
     next: function(txt) {
       this.setInsuranceInserIncludeTaoCan();
       if (this.flagByTaoCanId != 0) {
+          var insuranceInserIncludeOption=null;
+          switch(this.flagByTaoCanId){
+              case 1:
+                  insuranceInserIncludeOption=this.insuranceInserIncludeOption1;
+                break;
+              case 2:
+                  insuranceInserIncludeOption=this.insuranceInserIncludeOption2;
+                break;
+              case 3:
+                  insuranceInserIncludeOption=this.insuranceInserIncludeOption3;
+                break;
+              default:
+                break;
+          }
         this.$router.push({
           name: "verify",
           params: { 
             iiId: this.flagByTaoCanId,
-            totalMoney: this.totalMoney
+            totalMoney: this.totalMoney,
+            carInsurs:this.carInsurs,
+            insuranceInserIncludeOption:insuranceInserIncludeOption,
+            insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,
+            insuranceInserCheChuan:this.insuranceInserCheChuan
             }
         });
       } else {
