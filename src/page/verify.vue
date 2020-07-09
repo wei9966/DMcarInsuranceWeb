@@ -22,7 +22,7 @@
 									报价信息
 									<button class="s-button-1 pull-right" id="collapseThree-text">展开</button>
 									<span class="pull-right">应付金额：
-										<span>7085.14</span>
+										<span>{{totalMoney}}</span>
 									</span>
 								</a>
 							</h4>
@@ -41,104 +41,42 @@
 										保费(元)
 									</div>
 								</div>
-
+								<div class="row-s" v-for="(carInsur,index) in carInsurs" v-if="index in includeOption">
+									<div class="col-sm-5 text-left">
+										{{carInsur.ciName}}
+									</div>
+									<div class="col-sm-3 text-left">
+										{{carInsur.maxmoney}}
+									</div>
+									<div class="col-sm-3 text-right">
+										{{carInsur.ciMoney}}
+									</div>
+								</div>
 								<div class="row-s">
 									<div class="col-sm-5 text-left">
-										车辆损失保险
+										{{insuranceInserJiaoQiang.ciName}}
 									</div>
 									<div class="col-sm-3 text-left">
-										76400.0
+										{{insuranceInserJiaoQiang.maxmoney}}
 									</div>
 									<div class="col-sm-3 text-right">
-										2232.15
+										{{insuranceInserJiaoQiang.ciMoney}}
 									</div>
 								</div>
-
 								<div class="row-s">
 									<div class="col-sm-5 text-left">
-										第三者责任保险
+										{{insuranceInserCheChuan.ciName}}
 									</div>
 									<div class="col-sm-3 text-left">
-										76400.0
+										{{insuranceInserCheChuan.maxmoney}}
 									</div>
 									<div class="col-sm-3 text-right">
-										2232.15
+										{{insuranceInserCheChuan.ciMoney}}
 									</div>
 								</div>
+								<div>
 
-								<div class="row-s">
-									<div class="col-sm-5 text-left">
-										车上人员责任保险（司机）
-									</div>
-									<div class="col-sm-3 text-left">
-										76400.0
-									</div>
-									<div class="col-sm-3 text-right">
-										2232.15
-									</div>
 								</div>
-
-								<div class="row-s">
-									<div class="col-sm-5 text-left">
-										车上人员责任保险（乘客）
-									</div>
-									<div class="col-sm-3 text-left">
-										76400.0
-									</div>
-									<div class="col-sm-3 text-right">
-										2232.15
-									</div>
-								</div>
-
-								<div class="row-s">
-									<div class="col-sm-5 text-left">
-										不计免赔特约
-									</div>
-									<div class="col-sm-3 text-left">
-										车损/三者/人员险/
-									</div>
-									<div class="col-sm-3 text-right">
-										2232.15
-									</div>
-								</div>
-
-								<div class="row-s title">
-									<div class="col-sm-5 text-left">
-										交强险险种
-										<span>生效日期2018-01-10 </span>
-									</div>
-									<div class="col-sm-3 text-left">
-										保额
-									</div>
-									<div class="col-sm-3 text-right">
-										保费(元)
-									</div>
-								</div>
-
-								<div class="row-s">
-									<div class="col-sm-5 text-left">
-										交强险
-									</div>
-									<div class="col-sm-3 text-left">
-										122000.0
-									</div>
-									<div class="col-sm-3 text-right">
-										2232.15
-									</div>
-								</div>
-
-								<div class="row-s">
-									<div class="col-sm-5 text-left">
-										车船税
-									</div>
-									<div class="col-sm-3 text-left">
-										缴税
-									</div>
-									<div class="col-sm-3 text-right">
-										2232.15
-									</div>
-								</div>
-
 							</div>
 						</div>
 					</div>
@@ -589,10 +527,10 @@ export default {
   data() {
     return {
 		totalMoney: 0,//保险总金额
-		insuranceClause:[],
+		insuranceClause:[],//所有条款
 		checked:false,//判断是否点击了同意条款
 		isInsuranceInsured:true,//判断是否为同投保人
-		distribution:false,
+		distribution:false,//配送方式
 		insuranceUser:{//投保人(用户)
 			userId:'13',
 			userName:'',
@@ -610,10 +548,15 @@ export default {
 			drivingLicenseName:'',
 			drivingLicenseCard:''
 		},
-		insuranceUserId:'',
-		insuranceInsuredId:'',
-		insuranceDrivingLicenseId:'',
-		insuranceClause:[]
+		insuranceUserId:'',//投保人id
+		insuranceInsuredId:'',//被保险人id
+		insuranceDrivingLicenseId:'',//行驶证车主id
+		carInsurs:[],//所有保险类型
+		insuranceInserIncludeOption:null,//保险套餐
+		includeOption:[],//所有选择的套餐的下标
+		insuranceInserJiaoQiang:[],//交强险
+		insuranceInserCheChuan:[],//车船税
+
 	};
   },
   watch: {
@@ -627,8 +570,26 @@ export default {
 	getParams(){
 		// 取到路由带过来的参数
 		var totalMoney=this.$route.params.totalMoney;
-		this.totalMoney=totalMoney;
-		console.log("总金额",this.totalMoney);
+		this.totalMoney=totalMoney;//赋值总金额
+		 this.carInsurs=this.$route.params.carInsurs;//赋值所有保险类型
+		 this.insuranceInserIncludeOption=this.$route.params.insuranceInserIncludeOption;//赋值保险清单
+		 		  let index = 0;
+				  let index2 = -3;
+		 for (const option in this.insuranceInserIncludeOption){		
+		  	 if (option == "ci" + index &&this.insuranceInserIncludeOption[option] == 1) {
+				if (index>2) {
+					this.includeOption.push(index2);
+				}	
+			}
+				index++;
+				index2++;	
+				
+		 }
+		 //赋值交强险和车船税
+		this.insuranceInserJiaoQiang= this.$route.params.insuranceInserJiaoQiang;
+		this.insuranceInserCheChuan= this.$route.params.insuranceInserCheChuan;
+		 console.log("交强险和车船税",this.insuranceInserJiaoQiang,this.insuranceInserCheChuan);
+		 
 	},
     init() {
       $(".panel-info .panel-collapse").on("shown.bs.collapse", function(e) {
@@ -656,7 +617,11 @@ export default {
 		  name:"pay",
 		  path:"/pay",
 		  params:{
-			  totalMoney: this.totalMoney
+			  totalMoney: this.totalMoney,//传输总金额
+			  insuranceInserIncludeOption:insuranceInserIncludeOption,//套餐清单
+           	  insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,//交强险
+			  insuranceInserCheChuan:this.insuranceInserCheChuan,//车船税
+			  carInsurs:this.carInsurs,//所有套餐类型
 		  }
 	  });
 	},
@@ -679,13 +644,14 @@ export default {
 	addUserInfomation(){
 		//更新投保人
 		if (!this.isInsuranceInsured) {
-			this.axios.post('/api/policy/feign/user/update',this.insuranceUser).then(data=>{
+			this.axios.post('/api/policy/feign/user/update',this.insuranceUser).then(data=>{	
 				console.log("更新的投保人信息",data.data.data);
 			});
 		}
 		//添加被保险人
 		if (!this.isInsuranceInsured) {
 			this.axios.post('/api/policy/insuranceInsured/insertOne',this.insuranceInsured).then(data=>{
+				this.insuranceInsuredId=data.data.data.
 				console.log("添加的被保险人",data.data.data);
 			});
 		}
