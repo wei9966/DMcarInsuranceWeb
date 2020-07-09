@@ -589,6 +589,7 @@
 export default {
   data() {
     return {
+		id: '',// 用户id
 		totalMoney: 0,//保险总金额
 		insuranceClause:[],
 		checked:false,//判断是否点击了同意条款
@@ -629,6 +630,8 @@ export default {
 		// 取到路由带过来的参数
 		var totalMoney=this.$route.params.totalMoney;
 		this.totalMoney=totalMoney;
+		var id=this.$route.params.id;
+		this.id=id;
 		console.log("总金额",this.totalMoney);
 	},
     init() {
@@ -657,7 +660,8 @@ export default {
 		  name:"pay",
 		  path:"/pay",
 		  params:{
-			  totalMoney: this.totalMoney
+			  totalMoney: this.totalMoney,
+			  id: this.id
 		  }
 	  });
 	},
