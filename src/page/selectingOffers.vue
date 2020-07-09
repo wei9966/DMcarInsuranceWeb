@@ -578,19 +578,23 @@ export default {
     },
     // 动态传递价格
     dynamicPrice1($event) {
+      this.myCheckbox=true;
       this.flagByTaoCanId = 1;
       this.totalPriceShangYe = this.discountPrice1;
     },
     dynamicPrice2() {
+      this.myCheckbox=true;
       this.flagByTaoCanId = 2;
       this.totalPriceShangYe = this.discountPrice2;
     },
     dynamicPrice3() {
+      this.myCheckbox=true;
       this.flagByTaoCanId = 3;
       this.totalPriceShangYe = this.taocanPrice3;
     },
     // 点击显示、隐藏
     handleClick() {
+      
       this.isShow = !this.isShow;
     }
   },
