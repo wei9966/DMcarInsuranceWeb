@@ -15,24 +15,24 @@
           </span>
           <img src="../../static/images/icon-car.png" alt class="selectingoffer-car-img" />
           <!-- <span>别克SGM7104LAA1轿车</span> -->
-          <span>{{this.carInfoCard}}</span>
+          <span>{{this.InsuranceCarInfo.carInfoCard}}</span>
         </h5>
         <div class="row">
           <div class="col-sm-3 text-left">
             车主:
-            <span>{{this.carInfoOwner}}</span>
+            <span>{{this.InsuranceCarInfo.carInfoOwner}}</span>
           </div>
           <div class="col-sm-2 text-left">
             是否过户:
-            <span>{{this.carInfoTransfer}}</span>
+            <span>{{this.InsuranceCarInfo.carInfoTransfer}}</span>
           </div>
           <div class="col-sm-3 text-left">
             车架号:
-            <span>{{this.carInfoFrameNo}}</span>
+            <span>{{this.InsuranceCarInfo.carInfoFrameNo}}</span>
           </div>
           <div class="col-sm-3 text-left">
             发动机号:
-            <span>{{this.carInfoEnigneNumber}}</span>
+            <span>{{this.InsuranceCarInfo.carInfoEnigneNumber}}</span>
           </div>
         </div>
         <div class="s-lines-style"></div>
@@ -343,11 +343,8 @@
 export default {
   data() {
     return {
-      carInfoCard:'',// 车辆车牌号
-      carInfoOwner:'',// 车辆所有人
-      carInfoTransfer:'',// 是否过户车辆
-      carInfoFrameNo:'',// 车辆车架号
-      carInfoEnigneNumber:'',// 车辆发动机号
+      // 车辆所有信息
+      InsuranceCarInfo: '',
       carInsurs: [],
       myCheckbox: false,
       value1: true,
@@ -379,18 +376,21 @@ export default {
   methods: {
     getParams() {
       //取到路由带过来的参数
-      var routerParams1 = this.$route.params.carInfoCard;
-      //将数据放在当前组件的数据内
-      this.carInfoCard = routerParams1;
-      var routerParams2 = this.$route.params.carInfoOwner;
-      this.carInfoOwner = routerParams2;
-      var routerParams3 = this.$route.params.carInfoTransfer;
-      this.carInfoTransfer = routerParams3;
-      var routerParams4 = this.$route.params.carInfoFrameNo;
-      this.carInfoFrameNo = routerParams4;
-      var routerParams5 = this.$route.params.carInfoEnigneNumber;
-      this.carInfoEnigneNumber = routerParams5;
-      console.log("传过来的参数",this.$route.params.carInfoCard);
+      // var routerParams1 = this.$route.params.carInfoCard;
+      // //将数据放在当前组件的数据内
+      // this.carInfoCard = routerParams1;
+      // var routerParams2 = this.$route.params.carInfoOwner;
+      // this.carInfoOwner = routerParams2;
+      // var routerParams3 = this.$route.params.carInfoTransfer;
+      // this.carInfoTransfer = routerParams3;
+      // var routerParams4 = this.$route.params.carInfoFrameNo;
+      // this.carInfoFrameNo = routerParams4;
+      // var routerParams5 = this.$route.params.carInfoEnigneNumber;
+      // this.carInfoEnigneNumber = routerParams5;
+      // console.log("传过来的参数",this.$route.params.carInfoCard);
+      
+      this.InsuranceCarInfo = this.$route.params.InsuranceCarInfo;
+      console.log("传过来的参数",this.InsuranceCarInfo);
       },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
