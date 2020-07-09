@@ -14,24 +14,25 @@
             <button class="s-button-1" @click="adjustBrand">调整品牌</button>
           </span>
           <img src="../../static/images/icon-car.png" alt class="selectingoffer-car-img" />
-          <span>别克SGM7104LAA1轿车</span>
+          <!-- <span>别克SGM7104LAA1轿车</span> -->
+          <span>{{this.carInfoCard}}</span>
         </h5>
         <div class="row">
           <div class="col-sm-3 text-left">
             车主:
-            <span>{{this.carInfoCard}}</span>
+            <span>{{this.carInfoOwner}}</span>
           </div>
           <div class="col-sm-2 text-left">
             是否过户:
-            <span>否</span>
+            <span>{{this.carInfoTransfer}}</span>
           </div>
           <div class="col-sm-3 text-left">
             车架号:
-            <span>LS4AAB*******2393</span>
+            <span>{{this.carInfoFrameNo}}</span>
           </div>
           <div class="col-sm-3 text-left">
             发动机号:
-            <span>B**C5</span>
+            <span>{{this.carInfoEnigneNumber}}</span>
           </div>
         </div>
         <div class="s-lines-style"></div>
@@ -342,11 +343,11 @@
 export default {
   data() {
     return {
-      carInfoCard:'',
-      carInfoOwner:'',
-      carInfoTransfer:'',
-      carInfoFrameNo:'',
-      carInfoEnigneNumber:'',
+      carInfoCard:'',// 车辆车牌号
+      carInfoOwner:'',// 车辆所有人
+      carInfoTransfer:'',// 是否过户车辆
+      carInfoFrameNo:'',// 车辆车架号
+      carInfoEnigneNumber:'',// 车辆发动机号
       carInsurs: [],
       myCheckbox: false,
       value1: true,
@@ -371,9 +372,6 @@ export default {
   watch: {
     //监测路由变化
     $route: "getParams"
-  },
-  created() {
-    this.getParams();
   },
   mounted() {
     this.init();
@@ -416,7 +414,10 @@ export default {
       if (this.flagByTaoCanId != 0) {
         this.$router.push({
           name: "verify",
-          params: { iiId: this.flagByTaoCanId }
+          params: { 
+            iiId: this.flagByTaoCanId,
+            totalMoney: this.totalMoney
+            }
         });
       } else {
         this.$router.push("verify");
@@ -595,9 +596,9 @@ export default {
   },
   created() {
     this.getinsur();
-    
     this.getinsuranceInserJiaoQiang();
     this.getinsuranceInserCheChuan();
+    this.getParams();
   },
   beforeMount(){
     this.getInsuranceInserIncludeOption1();
