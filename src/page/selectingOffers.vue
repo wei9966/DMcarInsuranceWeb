@@ -621,6 +621,7 @@ export default {
     this.getinsuranceInserCheChuan();
     this.getParams();
   },
+  // 声明周期
   mounted() {
     this.init();
     this.getInsuranceInserIncludeOption1();
