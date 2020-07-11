@@ -343,6 +343,7 @@
 export default {
   data() {
     return {
+      id: '',// 用户id
       carInfoCard:'',// 车辆车牌号
       carInfoOwner:'',// 车辆所有人
       carInfoTransfer:'',// 是否过户车辆
@@ -390,6 +391,8 @@ export default {
       this.carInfoFrameNo = routerParams4;
       var routerParams5 = this.$route.params.carInfoEnigneNumber;
       this.carInfoEnigneNumber = routerParams5;
+      var id = this.$route.params.id;
+      this.id = id;
       console.log("传过来的参数",this.$route.params.carInfoCard);
       },
     init() {

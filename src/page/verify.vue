@@ -526,6 +526,7 @@
 export default {
   data() {
     return {
+		id: '',// 用户id
 		totalMoney: 0,//保险总金额
 		insuranceClause:[],//所有条款
 		checked:false,//判断是否点击了同意条款
