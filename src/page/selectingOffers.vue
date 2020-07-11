@@ -345,8 +345,17 @@
 export default {
   data() {
     return {
+<<<<<<< HEAD
       // 车辆所有信息
       InsuranceCarInfo: '',
+=======
+      id: '',// 用户id
+      carInfoCard:'',// 车辆车牌号
+      carInfoOwner:'',// 车辆所有人
+      carInfoTransfer:'',// 是否过户车辆
+      carInfoFrameNo:'',// 车辆车架号
+      carInfoEnigneNumber:'',// 车辆发动机号
+>>>>>>> b03c52b008826a1703ce57e43ef7ccb0bd8582d9
       carInsurs: [],
       myCheckbox: false,
       value1: true,
@@ -375,6 +384,7 @@ export default {
   methods: {
     getParams() {
       //取到路由带过来的参数
+<<<<<<< HEAD
       // var routerParams1 = this.$route.params.carInfoCard;
       // //将数据放在当前组件的数据内
       // this.carInfoCard = routerParams1;
@@ -390,6 +400,22 @@ export default {
       
       this.InsuranceCarInfo = this.$route.params.InsuranceCarInfo;
       console.log("传过来的参数",this.InsuranceCarInfo);
+=======
+      var routerParams1 = this.$route.params.carInfoCard;
+      //将数据放在当前组件的数据内
+      this.carInfoCard = routerParams1;
+      var routerParams2 = this.$route.params.carInfoOwner;
+      this.carInfoOwner = routerParams2;
+      var routerParams3 = this.$route.params.carInfoTransfer;
+      this.carInfoTransfer = routerParams3;
+      var routerParams4 = this.$route.params.carInfoFrameNo;
+      this.carInfoFrameNo = routerParams4;
+      var routerParams5 = this.$route.params.carInfoEnigneNumber;
+      this.carInfoEnigneNumber = routerParams5;
+      var id = this.$route.params.id;
+      this.id = id;
+      console.log("传过来的参数",this.$route.params.carInfoCard);
+>>>>>>> b03c52b008826a1703ce57e43ef7ccb0bd8582d9
       },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
