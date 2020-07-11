@@ -24,7 +24,9 @@
           </div>
           <div class="col-sm-2 text-left">
             是否过户:
-            <span>{{this.InsuranceCarInfo.carInfoTransfer}}</span>
+            <!-- <span>{{this.InsuranceCarInfo.carInfoTransfer}}</span> -->
+            <span v-if="this.InsuranceCarInfo.carInfoTransfer == 1">是</span>
+            <span v-if="this.InsuranceCarInfo.carInfoTransfer == 0">否</span>
           </div>
           <div class="col-sm-3 text-left">
             车架号:
@@ -370,9 +372,6 @@ export default {
     //监测路由变化
     $route: "getParams"
   },
-  mounted() {
-    this.init();
-  },
   methods: {
     getParams() {
       //取到路由带过来的参数
@@ -622,10 +621,14 @@ export default {
     this.getinsuranceInserCheChuan();
     this.getParams();
   },
-  beforeMount(){
+  mounted() {
+    this.init();
     this.getInsuranceInserIncludeOption1();
     this.getInsuranceInserIncludeOption2();
     this.getInsuranceInserIncludeOption3();
+  },
+  beforeMount(){
+    
   },
   computed: {
     discountPrice1() {
