@@ -52,6 +52,11 @@ export default new Router({
       path: '/usercenter',
       name: 'usercenter',
       component: resolve => require(['../page/UserCenter.vue'], resolve)
+    },
+    {
+      path: '/selectoffer',
+      name: 'selectOffer',
+      component: resolve => require(['../page/selectingOffersCopy.vue'], resolve)
     }
   ]
 })
