@@ -346,7 +346,7 @@ export default {
   data() {
     return {
       // 车辆所有信息
-      InsuranceCarInfo: null,
+      InsuranceCarInfo: '',
       carInsurs: [],
       myCheckbox: false,
       value1: true,
@@ -434,7 +434,8 @@ export default {
             InsuranceCarInfo:this.InsuranceCarInfo,
             insuranceInserIncludeOption:insuranceInserIncludeOption,
             insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,
-            insuranceInserCheChuan:this.insuranceInserCheChuan
+            insuranceInserCheChuan:this.insuranceInserCheChuan,
+            insuranceCarInfo:this.InsuranceCarInfo
             }
         });
       } else {
@@ -448,7 +449,8 @@ export default {
       this.$router.push("brand");
     },
     getinsur() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/insur/selectAllType", {
           params: { ciType: "商业险", ciState: 1 }
         })
@@ -456,12 +458,14 @@ export default {
           this.carInsurs = data.data.data;
           this.len = this.carInsurs.length;
           console.log("数据长度" + this.len);
-
+          resolve(data.data.data);
           // console.log("返回的数据", data.data.data);
         });
+      });
     },
     getInsuranceInserIncludeOption1() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 1 }
         })
@@ -485,14 +489,17 @@ export default {
             index++;
             index2++;
           }
+          resolve(data.data.data);
           console.log("套餐1的金额为" + this.money1);
 
           // console.log("套餐清单1的值",this.insuranceInserIncludeOption1);
           // console.log("返回的数据", data.data.data);
         });
+      });
     },
     getInsuranceInserIncludeOption2() {
-      this.axios
+      return new Promise((resolve,reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 2 }
         })
@@ -516,12 +523,15 @@ export default {
             index++;
             index2++;
           }
+          resolve(data.data.data);
           console.log("套餐2的金额为" + this.money2);
           // console.log("返回", data.data.data);
         });
+      });
     },
     getInsuranceInserIncludeOption3() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 3 }
         })
@@ -529,7 +539,9 @@ export default {
           // this.carInsurs = data.data.data;
           this.insuranceInserIncludeOption3 = data.data.data;
           // console.log("返回", data.data.data);
+          resolve(data.data.data);
         });
+      });
     },
     getmeoryxuanze() {
       this.money3 = 0;
@@ -612,22 +624,24 @@ export default {
     },
     // 点击显示、隐藏
     handleClick() {
-      
       this.isShow = !this.isShow;
+    },
+    async getAllData(){
+      await this.getinsur();
+      await this.getInsuranceInserIncludeOption1();
+      await this.getInsuranceInserIncludeOption2();
+      await this.getInsuranceInserIncludeOption3();
+      await this.getinsuranceInserJiaoQiang();
+      await this.getinsuranceInserCheChuan();
     }
   },
   created() {
-    this.getinsur();
-    this.getinsuranceInserJiaoQiang();
-    this.getinsuranceInserCheChuan();
+    this.getAllData();
     this.getParams();
   },
   // 声明周期
   mounted() {
     this.init();
-    this.getInsuranceInserIncludeOption1();
-    this.getInsuranceInserIncludeOption2();
-    this.getInsuranceInserIncludeOption3();
   },
   beforeMount(){
     
