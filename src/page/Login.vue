@@ -40,7 +40,7 @@
           </div>
         </div>
         <div class="form-group s-out-group">
-          <button type="submit" class="s-default" @click="next">快速报价</button>
+          <input type="button" class="s-default" @click="next" value="快速报价"/>
         </div>
       </form>
     </div>
@@ -117,6 +117,11 @@ export default {
       //     id: this.person.userId
       //   }
       // });
+      if (this.personnelInformation.personnelNewCarFlag==true) {
+          this.personnelInformation.personnelNewCarFlag=1;
+      }else{
+        this.personnelInformation.personnelNewCarFlag=0;
+      }
       this.$router.push({
         name: "selectOffer",
         path: "/selectoffer",

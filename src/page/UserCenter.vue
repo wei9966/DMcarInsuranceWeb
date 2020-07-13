@@ -108,7 +108,6 @@ export default {
   methods: {
     getParams() {
       //取到路由带过来的参数
-      console.log("路由传过来的参数", this.$route.params.id);
       var routerParams = this.$route.params.id;
       //将数据放在当前组件的数据内
       this.id = routerParams;

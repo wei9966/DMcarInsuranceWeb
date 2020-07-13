@@ -306,114 +306,120 @@ export default {
         var mydropdown = new app.customdropdown($(this));
       });
     },
+    //跳转到下一个页面
     next: function(txt) {
+      var personnelId=null;
       this.setInsuranceInserIncludeTaoCan();
       this.personnelInformation.insuranceInserIncludeId=this.flagByTaoCanId;
           var insuranceInserIncludeOption=null;
-        this.$router.push({
-          name: "sign",
-          params: { 
-              
-            }
-        });
+          this.axios.post('/api/policy/insurancePersonnelInformation/insert',this.personnelInformation).then(data=>{
+              console.log("添加的预客户信息",data.data.data);
+              personnelId=data.data.data.personnelId;
+              this.$router.push({
+                path: "/sign",
+                name: "sign",
+                params: {
+                      flag:1,
+                      personnelId:personnelId     
+                  }
+            });
+          }); 
+        
     },
     last: function(txt) {
-      this.$router.push("home");
+      this.$router.push("login");
     },
-    adjustBrand: function() {
-      this.$router.push("brand");
-    },
+    //获取所有商业险
     getinsur() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/insur/selectAllType", {
           params: { ciType: "商业险", ciState: 1 }
         })
         .then(data => {
           this.carInsurs = data.data.data;
           this.len = this.carInsurs.length;
-          console.log("数据长度" + this.len);
-
-          // console.log("返回的数据", data.data.data);
+          resolve(data.data.data);
         });
+      });
     },
+    //获取套餐1
     getInsuranceInserIncludeOption1() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 1 }
         })
         .then(data => {
           // this.carInsurs = data.data.data;
-          this.insuranceInserIncludeOption1 = data.data.data;
           let index = 0;
           let index2 = -3;
-          for (const key in this.insuranceInserIncludeOption1) {
-            // console.log("套餐清单1的值",this.insuranceInserIncludeOption1[key],key,key=='ci'+index,this.insuranceInserIncludeOption1[key]==1);
+          for (const key in data.data.data) {
             if (
               key == "ci" + index &&
-              this.insuranceInserIncludeOption1[key] == 1
+              data.data.data[key] == 1
             ) {
               if (index > 2) {
                 this.money1 += this.carInsurs[index2].ciMoney;
                 this.taocanPrice1 = this.money1;
-                // console.log("类型2的金额",this.carInsurs[index2].ciMoney,"类型的名称",this.carInsurs[index2].ciName);
               }
             }
             index++;
             index2++;
           }
+          this.insuranceInserIncludeOption1 = data.data.data;
+           resolve(data.data.data);
           console.log("套餐1的金额为" + this.money1);
-
-          // console.log("套餐清单1的值",this.insuranceInserIncludeOption1);
-          // console.log("返回的数据", data.data.data);
         });
+      });
     },
+    //获取套餐2,并计算金额
     getInsuranceInserIncludeOption2() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+         this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 2 }
         })
         .then(data => {
-          // this.carInsurs = data.data.data;
-          this.insuranceInserIncludeOption2 = data.data.data;
           let index = 0;
           let index2 = -3;
-          for (const key in this.insuranceInserIncludeOption2) {
-            // console.log("套餐清单1的值",this.insuranceInserIncludeOption1[key],key,key=='ci'+index,this.insuranceInserIncludeOption1[key]==1);
+          for (const key in data.data.data) {
             if (
               key == "ci" + index &&
-              this.insuranceInserIncludeOption2[key] == 1
+              data.data.data[key] == 1
             ) {
               if (index > 2) {
                 this.money2 += this.carInsurs[index2].ciMoney;
                 this.taocanPrice2 = this.money2;
-                // console.log("类型1的金额",this.carInsurs[index2].ciMoney,"类型的名称",this.carInsurs[index2].ciName);
               }
             }
             index++;
             index2++;
           }
+          this.insuranceInserIncludeOption2 = data.data.data;
+           resolve(data.data.data);
           console.log("套餐2的金额为" + this.money2);
-          // console.log("返回", data.data.data);
+          
         });
+      });
     },
+    //获取套餐3
     getInsuranceInserIncludeOption3() {
       this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 3 }
         })
         .then(data => {
-          // this.carInsurs = data.data.data;
           this.insuranceInserIncludeOption3 = data.data.data;
-          // console.log("返回", data.data.data);
         });
     },
+    //获取自定义选择的套餐和金额
     getmeoryxuanze() {
       this.money3 = 0;
       this.taocanPrice3 = 0;
       let index = 0;
       let index2 = -3;
       for (const key in this.insuranceInserIncludeOption3) {
-        // console.log("套餐清单3的值",this.insuranceInserIncludeOption3[key],key,key=='ci'+index,this.insuranceInserIncludeOption3[key]==1);
         if (
           key == "ci" + index &&
           this.insuranceInserIncludeOption3[key] == 1
@@ -421,7 +427,6 @@ export default {
           if (index > 2) {
             this.money3 += this.carInsurs[index2].ciMoney;
             this.taocanPrice3 = this.money3;
-            // console.log("类型3的金额",this.carInsurs[index2].ciMoney,"类型的名称",this.carInsurs[index2].ciName);
             this.totalPriceShangYe = this.taocanPrice3;
           }
         }
@@ -430,32 +435,29 @@ export default {
       }
       console.log("套餐3的金额为" + this.money3);
     },
+    //获取交强险
     getinsuranceInserJiaoQiang() {
       this.axios
         .get("/api/carInsur/insur/selectOne", {
           params: { id: 1 }
         })
         .then(data => {
-          // this.carInsurs = data.data.data;
           this.insuranceInserJiaoQiang = data.data;
-          console.log("交强", data.data);
         });
     },
+    //获取车船税
     getinsuranceInserCheChuan() {
       this.axios
         .get("/api/carInsur/insur/selectOne", {
           params: { id: 2 }
         })
         .then(data => {
-          // this.carInsurs = data.data.data;
           this.insuranceInserCheChuan = data.data;
-          console.log("车船税", data.data);
         });
     },
     //插入套餐
     setInsuranceInserIncludeTaoCan() {
       console.log(this.insuranceInserIncludeOption3);
-
       if (this.flagByTaoCanId == 3) {
         this.axios
           .post(
@@ -463,7 +465,6 @@ export default {
             this.insuranceInserIncludeOption3
           )
           .then(data => {
-            // this.carInsurs = data.data.data;
             this.insuranceInserIncludeOption3 = data.data.data;
             this.flagByTaoCanId = this.insuranceInserIncludeOption3.iiId;
             console.log("插入的套餐", data.data.data);
@@ -475,6 +476,7 @@ export default {
       this.flagByTaoCanId = 1;
       this.totalPriceShangYe = this.discountPrice1;
     },
+    //套餐2,动态传递价格
     dynamicPrice2() {
       this.flagByTaoCanId = 2;
       this.totalPriceShangYe = this.discountPrice2;
@@ -482,18 +484,24 @@ export default {
     // 点击显示、隐藏
     handleClick() {
       this.isShow = !this.isShow;
+    },
+   async getAllData(){
+   await this.getinsur();
+   await this.getInsuranceInserIncludeOption1();
+   await this.getInsuranceInserIncludeOption2();
+   await this.getinsuranceInserJiaoQiang();
+   await this.getinsuranceInserCheChuan();
     }
   },
   created() {
-    this.getinsur();
-    this.getinsuranceInserJiaoQiang();
-    this.getinsuranceInserCheChuan();
+    this.getAllData();
     this.getParams();
   },
-  beforeMount(){
-    this.getInsuranceInserIncludeOption1();
-    this.getInsuranceInserIncludeOption2();
+  beforeCreate(){
+      
+
   },
+  //显示值
   computed: {
     discountPrice1() {
       return this.taocanPrice1 * 0.95;

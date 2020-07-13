@@ -350,6 +350,8 @@ export default {
       flag1:true,
       dmt:false,
       damutou:false,
+      personnelId:null,//客户预信息id
+      personnel:null,//客户预信息
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
@@ -404,9 +406,11 @@ export default {
     getParams() {
       //取到路由带过来的参数
       console.log("路由传过来的参数", this.$route.params.id);
+      //获取的用户id
       var routerParams = this.$route.params.id;
       //将数据放在当前组件的数据内
       this.id = routerParams;
+      this.personnelId=this.$route.params.personnelId;
     },
     dmtChange(data){
         if(data==false){
@@ -478,6 +482,16 @@ export default {
             this.city2=data.data.data
          });
       },
+      getPersonnelInfo(){
+          return new Promise((resolve, reject)=>{
+              this.axios.get('/api/policy/insurancePersonnelInformation/selectOne',{params:{id:this.personnelId}}).
+              then(data=>{
+                  this.personnel=data.data.data;
+                  console.log("获取的客户预信息",data.data.data);
+              resolve(data.data.data);
+         });
+          });
+      },
        Home() {
         this.$router.push({
         name: "selectingOffers",
@@ -521,6 +535,9 @@ export default {
           this.z_idCard = this.person.userCard;
           this.z_Email = this.person.userEmail;
         });
+    },
+    async getAllData(){
+        await this.getPersonnelInfo();
     }
   }
 };

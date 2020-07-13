@@ -1,52 +1,80 @@
 <!--  -->
 <template>
-<body id="sg-users-login">
-  <div id="sg-us-login">
-    <h1>用户登录</h1>
-  </div>
+<div class="main login">
+  <el-row :gutter="20" style="width:1920px;">
+  <el-col :span="15"><div class="grid-content bg-purple">
+      <div class="whiteDiv" >
+          <img src="" alt="">
+      </div>
+    </div></el-col>
+    <el-col :span="5" style="margin-top:5%;" class="loginBody">
+    <div class="grid-content bg-purple" style="padding:5%;">
+        <div id="sg-us-login">
+    <h1 align="center">用户登录</h1>
+        </div>
+        <div>
+          <el-link type="primary" @click="loginMethodMes" style="fontSize:18px;margin-left:15%;">验证码登录</el-link>
+          <el-link type="primary" @click="loginMethodPass" style="fontSize:18px;margin-left:15%;">密码登录</el-link>
+        </div>
   <div>
-    <a href="#" @click="loginMethodMes" id="sg-Text-login">短信登录</a>
-    <a href="#" @click="loginMethodPass" id="sg-pass-login">密码登录</a>
-  </div>
-  <div>
-    <div id="sg-shouji" style="disply" v-model="flag" v-show="flag==true">
-      <section>
-        <input placeholder="手机号" v-model="getphone" id="sg-phone" />
-      </section>
-      <section>
-        <input placeholder="验证码" v-model="sgcode" id="sg-sj-code" />
-        <button v-show="show" @click="getCode2" id="sg-gain-code">获取验证码</button>
+    <div id="sg-shouji"  v-model="flag" v-show="flag==true">
+        <el-input
+            placeholder="请输入手机号或邮箱"
+            v-model="getphone"
+            clearable
+            class="marT">
+        </el-input>
+        <el-input
+            placeholder="请输入验证码"
+            v-model="sgcode"
+            clearable
+            class="marT"
+            style="width:66%;">
+        </el-input>
+        <el-button type="success" style="" v-show="show" @click="getCode2">获取验证码</el-button>
         <span v-show="!show" class="count" id="sg-gain-code">{{count}}秒后重试</span>
-      </section>
-      <h6>
-        温馨提示：未注册帐号的手机号，登录时将自动注册，且代表已同意
+      <h5 style="fontSize:16px;">
+        温馨提示：未注册帐号的手机号或邮箱，登录时将自动注册，且代表已同意
         <a href="#">《用户服务协议》</a>
-      </h6>
+      </h5>
     </div>
-
     <div id="sg-zhanghao" v-model="flag" v-show="flag==false">
-      <section>
-        <input placeholder="手机号/邮箱/用户名" v-model="getnumber" id="sg-number" />
-      </section>
-      <section>
-        <input placeholder="密码" v-model="getpass" id="sg-pass" />
-      </section>
+        <el-input
+            placeholder="手机号/邮箱/用户名"
+            v-model="getnumber"
+            clearable
+            class="marT">
+        </el-input>
+        <el-input
+            placeholder="请输入密码"
+            v-model="getpass"
+            clearable
+            class="marT"
+            type="password">
+        </el-input>
       <section id="ts">
         <Verify
           @success="alert('success')"
           @error="alert('error')"
           :type="3"
           :showButton="false"
-          :barSize="{width:'165px',height:'40px'}"
+          :barSize="{width:'340px',height:'40px'}"
           id="sg-zh-code"
+          class="marT"
         ></Verify>
       </section>
     </div>
   </div>
   <div>
-    <button @click="Sign" id="sg-login">登录</button>
+    <el-button type="primary" @click="Sign" class="marT" style="width:100%;" >立刻登录</el-button>
   </div>
-</body>
+    </div>
+    </el-col> 
+</el-row>
+  
+  
+</div>
+  
 </template>
 
 <script>
@@ -81,15 +109,24 @@ export default {
         userSex: "", //性别
         userAddress: "", //地址
         userCard: "" //身份证
-      }
+      },
+      flag1:null,//判断跳转页面
+      personnelId:null//客户预信息id 
     };
   },
   //监听属性 类似于data概念
   computed: {},
   //监控data中的数据变化
-  watch: {},
+  watch: {
+      $route: "getParams"
+  },
   //方法集合
   methods: {
+    getParams(){
+       this.flag1= this.$route.params.flag;
+       this.personnelId=this.$route.params.personnelId;
+       console.log("传递过来的客户预信息id",this.personnelId);
+    },
     loginMethodMes() {
       this.flag = true;
     },
@@ -98,12 +135,32 @@ export default {
     },
     //获取验证码
     getCode2() {
-      this.axios
+      var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      //手机号
+      var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+      if(this.getphone==''||this.getphone==null){
+           this.$message({
+            showClose: true,
+            message: "请输入手机号或邮箱",
+            type: "error"
+          }); 
+          return false;
+      }
+      if(reg.test(this.getphone)){
+          this.axios
         .post("/api/third/message/sendMessage?phoneNumber=" + this.getphone)
         .then(data => {
           console.log(data);
           this.msgCode = data.data.data;
         });
+      }else{
+           this.axios
+        .post(`/api/third/email/send/${this.getphone}`)
+        .then(data => {
+          console.log(data);
+          this.msgCode = data.data.data;
+        });
+      }
       //倒计时
       const TIME_COUNT = 60;
       if (!this.timer) {
@@ -136,11 +193,37 @@ export default {
       var nam = /^[A-Za-z0-9]{4,15}$/;
       //手机验证码登录
       if (this.flag == true) {
+        if (this.sgcode == "" && this.getphone != "") {
+          this.$message({
+            showClose: true,
+            message: "验证码不能为空！",
+            type: "error"
+          });
+          return false;
+        } 
+        if (
+          this.sgcode != this.msgCode &&
+          this.getphone != ""
+        ) {
+          this.$message({
+            showClose: true,
+            message: "验证码错误！",
+            type: "error"
+          });
+          return false;
+        }
+        if (this.getphone == "") {
+          this.$message({
+            showClose: true,
+            message: "手机号不能为空！",
+            type: "error"
+          });
+          return false;
+        }
         if (
           this.sgcode == this.msgCode &&
           this.getphone != "" &&
-          this.sgcode != "" &&
-          reg.test(this.getphone)
+          this.sgcode != ""
         ) {
           this.person.userPhone = this.getphone;
           this.axios
@@ -151,35 +234,7 @@ export default {
               // console.log("后台返回的值",data.data);
               this.updateduc();
             });
-        } else if (!reg.test(this.getphone) && this.getphone != "") {
-          this.$message({
-            showClose: true,
-            message: "手机号格式错误！",
-            type: "error"
-          });
-        } else if (this.sgcode == "" && this.getphone != "") {
-          this.$message({
-            showClose: true,
-            message: "验证码不能为空！",
-            type: "error"
-          });
-        } else if (
-          this.sgcode != this.msgCode &&
-          this.getphone != "" &&
-          !reg.test(this.getphone)
-        ) {
-          this.$message({
-            showClose: true,
-            message: "验证码错误！",
-            type: "error"
-          });
-        } else if (this.getphone == "") {
-          this.$message({
-            showClose: true,
-            message: "手机号不能为空！",
-            type: "error"
-          });
-        }
+        } 
       } else {
         // 账号登录,验证账号格式是否正确
         if (
@@ -317,16 +372,30 @@ export default {
       }
     },
     updateduc() {
-      this.$router.push({
-        name: "usercenter",
-        params: {
-          id: this.person.userId
+      console.log("跳转页面的标志位",this.flag1);
+        if (this.flag1==1) {
+            this.$router.push({
+            name: "Home",
+           params: {
+              id: this.person.userId,
+              personnelId:this.personnelId
+           }
+           });
+        }else{
+            this.$router.push({
+            name: "usercenter",
+           params: {
+              id: this.person.userId
+           }
+           });
         }
-      });
+      
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
-  created() {},
+  created() {
+    this.getParams();
+  },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
   beforeCreate() {}, //生命周期 - 创建之前
@@ -339,49 +408,15 @@ export default {
 };
 </script>
 <style scoped>
-div {
-}
-#sg-users-login {
-  text-align: center;
-}
-#sg-Text-login,
-#sg-pass-login {
-  width: 200px;
-}
-#sg-login {
-  width: 165px;
-  height: 30px;
-}
-
-#sg-shouji {
-}
-#sg-phone,
-#sg-sj-code,
-#sg-agin-code {
-  margin: 5px;
-}
-#sg-phone {
-  width: 165px;
-}
-#sg-sj-code {
-  width: 70px;
-  position: relative;
-  right: 4px;
-}
-#sg-agin-code {
-}
-
-#sg-zhanghao {
-}
-#sg-zh-code {
-  width: 170px;
-  position: relative;
-  left: 43.5%;
-  margin: 5px;
-}
-#sg-number,
-#sg-pass {
-  margin: 5px;
-  width: 165px;
-}
+  .loginBody{
+      background-color: white;
+      border-radius: 2%;
+      opacity:0.98;
+  }
+  .whiteDiv{
+    width: 100%;
+  }
+  .marT{
+    margin-top: 6%;
+  }
 </style>
