@@ -345,17 +345,8 @@
 export default {
   data() {
     return {
-<<<<<<< HEAD
       // 车辆所有信息
       InsuranceCarInfo: '',
-=======
-      id: '',// 用户id
-      carInfoCard:'',// 车辆车牌号
-      carInfoOwner:'',// 车辆所有人
-      carInfoTransfer:'',// 是否过户车辆
-      carInfoFrameNo:'',// 车辆车架号
-      carInfoEnigneNumber:'',// 车辆发动机号
->>>>>>> b03c52b008826a1703ce57e43ef7ccb0bd8582d9
       carInsurs: [],
       myCheckbox: false,
       value1: true,
@@ -384,7 +375,6 @@ export default {
   methods: {
     getParams() {
       //取到路由带过来的参数
-<<<<<<< HEAD
       // var routerParams1 = this.$route.params.carInfoCard;
       // //将数据放在当前组件的数据内
       // this.carInfoCard = routerParams1;
@@ -400,22 +390,6 @@ export default {
       
       this.InsuranceCarInfo = this.$route.params.InsuranceCarInfo;
       console.log("传过来的参数",this.InsuranceCarInfo);
-=======
-      var routerParams1 = this.$route.params.carInfoCard;
-      //将数据放在当前组件的数据内
-      this.carInfoCard = routerParams1;
-      var routerParams2 = this.$route.params.carInfoOwner;
-      this.carInfoOwner = routerParams2;
-      var routerParams3 = this.$route.params.carInfoTransfer;
-      this.carInfoTransfer = routerParams3;
-      var routerParams4 = this.$route.params.carInfoFrameNo;
-      this.carInfoFrameNo = routerParams4;
-      var routerParams5 = this.$route.params.carInfoEnigneNumber;
-      this.carInfoEnigneNumber = routerParams5;
-      var id = this.$route.params.id;
-      this.id = id;
-      console.log("传过来的参数",this.$route.params.carInfoCard);
->>>>>>> b03c52b008826a1703ce57e43ef7ccb0bd8582d9
       },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
@@ -473,7 +447,8 @@ export default {
       this.$router.push("brand");
     },
     getinsur() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/insur/selectAllType", {
           params: { ciType: "商业险", ciState: 1 }
         })
@@ -481,12 +456,14 @@ export default {
           this.carInsurs = data.data.data;
           this.len = this.carInsurs.length;
           console.log("数据长度" + this.len);
-
+          resolve(data.data.data);
           // console.log("返回的数据", data.data.data);
         });
+      });
     },
     getInsuranceInserIncludeOption1() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 1 }
         })
@@ -510,14 +487,17 @@ export default {
             index++;
             index2++;
           }
+          resolve(data.data.data);
           console.log("套餐1的金额为" + this.money1);
 
           // console.log("套餐清单1的值",this.insuranceInserIncludeOption1);
           // console.log("返回的数据", data.data.data);
         });
+      });
     },
     getInsuranceInserIncludeOption2() {
-      this.axios
+      return new Promise((resolve,reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 2 }
         })
@@ -541,12 +521,15 @@ export default {
             index++;
             index2++;
           }
+          resolve(data.data.data);
           console.log("套餐2的金额为" + this.money2);
           // console.log("返回", data.data.data);
         });
+      });
     },
     getInsuranceInserIncludeOption3() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
           params: { id: 3 }
         })
@@ -554,7 +537,9 @@ export default {
           // this.carInsurs = data.data.data;
           this.insuranceInserIncludeOption3 = data.data.data;
           // console.log("返回", data.data.data);
+          resolve(data.data.data);
         });
+      });
     },
     getmeoryxuanze() {
       this.money3 = 0;
@@ -638,20 +623,23 @@ export default {
     // 点击显示、隐藏
     handleClick() {
       this.isShow = !this.isShow;
+    },
+    async getAllData(){
+      await this.getinsur();
+      await this.getInsuranceInserIncludeOption1();
+      await this.getInsuranceInserIncludeOption2();
+      await this.getInsuranceInserIncludeOption3();
+      await this.getinsuranceInserJiaoQiang();
+      await this.getinsuranceInserCheChuan();
     }
   },
   created() {
-    this.getinsur();
-    this.getinsuranceInserJiaoQiang();
-    this.getinsuranceInserCheChuan();
+    this.getAllData();
     this.getParams();
   },
   // 声明周期
   mounted() {
     this.init();
-    this.getInsuranceInserIncludeOption1();
-    this.getInsuranceInserIncludeOption2();
-    this.getInsuranceInserIncludeOption3();
   },
   beforeMount(){
     
