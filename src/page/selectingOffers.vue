@@ -388,7 +388,7 @@ export default {
       // this.carInfoEnigneNumber = routerParams5;
       // console.log("传过来的参数",this.$route.params.carInfoCard);
       
-      this.InsuranceCarInfo = this.$route.query.InsuranceCarInfo;
+      this.InsuranceCarInfo =JSON.parse(this.$route.query.InsuranceCarInfo);
       console.log("传过来的参数",this.InsuranceCarInfo);
       },
     init() {
@@ -430,12 +430,12 @@ export default {
           query: { 
             iiId: this.flagByTaoCanId,
             totalMoney: this.totalMoney,
-            carInsurs:this.carInsurs,
-            InsuranceCarInfo:this.InsuranceCarInfo,
-            insuranceInserIncludeOption:insuranceInserIncludeOption,
-            insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,
-            insuranceInserCheChuan:this.insuranceInserCheChuan,
-            insuranceCarInfo:this.InsuranceCarInfo
+            carInsurs:JSON.stringify(this.carInsurs),
+            InsuranceCarInfo:JSON.stringify(this.InsuranceCarInfo),
+            insuranceInserIncludeOption:JSON.stringify(insuranceInserIncludeOption),
+            insuranceInserJiaoQiang:JSON.stringify(this.insuranceInserJiaoQiang),
+            insuranceInserCheChuan:JSON.stringify(this.insuranceInserCheChuan),
+            insuranceCarInfo:JSON.stringify(this.InsuranceCarInfo)
             }
         });
       } else {

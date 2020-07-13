@@ -66,7 +66,15 @@ export default {
       payafter:{
         id :"",
         totalMoney: ""
-      }
+      },
+        insuranceUser:null,//投保人(用户)
+        insuranceInsured:null,//被保险人
+        carInsurs:null,//所有保险类型
+        insuranceInserIncludeOption:null,//保险套餐
+        insuranceInserJiaoQiang:null,//交强险
+        insuranceInserCheChuan:null,//车船税
+        insuranceDrivingLicense:null,//行驶证车主
+        InsuranceCarInfo:null,//车辆信息
     };
   },
 //   computed:{
@@ -81,20 +89,34 @@ export default {
   methods: {
     getParams() {
       // 取到路由带过来的参数
-      var totalMoney = this.$route.query.totalMoney;
-      this.totalMoney = totalMoney;
+      this.totalMoney =  this.$route.query.totalMoney;
       console.log("总金额", this.totalMoney);
-      var id=this.$route.query.id;
-      this.id=id;
+      this.id=this.$route.query.id;
       this.payafter.id = this.id;
       this.payafter.totalMoney = this.totalMoney;
       console.log("订单编号=====",this.id);
-      
-    
-      
+      this.insuranceInserJiaoQiang= JSON.parse(this.$route.query.insuranceInserJiaoQiang);//交强险
+		  this.insuranceInserCheChuan= JSON.parse(this.$route.query.insuranceInserCheChuan);//车船税
+      this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);//车辆信息
+      this.carInsurs=JSON.parse(this.$route.query.carInsurs);//所有保险类型
+      this.insuranceUser=JSON.parse(this.$route.query.insuranceUser);//投保人
+      this.insuranceInsured=JSON.parse(this.$route.query.insuranceInsured);//被保险人
+      this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//保险清单
+      this.insuranceDrivingLicense=JSON.parse(this.$route.query.insuranceDrivingLicense);//车主信息
     },
     detial: function() {
-      this.$router.push("insuranceDetial");
+      this.$router.push({
+        name:"insuranceDetial",
+        query:{
+        insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
+        insuranceInserJiaoQiang:JSON.stringify(this.insuranceInserJiaoQiang),//交强险
+			  insuranceInserCheChuan:JSON.stringify(this.insuranceInserCheChuan),//车船税
+			  carInsurs:JSON.stringify(this.carInsurs),//所有套餐类型
+			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
+			  insuranceInsured:JSON.stringify(this.insuranceInsured),//被保险人
+			  insuranceDrivingLicense:JSON.stringify(this.insuranceDrivingLicense),//车主
+			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
+        }});
     },
     pay() {
       this.axios.post(`/api/insurance/pay/payorder?outtradeno=${this.order_number}&totalamount=${this.totalMoney}`,

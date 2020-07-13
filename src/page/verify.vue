@@ -557,7 +557,7 @@ export default {
 		includeOption:[],//所有选择的套餐的下标
 		insuranceInserJiaoQiang:[],//交强险
 		insuranceInserCheChuan:[],//车船税
-
+		insuranceCarInfo:null,
 	};
   },
   watch: {
@@ -570,10 +570,10 @@ export default {
   methods: {
 	getParams(){
 		// 取到路由带过来的参数
-		var totalMoney=this.$route.params.totalMoney;
+		var totalMoney=this.$route.query.totalMoney;
 		this.totalMoney=totalMoney;//赋值总金额
-		 this.carInsurs=this.$route.params.carInsurs;//赋值所有保险类型
-		 this.insuranceInserIncludeOption=this.$route.params.insuranceInserIncludeOption;//赋值保险清单
+		 this.carInsurs=this.$route.query.carInsurs;//赋值所有保险类型
+		 this.insuranceInserIncludeOption=this.$route.query.insuranceInserIncludeOption;//赋值保险清单
 		 		  let index = 0;
 				  let index2 = -3;
 		 for (const option in this.insuranceInserIncludeOption){		
@@ -587,9 +587,9 @@ export default {
 				
 		 }
 		 //赋值交强险和车船税
-		this.insuranceInserJiaoQiang= this.$route.params.insuranceInserJiaoQiang;
-		this.insuranceInserCheChuan= this.$route.params.insuranceInserCheChuan;
-		 console.log("交强险和车船税",this.insuranceInserJiaoQiang,this.insuranceInserCheChuan);
+		this.insuranceInserJiaoQiang= this.$route.query.insuranceInserJiaoQiang;
+		this.insuranceInserCheChuan= this.$route.query.insuranceInserCheChuan;
+		this.insuranceCarInfo=this.$route.query.insuranceCarInfo;
 		 
 	},
     init() {
@@ -619,13 +619,14 @@ export default {
 		  path:"/pay",
 		  query:{
 			  totalMoney: this.totalMoney,//传输总金额
-			  insuranceInserIncludeOption:this.insuranceInserIncludeOption,//套餐清单
-           	  insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,//交强险
-			  insuranceInserCheChuan:this.insuranceInserCheChuan,//车船税
-			  carInsurs:this.carInsurs,//所有套餐类型
-			  insuranceUser:this.insuranceUser,//投保人
-			  insuranceInsured:this.insuranceInsured,//被保险人
-			  insuranceDrivingLicense:this.insuranceDrivingLicense,//车主
+			  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
+           	  insuranceInserJiaoQiang:JSON.stringify(this.insuranceInserJiaoQiang),//交强险
+			  insuranceInserCheChuan:JSON.stringify(this.insuranceInserCheChuan),//车船税
+			  carInsurs:JSON.stringify(this.carInsurs),//所有套餐类型
+			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
+			  insuranceInsured:JSON.stringify(this.insuranceInsured),//被保险人
+			  insuranceDrivingLicense:JSON.stringify(this.insuranceDrivingLicense),//车主
+			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
 		  }
 	  });
 	},
@@ -633,7 +634,6 @@ export default {
       this.$router.push("selectingOffers");
 	},
 	getClause(){
-		
 		this.axios.get('/api/policy/insuranceClause/select').then(data=>{
 			this.insuranceClause=data.data.data;
 			console.log(this.insuranceClause);

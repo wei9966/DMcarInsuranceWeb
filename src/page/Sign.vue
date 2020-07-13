@@ -111,7 +111,8 @@ export default {
         userCard: "" //身份证
       },
       flag1:null,//判断跳转页面
-      personnelId:null//客户预信息id 
+      personnelId:null,//客户预信息id 
+      personnel:null,//客户预信息
     };
   },
   //监听属性 类似于data概念
@@ -125,7 +126,7 @@ export default {
     getParams(){
        this.flag1= this.$route.query.flag;
        this.personnelId=this.$route.query.personnelId;
-       console.log("传递过来的客户预信息id",this.personnelId);
+      this.getAllData();
     },
     loginMethodMes() {
       this.flag = true;
@@ -391,6 +392,18 @@ export default {
            });
         }
       
+    },
+    getPersonnel(){
+        return new Promise((resolve,reject)=>{
+            this.axios.get('/api/policy/insurancePersonnelInformation/selectOne',{params:{id:this.personnelId}}).then(data=>{
+                this.personnel=data.data.data;
+                console.log("查询到的客户预信息",data.data.data);
+                resolve(data.data.data);
+            });
+        })
+    },
+   async getAllData(){
+        await this.getPersonnel();
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）

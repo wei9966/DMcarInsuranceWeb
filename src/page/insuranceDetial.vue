@@ -268,14 +268,28 @@ export default {
         InsuranceCarInfo:null,//车辆信息
     };
   },
+  watch: {
+    //监测路由变化
+    $route: "getParams"
+  },
   mounted() {
     this.init();
   },
   methods: {
     init() {},
     back: function(txt) {
-      this.$router.push("pay");
-    }
+      this.$router.go(-1);
+    },
+     getParams() {
+      this.insuranceInserJiaoQiang= JSON.parse(this.$route.query.insuranceInserJiaoQiang);//交强险
+	  this.insuranceInserCheChuan= JSON.parse(this.$route.query.insuranceInserCheChuan);//车船税
+      this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);//车辆信息
+      this.carInsurs=JSON.parse(this.$route.query.carInsurs);//所有保险类型
+      this.insuranceUser=JSON.parse(this.$route.query.insuranceUser);//投保人
+      this.insuranceInsured=JSON.parse(this.$route.query.insuranceInsured);//被保险人
+      this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//保险清单
+      this.insuranceDrivingLicense=JSON.parse(this.$route.query.insuranceDrivingLicense);//车主信息
+     }
   }
 };
 </script>
