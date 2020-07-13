@@ -5,7 +5,7 @@
         <div class="s-cursor" @click="goindex">
         <img src="../../static/images/logo.png">
         <span>缔梦车险出单平台</span>
-        <router-link to="sign" id="yonhu">用户中心</router-link>
+        <router-link to="sign" id="yonhu">登录/注册</router-link>
         </div>
     </div>
     </header>

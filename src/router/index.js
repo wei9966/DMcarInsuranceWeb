@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 export default new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
@@ -52,6 +53,16 @@ export default new Router({
       path: '/usercenter',
       name: 'usercenter',
       component: resolve => require(['../page/UserCenter.vue'], resolve)
+    },
+    {
+      path: '/selectoffer',
+      name: 'selectOffer',
+      component: resolve => require(['../page/selectingOffersCopy.vue'], resolve)
+    },
+    {
+      path: '/paySuccess',
+      name: 'paySuccess',
+      component: resolve => require(['../page/paySuccess.vue'], resolve)
     }
   ]
 })
