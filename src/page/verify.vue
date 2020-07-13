@@ -619,7 +619,7 @@ export default {
 		  path:"/pay",
 		  params:{
 			  totalMoney: this.totalMoney,//传输总金额
-			  insuranceInserIncludeOption:insuranceInserIncludeOption,//套餐清单
+			  insuranceInserIncludeOption:this.insuranceInserIncludeOption,//套餐清单
            	  insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,//交强险
 			  insuranceInserCheChuan:this.insuranceInserCheChuan,//车船税
 			  carInsurs:this.carInsurs,//所有套餐类型

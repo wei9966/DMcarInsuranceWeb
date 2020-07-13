@@ -52,6 +52,11 @@ export default new Router({
       path: '/usercenter',
       name: 'usercenter',
       component: resolve => require(['../page/UserCenter.vue'], resolve)
+    },
+    {
+      path: '/paySuccess',
+      name: 'paySuccess',
+      component: resolve => require(['../page/paySuccess.vue'], resolve)
     }
   ]
 })
