@@ -637,7 +637,6 @@ export default {
     },
     // 点击显示、隐藏
     handleClick() {
-      
       this.isShow = !this.isShow;
     }
   },
