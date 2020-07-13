@@ -405,12 +405,12 @@ export default {
   methods: {
     getParams() {
       //取到路由带过来的参数
-      console.log("路由传过来的参数", this.$route.params.id);
+      console.log("路由传过来的参数", this.$route.query.id);
       //获取的用户id
-      var routerParams = this.$route.params.id;
+      var routerParams = this.$route.query.id;
       //将数据放在当前组件的数据内
       this.id = routerParams;
-      this.personnelId=this.$route.params.personnelId;
+      this.personnelId=this.$route.query.personnelId;
     },
     dmtChange(data){
         if(data==false){
@@ -455,7 +455,7 @@ export default {
           this.InsuranceCarInfo
         )
         .then(data => {
-          console.log();
+
         });
       //传值下一个页面
       console.log(this.InsuranceCarInfo);
@@ -496,8 +496,8 @@ export default {
         this.$router.push({
         name: "selectingOffers",
         path: "/selectingOffers",
-        params: {
-          InsuranceCarInfo: this.InsuranceCarInfo,
+        query: {
+          InsuranceCarInfo: JSON.stringify(this.InsuranceCarInfo),
           // carInfoCard: this.InsuranceCarInfo.carInfoCard,
           // carInfoOwner: this.InsuranceCarInfo.carInfoOwner,
           // carInfoTransfer: this.InsuranceCarInfo.carInfoTransfer,

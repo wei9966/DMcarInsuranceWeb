@@ -257,7 +257,16 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+        insuranceUser:null,//投保人(用户)
+        insuranceInsured:null,//被保险人
+        carInsurs:null,//所有保险类型
+        insuranceInserIncludeOption:null,//保险套餐
+        insuranceInserJiaoQiang:null,//交强险
+        insuranceInserCheChuan:null,//车船税
+        insuranceDrivingLicense:null,//行驶证车主
+        InsuranceCarInfo:null,//车辆信息
+    };
   },
   mounted() {
     this.init();

@@ -286,7 +286,7 @@ export default {
   methods: {
     getParams() {
       //取到路由带过来的参数
-       this.personnelInformation=this.$route.params.personnelInformation;
+       this.personnelInformation=JSON.parse(this.$route.query.personnelInformation);
        console.log("传过来的客户预信息",this.personnelInformation);
       },
     init() {
@@ -318,7 +318,7 @@ export default {
               this.$router.push({
                 path: "/sign",
                 name: "sign",
-                params: {
+                query: {
                       flag:1,
                       personnelId:personnelId     
                   }
@@ -498,7 +498,6 @@ export default {
     this.getParams();
   },
   beforeCreate(){
-      
 
   },
   //显示值

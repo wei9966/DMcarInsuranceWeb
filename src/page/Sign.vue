@@ -123,8 +123,8 @@ export default {
   //方法集合
   methods: {
     getParams(){
-       this.flag1= this.$route.params.flag;
-       this.personnelId=this.$route.params.personnelId;
+       this.flag1= this.$route.query.flag;
+       this.personnelId=this.$route.query.personnelId;
        console.log("传递过来的客户预信息id",this.personnelId);
     },
     loginMethodMes() {
@@ -152,6 +152,7 @@ export default {
         .then(data => {
           console.log(data);
           this.msgCode = data.data.data;
+          this.person.userPhone=this.getphone;
         });
       }else{
            this.axios
@@ -159,6 +160,7 @@ export default {
         .then(data => {
           console.log(data);
           this.msgCode = data.data.data;
+          this.person.userEmail=this.getphone;
         });
       }
       //倒计时
@@ -225,7 +227,6 @@ export default {
           this.getphone != "" &&
           this.sgcode != ""
         ) {
-          this.person.userPhone = this.getphone;
           this.axios
             .post("/api/user/insuranceUser/insert", this.person)
             .then(data => {
@@ -376,7 +377,7 @@ export default {
         if (this.flag1==1) {
             this.$router.push({
             name: "Home",
-           params: {
+           query: {
               id: this.person.userId,
               personnelId:this.personnelId
            }
@@ -384,7 +385,7 @@ export default {
         }else{
             this.$router.push({
             name: "usercenter",
-           params: {
+           query: {
               id: this.person.userId
            }
            });

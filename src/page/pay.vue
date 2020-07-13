@@ -81,10 +81,10 @@ export default {
   methods: {
     getParams() {
       // 取到路由带过来的参数
-      var totalMoney = this.$route.params.totalMoney;
+      var totalMoney = this.$route.query.totalMoney;
       this.totalMoney = totalMoney;
       console.log("总金额", this.totalMoney);
-      var id=this.$route.params.id;
+      var id=this.$route.query.id;
       this.id=id;
       this.payafter.id = this.id;
       this.payafter.totalMoney = this.totalMoney;

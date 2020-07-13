@@ -617,12 +617,15 @@ export default {
 	  this.$router.push({
 		  name:"pay",
 		  path:"/pay",
-		  params:{
+		  query:{
 			  totalMoney: this.totalMoney,//传输总金额
 			  insuranceInserIncludeOption:this.insuranceInserIncludeOption,//套餐清单
            	  insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,//交强险
 			  insuranceInserCheChuan:this.insuranceInserCheChuan,//车船税
 			  carInsurs:this.carInsurs,//所有套餐类型
+			  insuranceUser:this.insuranceUser,//投保人
+			  insuranceInsured:this.insuranceInsured,//被保险人
+			  insuranceDrivingLicense:this.insuranceDrivingLicense,//车主
 		  }
 	  });
 	},

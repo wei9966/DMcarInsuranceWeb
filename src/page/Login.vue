@@ -125,20 +125,26 @@ export default {
       this.$router.push({
         name: "selectOffer",
         path: "/selectoffer",
-        params: {
+        query: {
           id: this.person.userId,
-          personnelInformation:this.personnelInformation
+          personnelInformation:JSON.stringify(this.personnelInformation)
         }
       });
     },
     getEvaluations(){
+      return new Promise((resolve,reject)=>{
         this.axios.get('/api/policy/insuranceEvaluation/select').then(data=>{
             this.evaluations=data.data.data;
+            resolve(data.data.data);
         });
+      })
+    },
+    async getAllData(){
+     await this.getEvaluations();
     }
   },
   created() {
-    this.getEvaluations();
+    this.getAllData();
   }
 };
 </script>
