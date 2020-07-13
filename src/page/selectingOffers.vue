@@ -427,7 +427,7 @@ export default {
           }
         this.$router.push({
           name: "verify",
-          params: { 
+          params: {
             iiId: this.flagByTaoCanId,
             totalMoney: this.totalMoney,
             carInsurs:this.carInsurs,
