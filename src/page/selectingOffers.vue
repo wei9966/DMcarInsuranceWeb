@@ -15,24 +15,26 @@
           </span>
           <img src="../../static/images/icon-car.png" alt class="selectingoffer-car-img" />
           <!-- <span>别克SGM7104LAA1轿车</span> -->
-          <span>{{this.carInfoCard}}</span>
+          <span>{{this.InsuranceCarInfo.carInfoCard}}</span>
         </h5>
         <div class="row">
           <div class="col-sm-3 text-left">
             车主:
-            <span>{{this.carInfoOwner}}</span>
+            <span>{{this.InsuranceCarInfo.carInfoOwner}}</span>
           </div>
           <div class="col-sm-2 text-left">
             是否过户:
-            <span>{{this.carInfoTransfer}}</span>
+            <!-- <span>{{this.InsuranceCarInfo.carInfoTransfer}}</span> -->
+            <span v-if="this.InsuranceCarInfo.carInfoTransfer == 1">是</span>
+            <span v-if="this.InsuranceCarInfo.carInfoTransfer == 0">否</span>
           </div>
           <div class="col-sm-3 text-left">
             车架号:
-            <span>{{this.carInfoFrameNo}}</span>
+            <span>{{this.InsuranceCarInfo.carInfoFrameNo}}</span>
           </div>
           <div class="col-sm-3 text-left">
             发动机号:
-            <span>{{this.carInfoEnigneNumber}}</span>
+            <span>{{this.InsuranceCarInfo.carInfoEnigneNumber}}</span>
           </div>
         </div>
         <div class="s-lines-style"></div>
@@ -343,12 +345,17 @@
 export default {
   data() {
     return {
+<<<<<<< HEAD
+      // 车辆所有信息
+      InsuranceCarInfo: '',
+=======
       id: '',// 用户id
       carInfoCard:'',// 车辆车牌号
       carInfoOwner:'',// 车辆所有人
       carInfoTransfer:'',// 是否过户车辆
       carInfoFrameNo:'',// 车辆车架号
       carInfoEnigneNumber:'',// 车辆发动机号
+>>>>>>> b03c52b008826a1703ce57e43ef7ccb0bd8582d9
       carInsurs: [],
       myCheckbox: false,
       value1: true,
@@ -374,12 +381,26 @@ export default {
     //监测路由变化
     $route: "getParams"
   },
-  mounted() {
-    this.init();
-  },
   methods: {
     getParams() {
       //取到路由带过来的参数
+<<<<<<< HEAD
+      // var routerParams1 = this.$route.params.carInfoCard;
+      // //将数据放在当前组件的数据内
+      // this.carInfoCard = routerParams1;
+      // var routerParams2 = this.$route.params.carInfoOwner;
+      // this.carInfoOwner = routerParams2;
+      // var routerParams3 = this.$route.params.carInfoTransfer;
+      // this.carInfoTransfer = routerParams3;
+      // var routerParams4 = this.$route.params.carInfoFrameNo;
+      // this.carInfoFrameNo = routerParams4;
+      // var routerParams5 = this.$route.params.carInfoEnigneNumber;
+      // this.carInfoEnigneNumber = routerParams5;
+      // console.log("传过来的参数",this.$route.params.carInfoCard);
+      
+      this.InsuranceCarInfo = this.$route.params.InsuranceCarInfo;
+      console.log("传过来的参数",this.InsuranceCarInfo);
+=======
       var routerParams1 = this.$route.params.carInfoCard;
       //将数据放在当前组件的数据内
       this.carInfoCard = routerParams1;
@@ -394,6 +415,7 @@ export default {
       var id = this.$route.params.id;
       this.id = id;
       console.log("传过来的参数",this.$route.params.carInfoCard);
+>>>>>>> b03c52b008826a1703ce57e43ef7ccb0bd8582d9
       },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
@@ -599,19 +621,23 @@ export default {
     },
     // 动态传递价格
     dynamicPrice1($event) {
+      this.myCheckbox=true;
       this.flagByTaoCanId = 1;
       this.totalPriceShangYe = this.discountPrice1;
     },
     dynamicPrice2() {
+      this.myCheckbox=true;
       this.flagByTaoCanId = 2;
       this.totalPriceShangYe = this.discountPrice2;
     },
     dynamicPrice3() {
+      this.myCheckbox=true;
       this.flagByTaoCanId = 3;
       this.totalPriceShangYe = this.taocanPrice3;
     },
     // 点击显示、隐藏
     handleClick() {
+      
       this.isShow = !this.isShow;
     }
   },
@@ -621,10 +647,15 @@ export default {
     this.getinsuranceInserCheChuan();
     this.getParams();
   },
-  beforeMount(){
+  // 声明周期
+  mounted() {
+    this.init();
     this.getInsuranceInserIncludeOption1();
     this.getInsuranceInserIncludeOption2();
     this.getInsuranceInserIncludeOption3();
+  },
+  beforeMount(){
+    
   },
   computed: {
     discountPrice1() {

@@ -58,6 +58,11 @@ export default new Router({
       path: '/selectoffer',
       name: 'selectOffer',
       component: resolve => require(['../page/selectingOffersCopy.vue'], resolve)
+    },
+    {
+      path: '/paySuccess',
+      name: 'paySuccess',
+      component: resolve => require(['../page/paySuccess.vue'], resolve)
     }
   ]
 })

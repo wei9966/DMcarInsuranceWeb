@@ -50,8 +50,9 @@
 export default {
   data() {
     return {
+      m:"100",
       id:'',// 用户id
-      totalMoney: 0, // 保险总金额
+      totalMoney: "", // 保险总金额
       
       nowTimes: {
         yy: "0",
@@ -96,7 +97,8 @@ export default {
       this.$router.push("insuranceDetial");
     },
     pay() {
-      this.axios.post("/api/insurance/pay/payorder",
+      this.axios.post(`/api/insurance/pay/payorder?outtradeno=${this.order_number}&totalamount=${this.totalMoney}`,
+
          this.payafter  
       ).then(data => {
         console.log(data);
@@ -110,8 +112,19 @@ export default {
         document.body.appendChild(div);
         document.forms[0].setAttribute("target", "_self"); // 新开窗口跳转
         document.forms[0].submit();
+       
       });
+      // this.tz();
     },
+  //   tz(){
+  // this.$router.push({
+  //       name: "paySuccess",
+  //       path: "/paySuccess",
+       
+        
+  //     });
+  //   },
+
     //order_nums() {
     //       var that = this;
     //       var outTradeNo = ""; //订单号
