@@ -433,7 +433,8 @@ export default {
             carInsurs:this.carInsurs,
             insuranceInserIncludeOption:insuranceInserIncludeOption,
             insuranceInserJiaoQiang:this.insuranceInserJiaoQiang,
-            insuranceInserCheChuan:this.insuranceInserCheChuan
+            insuranceInserCheChuan:this.insuranceInserCheChuan,
+            insuranceCarInfo:this.InsuranceCarInfo
             }
         });
       } else {
