@@ -572,8 +572,8 @@ export default {
 		// 取到路由带过来的参数
 		var totalMoney=this.$route.query.totalMoney;
 		this.totalMoney=totalMoney;//赋值总金额
-		 this.carInsurs=this.$route.query.carInsurs;//赋值所有保险类型
-		 this.insuranceInserIncludeOption=this.$route.query.insuranceInserIncludeOption;//赋值保险清单
+		 this.carInsurs=JSON.parse(this.$route.query.carInsurs);//赋值所有保险类型
+		 this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//赋值保险清单
 		 		  let index = 0;
 				  let index2 = -3;
 		 for (const option in this.insuranceInserIncludeOption){		
@@ -587,9 +587,9 @@ export default {
 				
 		 }
 		 //赋值交强险和车船税
-		this.insuranceInserJiaoQiang= this.$route.query.insuranceInserJiaoQiang;
-		this.insuranceInserCheChuan= this.$route.query.insuranceInserCheChuan;
-		this.insuranceCarInfo=this.$route.query.insuranceCarInfo;
+		this.insuranceInserJiaoQiang= JSON.parse(this.$route.query.insuranceInserJiaoQiang);
+		this.insuranceInserCheChuan= JSON.parse(this.$route.query.insuranceInserCheChuan);
+		this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);
 		 
 	},
     init() {
