@@ -190,7 +190,6 @@ export default {
   
     //登录
     Sign() {
-      
       //邮箱
       var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       //手机号
@@ -242,7 +241,6 @@ export default {
             });
         } 
       } else {
-        alert(1);
         // 账号登录,验证账号格式是否正确
         if (
           regEmail.test(this.getnumber) ||
@@ -289,7 +287,6 @@ export default {
               });
             //手机号登录
           } else if (reg.test(this.getnumber)) {
-            alert(1);
             this.axios
               .get("/api/user/insuranceUser/phoneLogin", {
                 params: { userPhone: this.getnumber, userPass: this.getpass }
@@ -386,7 +383,7 @@ export default {
     },
     updateduc() {
       console.log("跳转页面的标志位",this.flag1);
-        if (this.flag1==1) {
+        if (!this.flag1==1) {
             this.$router.push({
             name: "Home",
            query: {
@@ -407,9 +404,13 @@ export default {
     getPersonnel(){
         return new Promise((resolve,reject)=>{
             this.axios.get('/api/policy/insurancePersonnelInformation/selectOne',{params:{id:this.personnelId}}).then(data=>{
-                this.personnel=data.data.data;
-                console.log("查询到的客户预信息",data.data.data);
-                resolve(data.data.data);
+                this.personnel=data.data;
+                this.getnumber=data.data.personnelPhone;
+                this.getphone=data.data.personnelPhone;
+                if (!this.flag1==1) {
+                  this.personnel=null;
+                }
+                resolve(data.data);
             });
         })
     },

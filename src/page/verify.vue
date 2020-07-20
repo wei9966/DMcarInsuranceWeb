@@ -101,26 +101,26 @@
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										投保城市：
-										<span>上海市</span>
+										<span>{{insuranceCarInfo.cityId}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										车牌号：
-										<span>沪A123456</span>
+										<span>{{insuranceCarInfo.carInfoCard}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										车辆配置型号：
-										<span>别克SGM7150ATA轿车</span>
+										<span>{{insuranceCarInfo.carInfoBrand}}</span>
 									</div>
 								</div>
 
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										车架号/VIN码：
-										<span>LS4AAB3D8BA022393</span>
+										<span>{{insuranceCarInfo.carInfoFrameNo}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										发动机号：
-										<span>B69C5</span>
+										<span>{{insuranceCarInfo.carInfoEnigneNumber}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										车价：
@@ -131,7 +131,7 @@
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										车辆注册日期：
-										<span>2018-01-08 00:00:00.0</span>
+										<span>{{insuranceCarInfo.carInfoRegisterDate}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										座位数：
@@ -144,7 +144,7 @@
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										车主姓名：
-										<span>张三</span>
+										<span>{{insuranceCarInfo.carInfoOwner}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										证件号码：
@@ -465,8 +465,8 @@ export default {
 			drivingLicenseCard:''
 		},
 		insuranceUserId:'',//投保人id
-		insuranceInsuredId:'',//被保险人id
-		insuranceDrivingLicenseId:'',//行驶证车主id
+		insuranceInsuredId:0,//被保险人id
+		insuranceDrivingLicenseId:0,//行驶证车主id
 		carInsurs:[],//所有保险类型
 		insuranceInserIncludeOption:null,//保险套餐
 		includeOption:[],//所有选择的套餐的下标
@@ -487,7 +487,6 @@ export default {
 		// 取到路由带过来的参数
 		var totalMoney=this.$route.query.totalMoney;
 		this.totalMoney=totalMoney;//赋值总金额
-		 this.carInsurs=JSON.parse(this.$route.query.carInsurs);//赋值所有保险类型
 		 this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//赋值保险清单
 		 		  let index = 0;
 				  let index2 = -3;
@@ -501,9 +500,6 @@ export default {
 				index2++;	
 				
 		 }
-		 //赋值交强险和车船税
-		this.insuranceInserJiaoQiang= JSON.parse(this.$route.query.insuranceInserJiaoQiang);
-		this.insuranceInserCheChuan= JSON.parse(this.$route.query.insuranceInserCheChuan);
 		this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);
 		console.log("车辆信息",this.insuranceCarInfo);
 	},
@@ -527,7 +523,7 @@ export default {
         });
 			return false;
 		}
-	this.addUserInfomation();
+	this.addInfo();
 	//   this.$router.push("pay");
 	  this.$router.push({
 		  name:"pay",
@@ -535,12 +531,9 @@ export default {
 		  query:{
 			  totalMoney: this.totalMoney,//传输总金额
 			  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
-           	  insuranceInserJiaoQiang:JSON.stringify(this.insuranceInserJiaoQiang),//交强险
-			  insuranceInserCheChuan:JSON.stringify(this.insuranceInserCheChuan),//车船税
-			  carInsurs:JSON.stringify(this.carInsurs),//所有套餐类型
 			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
-			  insuranceInsured:JSON.stringify(this.insuranceInsured),//被保险人
-			  insuranceDrivingLicense:JSON.stringify(this.insuranceDrivingLicense),//车主
+			  insuranceInsured:this.insuranceInsuredId,//被保险人
+			  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
 			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
 		  }
 	  });
@@ -554,14 +547,54 @@ export default {
 			console.log(this.insuranceClause);
 		});	
 	},
+	//获取所有商业险
+	 getinsur() {
+      return new Promise((resolve, reject)=>{
+        this.axios
+        .get("/api/carInsur/insur/selectAllType", {
+          params: { ciType: "商业险", ciState: 1 }
+        })
+        .then(data => {
+          this.carInsurs = data.data.data;
+          this.len = this.carInsurs.length;
+          console.log("数据长度" + this.len);
+          resolve(data.data.data);
+          // console.log("返回的数据", data.data.data);
+        });
+      });
+	},
+	//获取交强险
+	getinsuranceInserJiaoQiang() {
+      this.axios
+        .get("/api/carInsur/insur/selectOne", {
+          params: { id: 1 }
+        })
+        .then(data => {
+          this.insuranceInserJiaoQiang = data.data;
+        });
+    },//获取车船税
+    getinsuranceInserCheChuan() {
+      this.axios
+        .get("/api/carInsur/insur/selectOne", {
+          params: { id: 2 }
+        })
+        .then(data => {
+          // this.carInsurs = data.data.data;
+          this.insuranceInserCheChuan = data.data;
+        });
+    },
 	generateId(index){
 		return "clause"+index;
 	},
 	getMessage(){
 
 	},
+	async addInfo(){
+		await this.addUserInfomation();
+	},
 	addUserInfomation(){
-		//更新投保人
+		return new Promise((resolve,reject)=>{
+			//更新投保人
 		if (!this.isInsuranceInsured) {
 			this.axios.post('/api/policy/feign/user/update',this.insuranceUser).then(data=>{	
 				console.log("更新的投保人信息",data.data.data);
@@ -570,19 +603,28 @@ export default {
 		//添加被保险人
 		if (!this.isInsuranceInsured) {
 			this.axios.post('/api/policy/insuranceInsured/insertOne',this.insuranceInsured).then(data=>{
-				this.insuranceInsuredId=data.data.data.
+				this.insuranceInsuredId=data.data.data.insuranceInsuredId.
 				console.log("添加的被保险人",data.data.data);
 			});
 		}
 		//添加行驶证车主
 		this.axios.post('/api/policy/insuranceDrivingLicense/insertOne',this.insuranceDrivingLicense).then(data=>{
+				this.insuranceDrivingLicenseId=data.data.data.drivingLicenseId;
 				console.log("添加的行驶证车主",data.data.data);
 			});
-	}
+		})
+		resolve(this.insuranceInsuredId!=0);
+	},
+	 async getAllData(){
+		 await this.getinsur();
+		 await this.getinsuranceInserJiaoQiang();
+		 await this.getinsuranceInserCheChuan();
+	 }
   },
   created() {
 	  this.getClause();
 	  this.getParams();
+	  this.getAllData();
 }
 };
 </script>

@@ -67,7 +67,7 @@ export default {
     }
   },
   created() {
-    this.getTokenstatus();
+    // this.getTokenstatus();
     // window.setInterval(() => {
     //   this.getTokenstatus();
     //   setTimeout(fun, 0);
