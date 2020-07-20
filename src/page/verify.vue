@@ -299,7 +299,6 @@
 							姓名：
 						</div>
 						<div class="col-sm-6 text-left">
-
 							<input type="text" v-model="insuranceDrivingLicense.drivingLicenseName" name="" id="" class="form-control">
 						</div>
 					</div>
@@ -308,94 +307,10 @@
 							证件号码：
 						</div>
 						<div class="col-sm-6 text-left">
-
 							<input type="text" name="" id="" v-model="insuranceDrivingLicense.drivingLicenseCard" class="form-control">
 						</div>
 					</div>
-					</div>
-					<div class="s-lines-style"></div>
-					<h5>支付方式
-						<span class="s-check-span">
-							<button class="s-check-yes s-check S-Checkbox-Radio1" data-type='s-check-yes'>支付宝支付</button>
-							<button class="s-check S-Checkbox-Radio1" data-type='s-check-yes'>网上支付</button>
-						</span>
-					</h5>
-
-					<div class="s-lines-style"></div>
-					<h5>开票信息</h5>
-					<div class="row s-verify-title">
-						<div class="col-sm-6 text-left">
-							发票信息
-							<input type="button" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
-							<span>同投保人</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2 text-right">
-							客户类型：
-						</div>
-						<div class="col-sm-6 text-left">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
-								 aria-expanded="false">
-									外国人永久居留证
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a>Dropdown link</a>
-									</li>
-									<li>
-										<a>Dropdown link</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2 text-right">
-							纳税人类型：
-						</div>
-						<div class="col-sm-6 text-left">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
-								 aria-expanded="false">
-									外国人永久居留证
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a>Dropdown link</a>
-									</li>
-									<li>
-										<a>Dropdown link</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2 text-right">
-							发票类型：
-						</div>
-						<div class="col-sm-6 text-left">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
-								 aria-expanded="false">
-									外国人永久居留证
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a>采取自留的方式靠自身力量解决，还可以通过购买保险的方式将风险损失转移给保险公司。 但是，作为风险管理的技术之一，并不是所有的风险都适合或可以采用保险的方法来处理， 只有可保风险才是保险公司所能接受承保的风险。保险公司一般通过保险条款中的保险责</a>
-									</li>
-									<li>
-										<a>Dropdown link</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
+					</div>		
 					<div class="s-lines-style"></div>
 					<h5>保单领取方式</h5>
 					<div class="row s-verify-title">
@@ -590,7 +505,7 @@ export default {
 		this.insuranceInserJiaoQiang= JSON.parse(this.$route.query.insuranceInserJiaoQiang);
 		this.insuranceInserCheChuan= JSON.parse(this.$route.query.insuranceInserCheChuan);
 		this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);
-		 
+		console.log("车辆信息",this.insuranceCarInfo);
 	},
     init() {
       $(".panel-info .panel-collapse").on("shown.bs.collapse", function(e) {

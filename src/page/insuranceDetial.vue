@@ -289,6 +289,7 @@ export default {
       this.insuranceInsured=JSON.parse(this.$route.query.insuranceInsured);//被保险人
       this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//保险清单
       this.insuranceDrivingLicense=JSON.parse(this.$route.query.insuranceDrivingLicense);//车主信息
+      console.log("投保人",this.insuranceUser);
      }
   }
 };

@@ -238,6 +238,7 @@ export default {
             });
         } 
       } else {
+        alert(1);
         // 账号登录,验证账号格式是否正确
         if (
           regEmail.test(this.getnumber) ||
@@ -283,6 +284,7 @@ export default {
               });
             //手机号登录
           } else if (reg.test(this.getnumber)) {
+            alert(1);
             this.axios
               .get("/api/user/insuranceUser/phoneLogin", {
                 params: { userPhone: this.getnumber, userPass: this.getpass }

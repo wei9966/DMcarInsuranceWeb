@@ -6,7 +6,10 @@
         <div class="form-group">
           <label for class="col-sm-4 control-label">车辆牌号：</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" v-model="personnelInformation.personnelLicensePlate"/>
+            <el-input placeholder="请输入车牌号"
+             v-model="personnelInformation.personnelLicensePlate"
+            :disabled="personnelInformation.personnelNewCarFlag"
+            style="width:100%"/>
           </div>
           <div class="checkbox col-sm-4">
             <label>
@@ -80,7 +83,7 @@ export default {
           insuranceInserIncludeId:'',//套餐id
           personnelLicensePlate:'',//车牌号
           insuranceCityId:'',//城市id
-          personnelNewCarFlag:''//是否
+          personnelNewCarFlag:false//是否
       },
       evaluations:[]
     };
