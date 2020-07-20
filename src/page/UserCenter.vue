@@ -94,7 +94,8 @@ export default {
       regSfz1: true,
       regName1: true,
       regSex1: true,
-      regPass1: true
+      regPass1: true,
+      tokenstatus: null
     };
   },
   //监听属性 类似于data概念
@@ -112,7 +113,16 @@ export default {
       //将数据放在当前组件的数据内
       this.id = routerParams;
     },
-
+    // getadmintoken() {
+    //   this.axios.get("/api/user/insuranceUser/admin").then(data => {
+    //     console.log("返回的结果test", data);
+    //     if (data.data.code == 200) {
+    //       tshow = false;
+    //     } else {
+    //       tshow = true;
+    //     }
+    //   });
+    // },
     //个人信息
     loginMethodMes() {
       this.flag = true;
@@ -123,6 +133,7 @@ export default {
     },
     //修改方法
     loginmodify() {
+      this.getTokenstatus();
       this.modify = true;
     },
     //保存方法
@@ -140,6 +151,7 @@ export default {
       var regSex = /^['男'|'女']$/;
       //密码6-16位任意字符
       var regPass = /^\w{6,16}$/;
+
       //信息表状态判断
       //用户名
       if (regName.test(this.person.userName)) {
@@ -199,6 +211,7 @@ export default {
         this.regSfz1
       ) {
         //更新个人信息表
+
         this.axios
           .post("/api/user/insuranceUser/update", this.person)
           .then(data => {
@@ -281,6 +294,7 @@ export default {
       //     this.regSfz1
       // );
     },
+
     cardModify() {},
     //查询个人信息
     getPersonMessge() {
@@ -292,12 +306,60 @@ export default {
             this.person = data.data.data;
           });
       }
+    },
+    //测试token方法
+    // getadmintoken() {
+    //   let t = window.sessionStorage.getItem("token");
+    //   this.axios
+    //     .get("/api/user/insuranceUser/admin", {
+    //       headers: {
+    //         token: `${t}`
+    //       }
+    //     })
+    //     .then(data => {
+    //       if (data.data.code == 200) {
+    //         tshow = false;
+    //       } else {
+    //         tshow = true;
+    //       }
+    //     });
+    // }
+    //获取Token状态
+    getTokenstatus() {
+      //取token
+      let t = window.sessionStorage.getItem("token");
+      console.log("取到的token:" + t);
+      //调用验证TOKEN方法
+      this.axios
+        .get("/api/user/insuranceUser/admin", {
+          headers: {
+            token: `${t}`
+          }
+        })
+        .then(data => {
+          //返回200正确
+          if (data.data.code == 200) {
+            this.tokenstatus = 200;
+          }
+        })
+        .catch(data => {
+          console.log("错误苏剧", data.response.status);
+          //500Token异常或尚未登录
+          this.tokenstatus = 500;
+          this.$router.push({ name: "sign" });
+          this.$message({
+            showClose: true,
+            message: "请重新登录！",
+            type: "error"
+          });
+        });
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
     this.getParams();
     this.getPersonMessge();
+    this.getTokenstatus();
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},
