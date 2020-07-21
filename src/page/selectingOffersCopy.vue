@@ -142,6 +142,57 @@
               <div class="row"></div>
             </div>
           </div>
+          <div
+            @click="dynamicPrice3($event)"
+            class="col-sm-3 s-option s-right-sol s-border-left S-Checkbox-Radio1"
+            id="fangan1"
+            data-type="s-active"
+          >
+            <div>
+              <div class="title">
+                <h2>传统方案方案 56%</h2>
+                <h1>
+                  ￥
+                  <i>{{discountPrice3}}元</i>
+                </h1>
+                <h3>市场：{{taocanPrice3}}元</h3>
+              </div>
+              <div v-show="myCheckbox" class="content">
+                <div class="row titles">
+                  <div class="col-sm-6 text-center">
+                    <span>保额</span>
+                    <div
+                      class="includeGroup"
+                      v-for="(value,key,index) in insuranceInserIncludeOption3"
+                      v-if="index>2 && index<len+3"
+                    >
+                      <span
+                        class="text-center include1 panel"
+                        style="width:90px;display:inline-block;line-height: 21px;"
+                        v-if="value==1"
+                      >投保</span>
+                      <span
+                        class="include1 panel"
+                        style="width:90px;display:inline-block;line-height: 21px;"
+                        v-else="value==0"
+                      >不投保</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 text-center">
+                    <span>保费(元)</span>
+                    <div
+                      v-for="item in carInsurs"
+                      class="text-center"
+                      style="margin-top:1.8px;margin-bottom:2.7px;"
+                    >
+                      <span style="color:#FF7F16">{{item.ciMoney}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row"></div>
+              </div>
+            </div>
+          </div>
           <!--option-end-->
           <div class="option-SALI">
             <div class="col-sm-3">
@@ -181,7 +232,9 @@
               </div>
             </div>
           </div>
+          
         </div>
+        
         <!--list-end-->
         <div class="h_10"></div>
         <div class="s_main1080 s_next s-total">
@@ -255,7 +308,7 @@ export default {
       carInfoFrameNo:'',// 车辆车架号
       carInfoEnigneNumber:'',// 车辆发动机号
       carInsurs: [],
-      myCheckbox: false,
+      myCheckbox: true,
       value1: true,
       insuranceInserIncludeOption1: null,
       insuranceInserIncludeOption2: null,
@@ -264,10 +317,10 @@ export default {
       insuranceInserCheChuan: [],
       len: 0,
       money1: 0,
-      money2: 0,
+      money2: 0.0,
       money3: 0,
       taocanPrice1: 0,
-      taocanPrice2: 0,
+      taocanPrice2: 0.0,
       taocanPrice3: 0,
       totalPriceShangYe: 0,
       flagByTaoCanId: 0,
@@ -309,7 +362,6 @@ export default {
     //跳转到下一个页面
     next: function(txt) {
       var personnelId=null;
-      this.setInsuranceInserIncludeTaoCan();
       this.personnelInformation.insuranceInserIncludeId=this.flagByTaoCanId;
           var insuranceInserIncludeOption=null;
           this.axios.post('/api/policy/insurancePersonnelInformation/insert',this.personnelInformation).then(data=>{
@@ -348,7 +400,7 @@ export default {
       return new Promise((resolve, reject)=>{
         this.axios
         .get("/api/carInsur/incloud/selectOne", {
-          params: { id: 1 }
+          params: { id: 20 }
         })
         .then(data => {
           // this.carInsurs = data.data.data;
@@ -375,12 +427,13 @@ export default {
     },
     //获取套餐2,并计算金额
     getInsuranceInserIncludeOption2() {
-      return new Promise((resolve, reject)=>{
-         this.axios
+     return new Promise((resolve, reject)=>{
+        this.axios
         .get("/api/carInsur/incloud/selectOne", {
-          params: { id: 2 }
+          params: { id: 1 }
         })
         .then(data => {
+          // this.carInsurs = data.data.data;
           let index = 0;
           let index2 = -3;
           for (const key in data.data.data) {
@@ -398,20 +451,40 @@ export default {
           }
           this.insuranceInserIncludeOption2 = data.data.data;
            resolve(data.data.data);
-          console.log("套餐2的金额为" + this.money2);
-          
+          console.log("套餐1的金额为" + this.money1);
         });
       });
     },
     //获取套餐3
     getInsuranceInserIncludeOption3() {
-      this.axios
+      return new Promise((resolve, reject)=>{
+           this.axios
         .get("/api/carInsur/incloud/selectOne", {
-          params: { id: 3 }
+          params: { id: 2 }
         })
         .then(data => {
+         let index = 0;
+          let index2 = -3;
+          for (const key in data.data.data) {
+            if (
+              key == "ci" + index &&
+              data.data.data[key] == 1
+            ) {
+              if (index > 2) {
+                this.money3 += this.carInsurs[index2].ciMoney;
+                this.taocanPrice3 = this.money3;
+              }
+            }
+            index++;
+            index2++;
+          }
           this.insuranceInserIncludeOption3 = data.data.data;
+           resolve(data.data.data);
+          console.log("套餐3的金额为" + this.money3);
+           resolve(data.data.data);
         });
+      })
+     
     },
     //获取自定义选择的套餐和金额
     getmeoryxuanze() {
@@ -455,22 +528,6 @@ export default {
           this.insuranceInserCheChuan = data.data;
         });
     },
-    //插入套餐
-    setInsuranceInserIncludeTaoCan() {
-      console.log(this.insuranceInserIncludeOption3);
-      if (this.flagByTaoCanId == 3) {
-        this.axios
-          .post(
-            "/api/carInsur/incloud/inserttaocan",
-            this.insuranceInserIncludeOption3
-          )
-          .then(data => {
-            this.insuranceInserIncludeOption3 = data.data.data;
-            this.flagByTaoCanId = this.insuranceInserIncludeOption3.iiId;
-            console.log("插入的套餐", data.data.data);
-          });
-      }
-    },
     // 动态传递价格
     dynamicPrice1($event) {
       this.flagByTaoCanId = 1;
@@ -481,6 +538,11 @@ export default {
       this.flagByTaoCanId = 2;
       this.totalPriceShangYe = this.discountPrice2;
     },
+     //套餐3,动态传递价格
+    dynamicPrice3() {
+      this.flagByTaoCanId = 3;
+      this.totalPriceShangYe = this.discountPrice3;
+    },
     // 点击显示、隐藏
     handleClick() {
       this.isShow = !this.isShow;
@@ -489,6 +551,7 @@ export default {
    await this.getinsur();
    await this.getInsuranceInserIncludeOption1();
    await this.getInsuranceInserIncludeOption2();
+   await this.getInsuranceInserIncludeOption3();
    await this.getinsuranceInserJiaoQiang();
    await this.getinsuranceInserCheChuan();
     }
@@ -507,6 +570,9 @@ export default {
     },
     discountPrice2() {
       return this.taocanPrice2 * 0.95;
+    },
+    discountPrice3() {
+      return this.taocanPrice3 * 0.95;
     },
     totalMoney() {
       return (

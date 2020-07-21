@@ -101,26 +101,26 @@
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										投保城市：
-										<span>上海市</span>
+										<span>{{insuranceCarInfo.cityId}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										车牌号：
-										<span>沪A123456</span>
+										<span>{{insuranceCarInfo.carInfoCard}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										车辆配置型号：
-										<span>别克SGM7150ATA轿车</span>
+										<span>{{insuranceCarInfo.carInfoBrand}}</span>
 									</div>
 								</div>
 
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										车架号/VIN码：
-										<span>LS4AAB3D8BA022393</span>
+										<span>{{insuranceCarInfo.carInfoFrameNo}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										发动机号：
-										<span>B69C5</span>
+										<span>{{insuranceCarInfo.carInfoEnigneNumber}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										车价：
@@ -131,7 +131,7 @@
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										车辆注册日期：
-										<span>2018-01-08 00:00:00.0</span>
+										<span>{{insuranceCarInfo.carInfoRegisterDate}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										座位数：
@@ -144,7 +144,7 @@
 								<div class="row-s">
 									<div class="col-sm-4 text-left">
 										车主姓名：
-										<span>张三</span>
+										<span>{{insuranceCarInfo.carInfoOwner}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 										证件号码：
@@ -299,7 +299,6 @@
 							姓名：
 						</div>
 						<div class="col-sm-6 text-left">
-
 							<input type="text" v-model="insuranceDrivingLicense.drivingLicenseName" name="" id="" class="form-control">
 						</div>
 					</div>
@@ -308,94 +307,10 @@
 							证件号码：
 						</div>
 						<div class="col-sm-6 text-left">
-
 							<input type="text" name="" id="" v-model="insuranceDrivingLicense.drivingLicenseCard" class="form-control">
 						</div>
 					</div>
-					</div>
-					<div class="s-lines-style"></div>
-					<h5>支付方式
-						<span class="s-check-span">
-							<button class="s-check-yes s-check S-Checkbox-Radio1" data-type='s-check-yes'>支付宝支付</button>
-							<button class="s-check S-Checkbox-Radio1" data-type='s-check-yes'>网上支付</button>
-						</span>
-					</h5>
-
-					<div class="s-lines-style"></div>
-					<h5>开票信息</h5>
-					<div class="row s-verify-title">
-						<div class="col-sm-6 text-left">
-							发票信息
-							<input type="button" class="s-checkbox S-Checkbox-Radio s-checkbox-multiple-yes S-Checkbox-Radio1" data-type="s-checkbox-multiple-yes">
-							<span>同投保人</span>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2 text-right">
-							客户类型：
-						</div>
-						<div class="col-sm-6 text-left">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
-								 aria-expanded="false">
-									外国人永久居留证
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a>Dropdown link</a>
-									</li>
-									<li>
-										<a>Dropdown link</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2 text-right">
-							纳税人类型：
-						</div>
-						<div class="col-sm-6 text-left">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
-								 aria-expanded="false">
-									外国人永久居留证
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a>Dropdown link</a>
-									</li>
-									<li>
-										<a>Dropdown link</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-sm-2 text-right">
-							发票类型：
-						</div>
-						<div class="col-sm-6 text-left">
-							<div class="btn-group" role="group">
-								<button type="button" class="btn btn-default dropdown-toggle s-select-with-1" data-toggle="dropdown" aria-haspopup="true"
-								 aria-expanded="false">
-									外国人永久居留证
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a>采取自留的方式靠自身力量解决，还可以通过购买保险的方式将风险损失转移给保险公司。 但是，作为风险管理的技术之一，并不是所有的风险都适合或可以采用保险的方法来处理， 只有可保风险才是保险公司所能接受承保的风险。保险公司一般通过保险条款中的保险责</a>
-									</li>
-									<li>
-										<a>Dropdown link</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
+					</div>		
 					<div class="s-lines-style"></div>
 					<h5>保单领取方式</h5>
 					<div class="row s-verify-title">
@@ -550,8 +465,8 @@ export default {
 			drivingLicenseCard:''
 		},
 		insuranceUserId:'',//投保人id
-		insuranceInsuredId:'',//被保险人id
-		insuranceDrivingLicenseId:'',//行驶证车主id
+		insuranceInsuredId:0,//被保险人id
+		insuranceDrivingLicenseId:0,//行驶证车主id
 		carInsurs:[],//所有保险类型
 		insuranceInserIncludeOption:null,//保险套餐
 		includeOption:[],//所有选择的套餐的下标
@@ -572,8 +487,7 @@ export default {
 		// 取到路由带过来的参数
 		var totalMoney=this.$route.query.totalMoney;
 		this.totalMoney=totalMoney;//赋值总金额
-		 this.carInsurs=this.$route.query.carInsurs;//赋值所有保险类型
-		 this.insuranceInserIncludeOption=this.$route.query.insuranceInserIncludeOption;//赋值保险清单
+		 this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//赋值保险清单
 		 		  let index = 0;
 				  let index2 = -3;
 		 for (const option in this.insuranceInserIncludeOption){		
@@ -586,11 +500,8 @@ export default {
 				index2++;	
 				
 		 }
-		 //赋值交强险和车船税
-		this.insuranceInserJiaoQiang= this.$route.query.insuranceInserJiaoQiang;
-		this.insuranceInserCheChuan= this.$route.query.insuranceInserCheChuan;
-		this.insuranceCarInfo=this.$route.query.insuranceCarInfo;
-		 
+		this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);
+		console.log("车辆信息",this.insuranceCarInfo);
 	},
     init() {
       $(".panel-info .panel-collapse").on("shown.bs.collapse", function(e) {
@@ -612,7 +523,7 @@ export default {
         });
 			return false;
 		}
-	this.addUserInfomation();
+	this.addInfo();
 	//   this.$router.push("pay");
 	  this.$router.push({
 		  name:"pay",
@@ -620,12 +531,9 @@ export default {
 		  query:{
 			  totalMoney: this.totalMoney,//传输总金额
 			  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
-           	  insuranceInserJiaoQiang:JSON.stringify(this.insuranceInserJiaoQiang),//交强险
-			  insuranceInserCheChuan:JSON.stringify(this.insuranceInserCheChuan),//车船税
-			  carInsurs:JSON.stringify(this.carInsurs),//所有套餐类型
 			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
-			  insuranceInsured:JSON.stringify(this.insuranceInsured),//被保险人
-			  insuranceDrivingLicense:JSON.stringify(this.insuranceDrivingLicense),//车主
+			  insuranceInsured:this.insuranceInsuredId,//被保险人
+			  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
 			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
 		  }
 	  });
@@ -639,14 +547,54 @@ export default {
 			console.log(this.insuranceClause);
 		});	
 	},
+	//获取所有商业险
+	 getinsur() {
+      return new Promise((resolve, reject)=>{
+        this.axios
+        .get("/api/carInsur/insur/selectAllType", {
+          params: { ciType: "商业险", ciState: 1 }
+        })
+        .then(data => {
+          this.carInsurs = data.data.data;
+          this.len = this.carInsurs.length;
+          console.log("数据长度" + this.len);
+          resolve(data.data.data);
+          // console.log("返回的数据", data.data.data);
+        });
+      });
+	},
+	//获取交强险
+	getinsuranceInserJiaoQiang() {
+      this.axios
+        .get("/api/carInsur/insur/selectOne", {
+          params: { id: 1 }
+        })
+        .then(data => {
+          this.insuranceInserJiaoQiang = data.data;
+        });
+    },//获取车船税
+    getinsuranceInserCheChuan() {
+      this.axios
+        .get("/api/carInsur/insur/selectOne", {
+          params: { id: 2 }
+        })
+        .then(data => {
+          // this.carInsurs = data.data.data;
+          this.insuranceInserCheChuan = data.data;
+        });
+    },
 	generateId(index){
 		return "clause"+index;
 	},
 	getMessage(){
 
 	},
+	async addInfo(){
+		await this.addUserInfomation();
+	},
 	addUserInfomation(){
-		//更新投保人
+		return new Promise((resolve,reject)=>{
+			//更新投保人
 		if (!this.isInsuranceInsured) {
 			this.axios.post('/api/policy/feign/user/update',this.insuranceUser).then(data=>{	
 				console.log("更新的投保人信息",data.data.data);
@@ -655,19 +603,28 @@ export default {
 		//添加被保险人
 		if (!this.isInsuranceInsured) {
 			this.axios.post('/api/policy/insuranceInsured/insertOne',this.insuranceInsured).then(data=>{
-				this.insuranceInsuredId=data.data.data.
+				this.insuranceInsuredId=data.data.data.insuranceInsuredId.
 				console.log("添加的被保险人",data.data.data);
 			});
 		}
 		//添加行驶证车主
 		this.axios.post('/api/policy/insuranceDrivingLicense/insertOne',this.insuranceDrivingLicense).then(data=>{
+				this.insuranceDrivingLicenseId=data.data.data.drivingLicenseId;
 				console.log("添加的行驶证车主",data.data.data);
 			});
-	}
+		})
+		resolve(this.insuranceInsuredId!=0);
+	},
+	 async getAllData(){
+		 await this.getinsur();
+		 await this.getinsuranceInserJiaoQiang();
+		 await this.getinsuranceInserCheChuan();
+	 }
   },
   created() {
 	  this.getClause();
 	  this.getParams();
+	  this.getAllData();
 }
 };
 </script>

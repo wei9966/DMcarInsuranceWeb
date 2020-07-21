@@ -412,13 +412,12 @@ export default {
   },
   methods: {
     getParams() {
-      //取到路由带过来的参数
-      console.log("路由传过来的参数", this.$route.query.id);
       //获取的用户id
       var routerParams = this.$route.query.id;
       //将数据放在当前组件的数据内
       this.id = routerParams;
       this.personnelId=this.$route.query.personnelId;
+      this.getAllData();
     },
     dmtChange(data){
         if(data==false){
@@ -494,9 +493,9 @@ export default {
           return new Promise((resolve, reject)=>{
               this.axios.get('/api/policy/insurancePersonnelInformation/selectOne',{params:{id:this.personnelId}}).
               then(data=>{
-                  this.personnel=data.data.data;
-                  console.log("获取的客户预信息",data.data.data);
-              resolve(data.data.data);
+                  this.personnel=data.data;
+                  this.InsuranceCarInfo.carInfoCard=this.personnel.personnelLicensePlate;
+              resolve(data.data);
          });
           });
       },

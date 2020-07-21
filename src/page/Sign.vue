@@ -1,7 +1,7 @@
 <!--  -->
 <template>
 <div class="main login">
-  <el-row :gutter="20" style="width:1920px;">
+  <!-- <el-row :gutter="20" style="width:1920px;"> -->
   <el-col :span="15"><div class="grid-content bg-purple">
       <div class="whiteDiv" >
           <img src="" alt="">
@@ -79,6 +79,7 @@
 
 <script>
 import Verify from "vue2-verify";
+
 export default {
   //import引入的组件需要注入到对象中才能使用
   components: { Verify },
@@ -113,6 +114,7 @@ export default {
       flag1:null,//判断跳转页面
       personnelId:null,//客户预信息id 
       personnel:null,//客户预信息
+      tokenstatus:"",//token返回code
     };
   },
   //监听属性 类似于data概念
@@ -185,7 +187,7 @@ export default {
       this.test = text;
       console.log(this.test);
     },
-
+  
     //登录
     Sign() {
       //邮箱
@@ -234,6 +236,7 @@ export default {
               // this.$router.push('UserCenter')
               this.person.userId = data.data.data.userId;
               // console.log("后台返回的值",data.data);
+              this.getTokenstatus();
               this.updateduc();
             });
         } 
@@ -251,7 +254,7 @@ export default {
                 params: { userEmail: this.getnumber, userPass: this.getpass }
               })
               .then(data => {
-                if ((this.insuranceClause = data.data.code == 0)) {
+                if ((this.insuranceClause = data.data.code == 200)) {
                   if (this.test == "success") {
                     this.axios
                       .get("/api/user/insuranceUser/queryId", {
@@ -264,6 +267,7 @@ export default {
                       .then(data => {
                         this.person.userId = data.data.data.userId;
                         console.log("查询到的数据", this.person.userId);
+                        this.getTokenstatus();
                         this.updateduc();
                       });
                   } else {
@@ -287,8 +291,10 @@ export default {
               .get("/api/user/insuranceUser/phoneLogin", {
                 params: { userPhone: this.getnumber, userPass: this.getpass }
               })
-              .then(data => {
-                if ((this.insuranceClause = data.data.code == 0)) {
+              .then(data => {               
+                if ((this.insuranceClause = data.data.code == 200)) {
+                  console.log("token",data.data.extended.token);
+                  window.sessionStorage.setItem("token",data.data.extended.token)
                   if (this.test == "success") {
                     this.axios
                       .get("/api/user/insuranceUser/queryId", {
@@ -301,6 +307,7 @@ export default {
                       .then(data => {
                         this.person.userId = data.data.data.userId;
                         console.log("查询到的数据", this.person.userId);
+                        this.getTokenstatus();                       
                         this.updateduc();
                       });
                   } else {
@@ -325,7 +332,7 @@ export default {
                 params: { userName: this.getnumber, userPass: this.getpass }
               })
               .then(data => {
-                if ((this.insuranceClause = data.data.code == 0)) {
+                if ((this.insuranceClause = data.data.code == 200)) {
                   if (this.test == "success") {
                     this.axios
                       .get("/api/user/insuranceUser/queryId", {
@@ -338,6 +345,7 @@ export default {
                       .then(data => {
                         this.person.userId = data.data.data.userId;
                         console.log("查询到的数据", this.person.userId);
+                        this.getTokenstatus();
                         this.updateduc();
                       });
                   } else {
@@ -375,7 +383,7 @@ export default {
     },
     updateduc() {
       console.log("跳转页面的标志位",this.flag1);
-        if (this.flag1==1) {
+        if (!this.flag1==1) {
             this.$router.push({
             name: "Home",
            query: {
@@ -391,16 +399,50 @@ export default {
            }
            });
         }
-      
+   
     },
     getPersonnel(){
         return new Promise((resolve,reject)=>{
             this.axios.get('/api/policy/insurancePersonnelInformation/selectOne',{params:{id:this.personnelId}}).then(data=>{
-                this.personnel=data.data.data;
-                console.log("查询到的客户预信息",data.data.data);
-                resolve(data.data.data);
+                this.personnel=data.data;
+                this.getnumber=data.data.personnelPhone;
+                this.getphone=data.data.personnelPhone;
+                if (!this.flag1==1) {
+                  this.personnel=null;
+                }
+                resolve(data.data);
             });
         })
+    },
+    //获取Token状态
+    getTokenstatus() {
+      //取token
+      let t = window.sessionStorage.getItem("token");
+      console.log("取到的token:" + t);
+      //调用验证TOKEN方法
+      this.axios
+        .get("/api/user/insuranceUser/admin", {
+          headers: {
+            token: `${t}`
+          }
+        })
+        .then(data => {
+          //返回200正确
+          if (data.data.code == 200) {
+            this.tokenstatus = 200;
+          }
+        })
+        .catch(data => {
+          console.log("错误code:", data.response.status);
+          //500Token异常或尚未登录
+          this.tokenstatus = 500;
+          this.$router.push({ name: "sign" });
+          this.$message({
+            showClose: true,
+            message: "请重新登录！",
+            type: "error"
+          });
+        });
     },
    async getAllData(){
         await this.getPersonnel();
