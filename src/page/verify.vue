@@ -498,10 +498,8 @@ export default {
 			}
 				index++;
 				index2++;	
-				
 		 }
 		this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);
-		console.log("车辆信息",this.insuranceCarInfo);
 	},
     init() {
       $(".panel-info .panel-collapse").on("shown.bs.collapse", function(e) {
@@ -523,21 +521,100 @@ export default {
         });
 			return false;
 		}
-	this.addInfo();
+	// this.addInfo();
+	this.validVerift();
 	//   this.$router.push("pay");
-	  this.$router.push({
-		  name:"pay",
-		  path:"/pay",
-		  query:{
-			  totalMoney: this.totalMoney,//传输总金额
-			  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
-			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
-			  insuranceInsured:this.insuranceInsuredId,//被保险人
-			  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
-			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
-		  }
-	  });
+	//   this.$router.push({
+	// 	  name:"pay",
+	// 	  path:"/pay",
+	// 	  query:{
+	// 		  totalMoney: this.totalMoney,//传输总金额
+	// 		  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
+	// 		  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
+	// 		  insuranceInsured:this.insuranceInsuredId,//被保险人
+	// 		  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
+	// 		  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
+	// 	  }
+	//   });
 	},
+	validVerift(){
+		 var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      //手机号
+		  var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
+		  var card=/^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+			//校验数据
+		if (this.insuranceUser.userName==null||this.insuranceUser.userName=='') {
+			this.errorMessage("请输入投保人姓名");
+			return false;
+		}
+		if (this.insuranceUser.userCard==null||this.insuranceUser.userCard=='') {
+			this.errorMessage("请输入投保人身份证号码");
+			return false;
+		}else{
+			if (card.test(this.insuranceUser.userCard)) {
+				this.errorMessage("身份证号码格式不正确");
+				return false;
+			}
+		}
+		if (this.insuranceUser.userEmail==null||this.insuranceUser.userEmail=='') {
+			this.errorMessage("请输入投保人Email");
+			return false;
+		}else{
+			if (!regEmail.test(this.insuranceUser.userEmail)) {
+				this.errorMessage("Email格式有误");
+			return false;
+			}
+		}
+		if (this.insuranceUser.userAddress==null||this.insuranceUser.userAddress=='') {
+			this.errorMessage("请输入投保人地址");
+			return false;
+		}
+		if (!this.isInsuranceInsured) {
+			if (this.insuranceInsured.insuredName==null||this.insuranceInsured.insuredName=='') {
+				this.errorMessage("请输入被保险人姓名");
+				return false;
+			}
+			if (this.insuranceInsured.insuredCard==null||this.insuranceInsured.insuredCard=='') {
+				this.errorMessage("请输入被保险人身份证号码");
+				return false;
+			}else{
+				if (card.test(this.insuranceInsured.insuredCard)) {
+				this.errorMessage("身份证号码格式不正确");
+				return false;
+			}
+			}
+			if (this.insuranceInsured.insuredEmail==null||this.insuranceInsured.insuredEmail=='') {
+				this.errorMessage("请输入被保险人邮箱");
+				return false;
+			}else{
+				if (!regEmail.test(this.insuranceInsured.insuredEmail)) {
+				this.errorMessage("Email格式有误");
+				return false;
+			}
+			}
+			if (this.insuranceInsured.insuredAddress==null||this.insuranceInsured.insuredAddress=='') {
+				this.errorMessage("请输入被保险人地址");
+				return false;
+			}
+		}
+		if (this.insuranceDrivingLicense.drivingLicenseName==null||this.insuranceDrivingLicense.drivingLicenseName=='') {
+			this.errorMessage("请输入车主姓名");
+			return false;
+		}
+		if (this.insuranceDrivingLicense.drivingLicenseCard==null||this.insuranceDrivingLicense.drivingLicenseCard=='') {
+			this.errorMessage("请输入车主证件号码");
+			return false;
+		}
+		return true;
+	},
+	errorMessage(data){
+        this.$message({
+           showClose: true,
+          message: `${data}`,
+          type: 'error',
+          duration:1500
+        });
+    },
     last: function(txt) {
       this.$router.push("selectingOffers");
 	},
@@ -557,7 +634,6 @@ export default {
         .then(data => {
           this.carInsurs = data.data.data;
           this.len = this.carInsurs.length;
-          console.log("数据长度" + this.len);
           resolve(data.data.data);
           // console.log("返回的数据", data.data.data);
         });

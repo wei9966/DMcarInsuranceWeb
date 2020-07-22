@@ -571,7 +571,6 @@ export default {
         .then(data => {
           // this.carInsurs = data.data.data;
           this.insuranceInserJiaoQiang = data.data;
-          console.log("交强", data.data);
         });
     },
     getinsuranceInserCheChuan() {
