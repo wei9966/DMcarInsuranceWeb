@@ -6,7 +6,7 @@
         <img src="../../static/images/logo.png" />
         <span @click="goindex">缔梦车险出单平台</span>
         <router-link to="sign" id="yonhu" v-model="tshow" v-show="tshow==true">登录/注册</router-link>
-        <router-link to="usercenter" id="yonhu" v-model="tshow" v-show="tshow==false">用户</router-link>
+        <router-link to="usercenter" id="yonhu" v-model="tshow" v-show="tshow==false">手机用户{{user.userPhone}}</router-link>
       </div>
     </div>
   </header>
@@ -17,7 +17,8 @@ export default {
   data() {
     return {
       home: "",
-      tshow: true
+      tshow: true,
+      user:null
     };
   },
   watch: {
@@ -37,7 +38,6 @@ export default {
     getTokenstatus() {
       //取token
       let t = window.sessionStorage.getItem("token");
-      console.log("取到的token:" + t);
       //调用验证TOKEN方法
       this.axios
         .get("/api/user/insuranceUser/admin", {
@@ -47,10 +47,10 @@ export default {
         })
         .then(data => {
           //返回200正确
-          if (data.data.code == 200) {
             this.tshow = false;
             this.tokenstatus = 200;
-          }
+            this.user=data.data.user;
+            console.log("获取的对象",data.data.user);
         })
         .catch(data => {
           console.log("错误code:", data.response.status);
@@ -67,7 +67,7 @@ export default {
     }
   },
   created() {
-    // this.getTokenstatus();
+    this.getTokenstatus();
     // window.setInterval(() => {
     //   this.getTokenstatus();
     //   setTimeout(fun, 0);

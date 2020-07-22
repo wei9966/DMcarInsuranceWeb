@@ -106,7 +106,6 @@
             </el-input>
             <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoFrameNo" class="form-control"/> -->
           </div>
-          <div class="checkbox col-sm-4 error">2002年后车架号为17位哦</div>
         </div>
         <div class="row">
           <div class="col-sm-6 text-right">
@@ -118,7 +117,7 @@
             </el-input>
             <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoEnigneNumber" class="form-control"/> -->
           </div>
-          <div class="checkbox col-sm-4 error">亲，您输入的发动机号不正确哦！</div>
+          <!-- <div class="checkbox col-sm-4 error">亲，您输入的发动机号不正确哦！</div> -->
         </div>
         <div class="row">
           <div class="col-sm-6 text-right">
@@ -130,7 +129,7 @@
             </el-input>
             <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoConfigurationModel" class="form-control"/> -->
           </div>
-          <div class="checkbox col-sm-4 error">亲，请参考行驶证品牌型号填写!</div>
+          <!-- <div class="checkbox col-sm-4 error">亲，请参考行驶证品牌型号填写!</div> -->
         </div>
         <div class="row">
           <div class="col-sm-6 text-right">
@@ -324,18 +323,18 @@ export default {
       value2: "",
       city2: [],
       InsuranceCarInfo: {
-        carInfoBrand: "", // 车辆品牌型号
-        carInfoRegisterDate: "", // 车辆注册日期
-        cityId: "", // 车辆投保城市
-        carInfoCard: "", //车辆车牌号
-        carInfoOwner: "", //车辆所有人
-        carInfoFrameNo: "", //车辆车架号
-        carInfoEnigneNumber: "", //车辆发动机号
-        carInfoConfigurationModel: "", //车辆类型
-        carInfoDateFirst: "", //初登日期
-        carInfoTransfer: "", //是否过户车辆
-        carInfoTransferDate: "", //过户日期
-        userId: "", //用户id
+        carInfoBrand: null, // 车辆品牌型号
+        carInfoRegisterDate: null, // 车辆注册日期
+        cityId: null, // 车辆投保城市
+        carInfoCard: null, //车辆车牌号
+        carInfoOwner: null, //车辆所有人
+        carInfoFrameNo: null, //车辆车架号
+        carInfoEnigneNumber: null, //车辆发动机号
+        carInfoConfigurationModel: null, //车辆类型
+        carInfoDateFirst: null, //初登日期
+        carInfoTransfer: null, //是否过户车辆
+        carInfoTransferDate: null, //过户日期
+        userId: null, //用户id
       },
         z_name:"",//车主姓名
         z_idCard:"",//车主身份证
@@ -450,7 +449,6 @@ export default {
       });
     },
     next: function(txt) {
-      console.log("点击了下一页");
       if (this.flag1 == true) {
         this.InsuranceCarInfo.carInfoTransfer = 1;
       } else {
@@ -465,10 +463,9 @@ export default {
 
         });
       //传值下一个页面
-      console.log(this.InsuranceCarInfo);
-      console.log("asdas" + this.InsuranceCarInfo.carInfoTransfer);
-
-      this.Home();
+      if (this.valid()) {
+           this.Home();
+      }
       //  this.$router.push('selectingOffers')
     },
     getClause(){
@@ -513,6 +510,84 @@ export default {
           //
         }
       });
+    },
+    valid(){
+      let frameNoValid=/[\dA-HJ-NPR-Z]{17}/;//车辆识别码
+      let carInfoCardValid=/^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/;
+      //验证所有正则
+      //城市
+      if (this.InsuranceCarInfo.cityId==''||this.InsuranceCarInfo.cityId==null) {
+          this.errorMessage("请勾选投你的投保城市");
+          return false;
+      }
+      //车牌号码
+      if (!this.damutou) {
+          if (this.InsuranceCarInfo.carInfoCard==''||this.InsuranceCarInfo.carInfoCard==null) {
+            this.errorMessage("请输入您的车牌号码");
+            return false;
+        }else{
+            if(!carInfoCardValid.test(this.InsuranceCarInfo.carInfoCard)){
+              this.errorMessage("您输入的车牌号不规范哦");
+              return false;
+          }
+        }
+      }
+      //车辆所有人
+      if (this.InsuranceCarInfo.carInfoOwner==''||this.InsuranceCarInfo.carInfoOwner==null) {
+          this.errorMessage("请输入车辆所有人");
+          return false;
+      }
+      //车辆注册日期
+      if (this.InsuranceCarInfo.carInfoRegisterDate==''||this.InsuranceCarInfo.carInfoRegisterDate==null) {
+          this.errorMessage("请选择您的车辆注册日期");
+          return false;
+      }
+      //车辆识别代号
+      if (this.InsuranceCarInfo.carInfoFrameNo==''||this.InsuranceCarInfo.carInfoFrameNo==null) {
+           this.errorMessage("请输入车辆识别代号");
+          return false;
+      }else{
+        if (!frameNoValid.test(this.InsuranceCarInfo.carInfoFrameNo)) {
+                this.errorMessage("2002年后车架号为17位哦");
+              return false;
+          }
+      }
+      //发动机号
+      if (this.InsuranceCarInfo.carInfoEnigneNumber==''||this.InsuranceCarInfo.carInfoEnigneNumber==null) {
+          this.errorMessage("请输入发动机号");
+          return false;
+      }
+      //品牌型号
+      if (this.InsuranceCarInfo.carInfoBrand==''||this.InsuranceCarInfo.carInfoBrand==null) {
+          this.errorMessage("请输入品牌型号");
+          return false;
+      }
+      //车辆类型
+      if (this.InsuranceCarInfo.carInfoConfigurationModel==''||this.InsuranceCarInfo.carInfoConfigurationModel==null) {
+          this.errorMessage("请输入车辆类型");
+          return false;
+      }
+      //初登日期
+      if (this.InsuranceCarInfo.carInfoDateFirst==''||this.InsuranceCarInfo.carInfoDateFirst==null) {
+          this.errorMessage("请输入你的初登日期");
+          return false;
+      }
+      //过户日期
+      if (!this.dmt) {
+          if (this.InsuranceCarInfo.carInfoTransferDate==''||this.InsuranceCarInfo.carInfoTransferDate==null) {
+          this.errorMessage("请输入你的过户日期");
+          return false;
+      }
+      }
+      return true;
+    },
+    errorMessage(data){
+        this.$message({
+           showClose: true,
+          message: `${data}`,
+          type: 'error',
+          duration:1500
+        });
     },
     otherinfo() {
       this.axios
