@@ -49,7 +49,7 @@
     </div>
     <footer class="foots">
       <p>车险出单平台 版权所有</p>
-      <p>Copyright@2017 Chexianchudanpingtai</p>
+      <p>Copyright@2020 Chexianchudanpingtai</p>
     </footer>
   </div>
 </template>
@@ -60,16 +60,6 @@ export default {
     return {
       getphone: "",
       //user表对象
-      person: {
-        userId: "", //id
-        userName: "", //用户名
-        userPass: "", //密码
-        userPhone: "", //手机号
-        userEmail: "", //邮箱
-        userSex: "", //性别
-        userAddress: "", //地址
-        userCard: "" //身份证
-      },
       values: [],
       props: {
         value: "baseAreaid",

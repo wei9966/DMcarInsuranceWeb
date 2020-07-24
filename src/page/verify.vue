@@ -219,7 +219,6 @@
 							地址：
 						</div>
 						<div class="col-sm-9 text-left">
-
 							<input type="text" name="" v-model="insuranceUser.userAddress" id="" class="form-control">
 						</div>
 					</div>

@@ -6,7 +6,7 @@
         <img src="../../static/images/logo.png" />
         <span @click="goindex">缔梦车险出单平台</span>
         <router-link to="sign" id="yonhu" v-model="tshow" v-show="tshow==true">登录/注册</router-link>
-        <router-link to="usercenter" id="yonhu" v-model="tshow" v-show="tshow==false">手机用户{{user.userPhone}}</router-link>
+        <router-link to="usercenter" id="yonhu" v-model="tshow" v-show="tshow==false">手机用户</router-link>
       </div>
     </div>
   </header>
@@ -67,7 +67,7 @@ export default {
     }
   },
   created() {
-    this.getTokenstatus();
+    // this.getTokenstatus();
     // window.setInterval(() => {
     //   this.getTokenstatus();
     //   setTimeout(fun, 0);
