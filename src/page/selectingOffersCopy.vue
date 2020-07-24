@@ -404,12 +404,14 @@ export default {
         })
         .then(data => {
           // this.carInsurs = data.data.data;
+          console.log(data.data);
+          
           let index = 0;
           let index2 = -3;
-          for (const key in data.data.data) {
+          for (const key in data.data) {
             if (
               key == "ci" + index &&
-              data.data.data[key] == 1
+              data.data[key] == 1
             ) {
               if (index > 2) {
                 this.money1 += this.carInsurs[index2].ciMoney;
@@ -419,8 +421,8 @@ export default {
             index++;
             index2++;
           }
-          this.insuranceInserIncludeOption1 = data.data.data;
-           resolve(data.data.data);
+          this.insuranceInserIncludeOption1 = data.data;
+           resolve(data.data);
           console.log("套餐1的金额为" + this.money1);
         });
       });
@@ -436,10 +438,10 @@ export default {
           // this.carInsurs = data.data.data;
           let index = 0;
           let index2 = -3;
-          for (const key in data.data.data) {
+          for (const key in data.data) {
             if (
               key == "ci" + index &&
-              data.data.data[key] == 1
+              data.data[key] == 1
             ) {
               if (index > 2) {
                 this.money2 += this.carInsurs[index2].ciMoney;
@@ -449,8 +451,8 @@ export default {
             index++;
             index2++;
           }
-          this.insuranceInserIncludeOption2 = data.data.data;
-           resolve(data.data.data);
+          this.insuranceInserIncludeOption2 = data.data;
+           resolve(data.data);
           console.log("套餐1的金额为" + this.money1);
         });
       });
@@ -465,10 +467,10 @@ export default {
         .then(data => {
          let index = 0;
           let index2 = -3;
-          for (const key in data.data.data) {
+          for (const key in data.data) {
             if (
               key == "ci" + index &&
-              data.data.data[key] == 1
+              data.data[key] == 1
             ) {
               if (index > 2) {
                 this.money3 += this.carInsurs[index2].ciMoney;
@@ -478,10 +480,9 @@ export default {
             index++;
             index2++;
           }
-          this.insuranceInserIncludeOption3 = data.data.data;
-           resolve(data.data.data);
+          this.insuranceInserIncludeOption3 = data.data;
           console.log("套餐3的金额为" + this.money3);
-           resolve(data.data.data);
+           resolve(data.data);
         });
       })
      

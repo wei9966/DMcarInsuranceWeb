@@ -106,16 +106,15 @@ export default {
       this.$router.push({
         name:"insuranceDetial",
         query:{
-        insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
-			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
-			  insuranceInsured:this.insuranceInsured,//被保险人
-        insuranceDrivingLicense:this.insuranceDrivingLicense,//车主
-			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
+          insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
+          insuranceUser:JSON.stringify(this.insuranceUser),//投保人
+          insuranceInsured:this.insuranceInsured,//被保险人
+          insuranceDrivingLicense:this.insuranceDrivingLicense,//车主
+          insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
         }});
     },
     pay() {
       this.axios.post(`/api/insurance/pay/payorder?outtradeno=${this.order_number}&totalamount=${this.totalMoney}`,
-
          this.payafter  
       ).then(data => {
         console.log(data);
@@ -129,7 +128,6 @@ export default {
         document.body.appendChild(div);
         document.forms[0].setAttribute("target", "_self"); // 新开窗口跳转
         document.forms[0].submit();
-       
       });
       // this.tz();
     },

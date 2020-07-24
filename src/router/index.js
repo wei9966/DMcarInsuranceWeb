@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
+
 export default new Router({
   mode:'history',
   routes: [
@@ -63,6 +64,16 @@ export default new Router({
       path: '/paySuccess',
       name: 'paySuccess',
       component: resolve => require(['../page/paySuccess.vue'], resolve)
+    },
+    {
+      path:'/loginSuccess',
+      name:'loginSuccess',
+      redirect:'/home'
+    },
+    {
+      path:'/loginOut',
+      name:'loginOut',
+      redirect:'/sign'
     }
   ]
 })

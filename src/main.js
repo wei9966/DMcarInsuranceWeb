@@ -31,6 +31,28 @@ Vue.use(elementUi)
 Vue.config.productionTip = false
 Vue.component('my-header', header)
 /* eslint-disable no-new */
+router.beforeEach((to, from, next) => {
+  console.log("token是",window.sessionStorage.getItem("token"));
+  let token = window.sessionStorage.getItem("token");
+  let id=window.sessionStorage.getItem("userId");
+  if (token ===null || token === '' || token=== 'null') {
+      if (!(to.path=='/login'||to.path=='/selectoffer'||to.path=='/sign')) {
+          next('/sign');
+      }else{
+        next()
+      }
+  }else{//如果token不为空
+    if (to.path=='/sign') {//并且访问的地址是登录页面
+      if (!(token===null || token==='')) {
+        next({path:'/usercenter',query: {
+          id: id
+       }})
+      }
+    }else{
+      next();
+    }
+  }
+})
 new Vue({
   el: '#app',
   router,

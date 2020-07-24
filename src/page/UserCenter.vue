@@ -298,13 +298,25 @@ export default {
     cardModify() {},
     //查询个人信息
     getPersonMessge() {
-      console.log(this.id);
       if (this.flag == true) {
-        this.axios
-          .get("/api/user/insuranceUser/selectOne", { params: { id: this.id } })
+        if (window.sessionStorage.getItem("token")!=null) {
+            this.axios
+          .get("/api/user/insuranceUser/redisGet", { params: { redisKey: window.sessionStorage.getItem("redisKey") },headers: {
+            token: window.sessionStorage.getItem("token")
+                   }})
           .then(data => {
+            console.log("缓存查到的数据",data.data.data);
             this.person = data.data.data;
+          }).catch((data)=>{
+              console.log("错误code:", data.response.status);
+              if (data.response.status==500) {
+                  window.sessionStorage.setItem("token",null)
+                  window.sessionStorage.setItem("redisKey",null)
+              }
           });
+        }else{
+            this.$router.push("sign");
+        }
       }
     },
     //测试token方法
@@ -359,7 +371,7 @@ export default {
   created() {
     this.getParams();
     this.getPersonMessge();
-    this.getTokenstatus();
+    // this.getTokenstatus();
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},

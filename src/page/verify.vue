@@ -448,7 +448,7 @@ export default {
 		isInsuranceInsured:true,//判断是否为同投保人
 		distribution:false,//配送方式
 		insuranceUser:{//投保人(用户)
-			userId:'13',
+			userId:'',
 			userName:'',
 			userCard:'',
 			userAddress:'',
@@ -473,6 +473,7 @@ export default {
 		insuranceInserJiaoQiang:[],//交强险
 		insuranceInserCheChuan:[],//车船税
 		insuranceCarInfo:null,
+		userId:0,//用户id
 	};
   },
   watch: {
@@ -500,6 +501,20 @@ export default {
 				index2++;	
 		 }
 		this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);
+		this.userId=this.$route.query.userId;
+		this.getData();
+	},
+	//获取用户信息
+	getUserInfo(){
+		return new Promise((resolve,reject)=>{
+			this.axios.post(`/api/user/insuranceUser/selectUser/${this.userId}`).then(data=>{
+				this.insuranceUser=data.data.data;
+				console.log("获取到的用户信息",data.data.data);
+			});
+		})
+	},
+	async getData(){
+		await getUserInfo();
 	},
     init() {
       $(".panel-info .panel-collapse").on("shown.bs.collapse", function(e) {
@@ -521,21 +536,21 @@ export default {
         });
 			return false;
 		}
-	// this.addInfo();
+	this.addInfo();
 	this.validVerift();
-	//   this.$router.push("pay");
-	//   this.$router.push({
-	// 	  name:"pay",
-	// 	  path:"/pay",
-	// 	  query:{
-	// 		  totalMoney: this.totalMoney,//传输总金额
-	// 		  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
-	// 		  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
-	// 		  insuranceInsured:this.insuranceInsuredId,//被保险人
-	// 		  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
-	// 		  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
-	// 	  }
-	//   });
+	  this.$router.push("pay");
+	  this.$router.push({
+		  name:"pay",
+		  path:"/pay",
+		  query:{
+			  totalMoney: this.totalMoney,//传输总金额
+			  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
+			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
+			  insuranceInsured:this.insuranceInsuredId,//被保险人
+			  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
+			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
+		  }
+	  });
 	},
 	validVerift(){
 		 var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -551,7 +566,7 @@ export default {
 			this.errorMessage("请输入投保人身份证号码");
 			return false;
 		}else{
-			if (card.test(this.insuranceUser.userCard)) {
+			if (!card.test(this.insuranceUser.userCard)) {
 				this.errorMessage("身份证号码格式不正确");
 				return false;
 			}
@@ -578,7 +593,7 @@ export default {
 				this.errorMessage("请输入被保险人身份证号码");
 				return false;
 			}else{
-				if (card.test(this.insuranceInsured.insuredCard)) {
+				if (!card.test(this.insuranceInsured.insuredCard)) {
 				this.errorMessage("身份证号码格式不正确");
 				return false;
 			}
