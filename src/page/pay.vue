@@ -90,8 +90,9 @@ export default {
     getParams() {
       // 取到路由带过来的参数
       this.totalMoney =  this.$route.query.totalMoney;
-      console.log("总金额", this.totalMoney);
-      this.id=this.$route.query.id;
+      console.log("总金额", this.totalMoney,JSON.parse(this.$route.query.insuranceUser));
+      let user=JSON.parse(this.$route.query.insuranceUser);
+      this.id=user.userId;
       this.payafter.id = this.id;
       this.payafter.totalMoney = this.totalMoney;
       console.log("订单编号=====",this.id);
@@ -117,7 +118,6 @@ export default {
       this.axios.post(`/api/insurance/pay/payorder?outtradeno=${this.order_number}&totalamount=${this.totalMoney}`,
          this.payafter  
       ).then(data => {
-        console.log(data);
         // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
         const divForm = document.getElementsByTagName("div");
         if (divForm.length) {
@@ -173,9 +173,7 @@ export default {
             this.nowTimes.sec = String(myDate.getSeconds()<10?'0'+myDate.getSeconds():myDate.getSeconds());
             this.time= this.nowTimes.yy +"-" + this.nowTimes.mm + "-" + this.nowTimes.dd;
             console.log(this.nowTimes.yy);
-            
             console.log("当前日期======"+this.time);
-            
             this.time1=this.nowTimes.yy +"0"+ this.nowTimes.mm + this.nowTimes.dd;
     }
   },

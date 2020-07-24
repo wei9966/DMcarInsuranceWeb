@@ -223,7 +223,7 @@
               <el-input type="text" 
                style="width:60%"
                 placeholder="请输入邮箱"
-                v-model="userEmail"/>
+                v-model="user.userEmail"/>
             </div>
             <div class="checkbox col-sm-4 error">
               <!-- 身份证号不正确，请重新输入 -->
@@ -307,7 +307,7 @@ export default {
           userName:'',//用户名
           userPhone:'',//手机号
           userEmail:'',//邮箱
-          userSex:'',//性别
+          userSex:'',//性别 
           userAddress:'',//地址
           userCard:''//身份证号码
       },
@@ -404,11 +404,10 @@ export default {
       } else {
         this.InsuranceCarInfo.carInfoTransfer = 0;
       }
-      this.addData();
-      //传值下一个页面
       if (this.valid()) {
-           this.Home();
+          this.addData();
       }
+      //传值下一个页面
       //  this.$router.push('selectingOffers')
     },
     addDataCar(){//当前页面的信息添加进入数据库
@@ -431,18 +430,23 @@ export default {
             this.axios
         .post(
           "/api/user/insuranceUser/insertUser",
-          this.user
+          this.user,{
+           headers: {
+              token: window.sessionStorage.getItem("token")
+                }
+              }
         )
         .then(data => {
               console.log("添加后的用户信息",data.data.data);
               this.userId=data.data.data.userId;
-              resolve(data.data.data);
+              resolve(data);
         });
         })
     },
     async addData(){
-     await this.addDataCar();
-     await this.addDataUser();
+      await this.addDataUser();
+      await this.addDataCar();
+      this.Home();
     },
     getClause(){
         this.axios.get('/api/insuranceCity/insuranceCity/selectOne2',{params:{parentid:0}}).then(data=>{

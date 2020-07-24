@@ -419,7 +419,7 @@ export default {
           query: { 
             iiId: this.flagByTaoCanId,
             totalMoney: this.totalMoney,
-            InsuranceCarInfo:JSON.stringify(this.InsuranceCarInfo),
+            insuranceCarInfo:JSON.stringify(this.InsuranceCarInfo),
             insuranceInserIncludeOption:JSON.stringify(insuranceInserIncludeOption),
             // insuranceCarInfo:JSON.stringify(this.InsuranceCarInfo)
             userId:this.userId
