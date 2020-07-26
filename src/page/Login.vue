@@ -101,7 +101,9 @@ export default {
       //       // this.$router.push('UserCenter')
       //       this.person.userId = data.data.data.userId;
       //       // console.log("后台返回的值",data.data);
-            this.valid();
+            if (!this.valid()) {
+                return;
+            }
             this.updatedlogin();
       //     });
       // } else {

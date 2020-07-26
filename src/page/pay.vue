@@ -74,7 +74,21 @@ export default {
         insuranceInserJiaoQiang:null,//交强险
         insuranceInserCheChuan:null,//车船税
         insuranceDrivingLicense:null,//行驶证车主
-        InsuranceCarInfo:null,//车辆信息
+        insuranceCarInfo:null,//车辆信息
+        insuranceInsurContract:{//投保单信息
+            userId:null,//用户id
+            carInfoId:null,//车辆信息id
+            insuredId:null,//被保险人id
+            drivingLicenseId:null,//车主id
+            policyDate:null,//投保日期
+            icTotime:null,//到保日期
+            ipId:null,//套餐id
+            icMoney:0,//保单金额
+            icIspayment:0,//保单是否支付
+            ciId:null,//投保单号
+            maxMoney:0,//最大保额
+            unId:0,//添加人员id
+        }
     };
   },
 //   computed:{
@@ -91,17 +105,31 @@ export default {
       // 取到路由带过来的参数
       this.totalMoney =  this.$route.query.totalMoney;
       console.log("总金额", this.totalMoney,JSON.parse(this.$route.query.insuranceUser));
+      //赋值保单金额
+      this.insuranceInsurContract.icMoney=this.totalMoney;
       let user=JSON.parse(this.$route.query.insuranceUser);
       this.id=user.userId;
       this.payafter.id = this.id;
       this.payafter.totalMoney = this.totalMoney;
       console.log("订单编号=====",this.id);
       this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);//车辆信息
+      this.insuranceInsurContract.carInfoId=this.insuranceCarInfo.carInfoId;//赋值车辆信息id
       this.insuranceUser=JSON.parse(this.$route.query.insuranceUser);//投保人
+      this.insuranceInsurContract.userId=this.insuranceUser.userId;//赋值用户id
       this.insuranceInsured=this.$route.query.insuranceInsured;//被保险人
+      console.log("被保险人",this.$route.query.insuranceInsured);
+      if (this.insuranceInsured!=0) {
+        //赋值被保险人id
+        this.insuranceInsurContract.insuredId=this.insuranceInsured;
+      }
       this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//保险清单
-      this.insuranceDrivingLicense=this.$route.query.insuranceDrivingLicense;//车主信息
-      console.log("车主id",this.insuranceDrivingLicense);
+      //赋值套餐id
+      console.log("套餐信息",this.insuranceInserIncludeOption);
+      this.insuranceInsurContract.ipId=this.insuranceInserIncludeOption.ci1;
+      // this.insuranceDrivingLicense=this.$route.query.insuranceDrivingLicense;//车主信息
+      //赋值车主id
+      this.insuranceInsurContract.drivingLicenseId=this.$route.query.insuranceDrivingLicense;
+      console.log("已保存的信息",this.insuranceInsurContract);
     },
     detial: function() {
       this.$router.push({
@@ -110,11 +138,15 @@ export default {
           insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
           insuranceUser:JSON.stringify(this.insuranceUser),//投保人
           insuranceInsured:this.insuranceInsured,//被保险人
-          insuranceDrivingLicense:this.insuranceDrivingLicense,//车主
+          insuranceDrivingLicense:this.insuranceInsurContract.drivingLicenseId,//车主
           insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
         }});
     },
-    pay() {
+   async pay() {
+      //配置好订单号注入
+      this.insuranceInsurContract.ciId=this.order_number;
+      //将数据存到缓存中去
+      await this.setContractRedis();
       this.axios.post(`/api/insurance/pay/payorder?outtradeno=${this.order_number}&totalamount=${this.totalMoney}`,
          this.payafter  
       ).then(data => {
@@ -130,6 +162,15 @@ export default {
         document.forms[0].submit();
       });
       // this.tz();
+    },
+    //缓存存值
+    setContractRedis(){
+        return new Promise((resolve,reject)=>{
+            this.axios.post('/api/policy/insuranceInsurContract/add/contract',this.insuranceInsurContract).then(data=>{
+                console.log("缓存后返回的结果",data);
+                resolve(data);
+            });
+        })
     },
   //   tz(){
   // this.$router.push({
@@ -159,7 +200,7 @@ export default {
     //自己定义的点击新增的方法
     handleCreate() {
       // 用于生成uuid
-      this.order_number = (this.time1+this.S4()+this.id );
+      this.order_number = (this.time1+this.S4()+this.id );//订单号
     },
 
       
@@ -173,7 +214,6 @@ export default {
             this.nowTimes.sec = String(myDate.getSeconds()<10?'0'+myDate.getSeconds():myDate.getSeconds());
             this.time= this.nowTimes.yy +"-" + this.nowTimes.mm + "-" + this.nowTimes.dd;
             console.log(this.nowTimes.yy);
-            console.log("当前日期======"+this.time);
             this.time1=this.nowTimes.yy +"0"+ this.nowTimes.mm + this.nowTimes.dd;
     }
   },

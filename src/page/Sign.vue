@@ -127,7 +127,6 @@ export default {
   methods: {
     getParams(){
        this.flag1= this.$route.query.flag;
-       this.personnelId=this.$route.query.personnelId;
       this.getAllData();
     },
     loginMethodMes() {
@@ -136,8 +135,28 @@ export default {
     loginMethodPass() {
       this.flag = false;
     },
+    checkPhone(){
+        //验证手机号是否是保险人员
+        return new Promise((resolve,reject)=>{
+            this.axios.get(`/api/user/loginUser/checkPhone/${this.getphone}`).then(data=>{
+            console.log("后台穿回来的状态码",data.data.code);
+            resolve(data.data.code);
+            return data.data.code;
+        });
+        })
+    },
+    checkEmail(){
+        //验证手机号是否是保险人员
+        return new Promise((resolve,reject)=>{
+            this.axios.get(`/api/user/loginUser/checkEmail/${this.getphone}`).then(data=>{
+            console.log("后台穿回来的状态码",data.data.code);
+            resolve(data.data.code);
+            return data.data.code;
+        });
+        })
+    },
     //获取验证码
-    getCode2() {
+  async getCode2() {
       var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       //手机号
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
@@ -150,23 +169,43 @@ export default {
           return false;
       }
       if(reg.test(this.getphone)){
+        //这里先去后台请求,看是否要发送请求
+       let code= await this.checkPhone();
+       if (code==0) {
           this.axios
         .post("/api/third/message/sendMessage?phoneNumber=" + this.getphone)
         .then(data => {
-          console.log(data);
           this.msgCode = data.data.data;
           this.person.userPhone=this.getphone;
+           this.messageShow("验证码发送成功","success");
+           this.timeMethod();
         });
+       }else{
+         //这里写不是保险人员
+         this.messageShow("服务器忙,请联系管理员","error");
+         return ;
+       }
       }else{
-           this.axios
+        //这里先去后台请求,看是否要发送请求
+       let code= await this.checkEmail();
+       if (code==0) {
+          this.axios
         .post(`/api/third/email/send/${this.getphone}`)
         .then(data => {
-          console.log(data);
           this.msgCode = data.data.data;
           this.person.userEmail=this.getphone;
+          this.messageShow("验证码发送成功","success");
+          this.timeMethod();
         });
+       }else{
+         //这里写不是保险人员
+         this.messageShow("服务器忙,请联系管理员","error");
+         return ;
+       }
       }
-      //倒计时
+    },
+    timeMethod(){
+       //倒计时
       const TIME_COUNT = 60;
       if (!this.timer) {
         this.count = TIME_COUNT;
@@ -182,12 +221,18 @@ export default {
         }, 1000);
       }
     },
+    messageShow(data,type){
+      this.$message({
+          showClose: true,
+          message: `${data}`,
+          type: `${type}`
+        });
+    },
     //插件验证
     alert(text) {
       this.test = text;
       console.log(this.test);
     },
-  
     //登录
     Sign() {
       //邮箱
@@ -230,14 +275,17 @@ export default {
           this.getphone != "" &&
           this.sgcode != ""
         ) {
+          //这里进行登录
           this.axios
-            .post("/api/user/insuranceUser/insert", this.person)
+            .post(`/api/user/loginUser/phoneCodeLogin/${this.getphone}`)
             .then(data => {
-              // this.$router.push('UserCenter')
-              this.person.userId = data.data.data.userId;
-              // console.log("后台返回的值",data.data);
-              // this.getTokenstatus();
-              this.updateduc();
+              if ((this.insuranceClause = data.data.code == 200)) {
+                 window.sessionStorage.setItem("token",data.data.extended.token)
+                  this.insertRedis();
+                  window.sessionStorage.setItem("userId",data.data.extended.user.userId)
+                  this.person.userId = data.data.extended.user.userId;
+                  this.updateduc();
+              }
             });
         } 
       } else {
@@ -467,6 +515,7 @@ export default {
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
     this.getParams();
+    
   },
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {},

@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-sm-6 text-left">
                         手机号:
-                        <span>13900000000</span>
+                        <span>{{insuranceUser.userPhone}}</span>
                     </div>
                     <div class="col-sm-6 text-left">
                         邮箱:
@@ -42,7 +42,7 @@
                     <h4>被保人信息</h4>
                     <div class="col-sm-12 text-left">
                         姓名:
-                        <span>张三</span>
+                        <span>{{insuranceUser.userName}}</span>
                     </div>
                     <div class="col-sm-6 text-left">
                         证件类型:
@@ -50,15 +50,15 @@
                     </div>
                     <div class="col-sm-6 text-left">
                         证件号:
-                        <span>242525198806122632</span>
+                        <span>{{insuranceUser.userCard}}</span>
                     </div>
                     <div class="col-sm-6 text-left">
                         手机号:
-                        <span>13900000000</span>
+                        <span>{{insuranceUser.userPhone}}</span>
                     </div>
                     <div class="col-sm-6 text-left">
                         邮箱:
-                        <span>13900000000@163.com</span>
+                        <span>{{insuranceUser.userEmail}}</span>
                     </div>
                 </div>
                 <div class="s-lines-style"></div>
@@ -103,13 +103,6 @@
                     <div class="col-sm-6 text-left">
                         证件号:
                         <span>{{insuranceDrivingLicense.drivingLicenseCard}}</span>
-                    </div>
-                </div>
-                <div class="s-lines-style"></div>
-                <div class="row">
-                    <h4>保险日期</h4>
-                    <div class="col-sm-12 text-left">
-                        2018年1月10日0时至2019年1月9日24时止
                     </div>
                 </div>
                 <div class="s-lines-style"></div>
@@ -231,7 +224,11 @@ export default {
         insuranceInserIncludeOption:null,//保险套餐
         insuranceInserJiaoQiang:null,//交强险
         insuranceInserCheChuan:null,//车船税
-        insuranceDrivingLicense:null,//行驶证车主
+        insuranceDrivingLicense:{
+            drivingLicenseId:'',
+            drivingLicenseName:'',
+            drivingLicenseCard:''
+        },//行驶证车主
         InsuranceCarInfo:null,//车辆信息
         includeOption:[],//套餐清单下标
         totalMoney:0,//套餐总金额
@@ -258,10 +255,12 @@ export default {
       this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);//车辆信息
       this.insuranceInsured=this.$route.query.insuranceInsured;//被保险人
       this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//保险清单
-      this.insuranceDrivingLicense=this.$route.query.insuranceDrivingLicense;//车主信息
+      this.insuranceDrivingLicenseId=this.$route.query.insuranceDrivingLicense;//车主信息
       console.log("投保人",this.insuranceUser);
       console.log("被保险人",this.insuranceInsured);
       console.log("保险清单",this.insuranceInserIncludeOption);
+      console.log("车主信息",this.insuranceDrivingLicenseId);
+
      },
      getIncludeMoney(){
         return new Promise((resolve, reject)=>{
@@ -332,17 +331,17 @@ export default {
         })
         .then(data => {
           // this.carInsurs = data.data.data;
-        //   this.insuranceDrivingLicense = data.data.data;
-          console.log("车主信息",data.data.data);
+          this.insuranceDrivingLicense= data.data;
+          console.log("车主信息",this.insuranceDrivingLicense);
            resolve(data.data);
         });
       })
     },
     async getAllData(){
-		 await this.getinsur();
+         await this.getinsur();
+         await this.getInsuranceDrivingLicense();
 		 await this.getinsuranceInserJiaoQiang();
          await this.getinsuranceInserCheChuan();
-         await this.getInsuranceDrivingLicense();
          await this.getIncludeMoney();
      },
   },

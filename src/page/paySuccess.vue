@@ -1,7 +1,7 @@
 <!--  -->
 <template>
 <div>
-    <h1>支付成功</h1>
+    <h1 align="center">支付成功</h1>
     <!-- 订单号<input type="text" v-model="this.$route.query.out_trade_no" readonly="readonly"/></br> -->
  订单号:<b>{{this.$route.query.out_trade_no}}</b></br>
             <!-- 金额<input type="text" v-model="this.$route.query.total_amount" readonly="readonly"/></br> -->
@@ -30,13 +30,15 @@ watch: {
 methods: {
     getParams(){
         this.id=this.$route.query.out_trade_no;
-        console.log("获取到的订单号",this.id,this.$route.query.total_amount);
-        
     },
 },
 //生命周期 - 创建完成（可以访问当前this实例）
 created() {
-    // this.id();
+    //这里发送请求到后端获取redis的值,并且同时保存到数据库中
+        this.axios.get(`/api/policy/insuranceInsurContract/get/contract/${this.this.$route.query.out_trade_no}`).then(data=>{
+            console.log("根据订单号查询到的缓存的值",data.data);
+        });
+        console.log("获取到的订单号",this.$route.query.total_amount);
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {
