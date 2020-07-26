@@ -9,6 +9,9 @@
           <!-- <router-link to="usercenter" id="yonhu" 
         v-if="tshow==false">
         手机用户{{user.userPhone}}</router-link> -->
+        <a v-if="tshow==false" class="userPosition">
+          当前用户{{user.insuranceLoginPhone}}
+        </a>
         <a to="usercenter" id="yonhu"
         @click="loginOut" 
         v-if="tshow==false">
@@ -106,6 +109,7 @@ export default {
                 this.user = data.data.data;
             if (this.user.userId!=null||this.user.userId!='') {
                this.tshow=false;
+               console.log("当前登录的用户",this.user);
             }
              resolve(this.user);
             }else{
@@ -148,5 +152,12 @@ export default {
   position: absolute;
   left: 90%;
   top: 20px;
+}
+.userPosition{
+  position: absolute;
+  left: 82%;
+  top: 20px;
+  color: black;
+  text-decoration: none;
 }
 </style>

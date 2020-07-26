@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
   }else{//如果token不为空
     if (to.path=='/sign') {//并且访问的地址是登录页面
       if (!(token===null || token==='')) {
-        next({path:'/usercenter',query: {
+        next({path:'/home',query: {
           id: id
        }})
       }

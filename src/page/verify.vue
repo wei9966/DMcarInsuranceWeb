@@ -532,7 +532,7 @@ export default {
         var mydropdown = new app.customdropdown($(this));
       });
     },
-    next: function(txt) {
+   async next() {
 		if (!this.checked) {
 			this.$message({
           message: '请勾选确认协议',
@@ -540,7 +540,8 @@ export default {
         });
 			return false;
 		}
-	this.addInfo();
+	await this.addUserInfomation();
+	console.log("车薪猪心id",this.insuranceDrivingLicenseId);
 	if (this.validVerift()) {
 		this.$router.push({
 		  name:"pay",
@@ -635,7 +636,7 @@ export default {
         });
     },
     last: function(txt) {
-      this.$router.push("selectingOffers");
+      this.$router.go(-1);
 	},
 	getClause(){
 		this.axios.get('/api/policy/insuranceClause/select').then(data=>{
@@ -684,9 +685,6 @@ export default {
 	getMessage(){
 
 	},
-	async addInfo(){
-		await this.addUserInfomation();
-	},
 	addUserInfomation(){
 		return new Promise((resolve,reject)=>{
 			//更新投保人
@@ -706,9 +704,10 @@ export default {
 		this.axios.post('/api/policy/insuranceDrivingLicense/insertOne',this.insuranceDrivingLicense).then(data=>{
 				this.insuranceDrivingLicenseId=data.data.data.drivingLicenseId;
 				console.log("添加的行驶证车主",data.data.data);
+				resolve(data.data.data);
 			});
 		})
-		resolve(this.insuranceInsuredId!=0);
+		
 	},
 	 async getAllData(){
 		 await this.getinsur();
