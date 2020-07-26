@@ -60,6 +60,16 @@ export default {
     return {
       getphone: "",
       //user表对象
+      person: {
+        userId: "", //id
+        userName: "", //用户名
+        userPass: "", //密码
+        userPhone: "", //手机号
+        userEmail: "", //邮箱
+        userSex: "", //性别
+        userAddress: "", //地址
+        userCard: "" //身份证
+      },
       values: [],
       props: {
         value: "baseAreaid",

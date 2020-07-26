@@ -134,19 +134,19 @@
         <div class="row">
           <div class="col-sm-6 text-right">
             车辆类型：
-              <el-select v-model="value" filterable placeholder="请选择">
-                <el-option
+              <!-- <el-select v-model="value" filterable placeholder="请选择"> -->
+                <!-- <el-option
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value">
                 </el-option>
-              </el-select>
-             <!-- <el-input
+              </el-select> -->
+             <el-input
                 placeholder="请输入车辆类型"
                 v-model="InsuranceCarInfo.carInfoConfigurationModel"
                 style="width:306px;">
-            </el-input> -->
+            </el-input>
             <!-- <input type="text" name="" id="" v-model="InsuranceCarInfo.carInfoBrand" class="form-control"/> -->
           </div>
         </div>

@@ -468,7 +468,8 @@ export default {
         })
         .then(data => {
           // this.carInsurs = data.data.data;
-          this.insuranceInserIncludeOption1 = data.data.data;
+          console.log("套餐1的数据",data.data);
+          this.insuranceInserIncludeOption1 = data.data;
           let index = 0;
           let index2 = -3;
           for (const key in this.insuranceInserIncludeOption1) {
@@ -486,7 +487,7 @@ export default {
             index++;
             index2++;
           }
-          resolve(data.data.data);
+          resolve(data.data);
           console.log("套餐1的金额为" + this.money1);
 
           // console.log("套餐清单1的值",this.insuranceInserIncludeOption1);
@@ -502,11 +503,11 @@ export default {
         })
         .then(data => {
           // this.carInsurs = data.data.data;
-          this.insuranceInserIncludeOption2 = data.data.data;
+          this.insuranceInserIncludeOption2 = data.data;
           let index = 0;
           let index2 = -3;
           for (const key in this.insuranceInserIncludeOption2) {
-            // console.log("套餐清单1的值",this.insuranceInserIncludeOption1[key],key,key=='ci'+index,this.insuranceInserIncludeOption1[key]==1);
+            console.log("套餐清单1的值",this.insuranceInserIncludeOption1[key],key,key=='ci'+index,this.insuranceInserIncludeOption1[key]==1);
             if (
               key == "ci" + index &&
               this.insuranceInserIncludeOption2[key] == 1
@@ -514,13 +515,13 @@ export default {
               if (index > 2) {
                 this.money2 += this.carInsurs[index2].ciMoney;
                 this.taocanPrice2 = this.money2;
-                // console.log("类型1的金额",this.carInsurs[index2].ciMoney,"类型的名称",this.carInsurs[index2].ciName);
+                console.log("类型1的金额",this.carInsurs[index2].ciMoney,"类型的名称",this.carInsurs[index2].ciName);
               }
             }
             index++;
             index2++;
           }
-          resolve(data.data.data);
+          resolve(data.data);
           console.log("套餐2的金额为" + this.money2);
           // console.log("返回", data.data.data);
         });
@@ -534,9 +535,9 @@ export default {
         })
         .then(data => {
           // this.carInsurs = data.data.data;
-          this.insuranceInserIncludeOption3 = data.data.data;
+          this.insuranceInserIncludeOption3 = data.data;
           // console.log("返回", data.data.data);
-          resolve(data.data.data);
+          resolve(data.data);
         });
       });
     },

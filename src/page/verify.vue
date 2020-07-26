@@ -520,27 +520,29 @@ export default {
         });
 			return false;
 		}
-	// this.addInfo();
-	this.validVerift();
-	//   this.$router.push("pay");
-	//   this.$router.push({
-	// 	  name:"pay",
-	// 	  path:"/pay",
-	// 	  query:{
-	// 		  totalMoney: this.totalMoney,//传输总金额
-	// 		  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
-	// 		  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
-	// 		  insuranceInsured:this.insuranceInsuredId,//被保险人
-	// 		  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
-	// 		  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
-	// 	  }
-	//   });
+	this.addInfo();
+	if(!this.validVerift()){
+		return false;
+	}
+	  this.$router.push("pay");
+	  this.$router.push({
+		  name:"pay",
+		  path:"/pay",
+		  query:{
+			  totalMoney: this.totalMoney,//传输总金额
+			  insuranceInserIncludeOption:JSON.stringify(this.insuranceInserIncludeOption),//套餐清单
+			  insuranceUser:JSON.stringify(this.insuranceUser),//投保人
+			  insuranceInsured:this.insuranceInsuredId,//被保险人
+			  insuranceDrivingLicense:this.insuranceDrivingLicenseId,//车主
+			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
+		  }
+	  });
 	},
 	validVerift(){
 		 var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       //手机号
 		  var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-		  var card=/^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+		  var card=/^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;;
 			//校验数据
 		if (this.insuranceUser.userName==null||this.insuranceUser.userName=='') {
 			this.errorMessage("请输入投保人姓名");
@@ -550,8 +552,8 @@ export default {
 			this.errorMessage("请输入投保人身份证号码");
 			return false;
 		}else{
-			if (card.test(this.insuranceUser.userCard)) {
-				this.errorMessage("身份证号码格式不正确");
+			if (!card.test(this.insuranceUser.userCard)) {
+				this.errorMessage("投保人身份证号码格式不正确");
 				return false;
 			}
 		}
@@ -577,7 +579,7 @@ export default {
 				this.errorMessage("请输入被保险人身份证号码");
 				return false;
 			}else{
-				if (card.test(this.insuranceInsured.insuredCard)) {
+				if (!card.test(this.insuranceInsured.insuredCard)) {
 				this.errorMessage("身份证号码格式不正确");
 				return false;
 			}
