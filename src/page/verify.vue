@@ -148,7 +148,7 @@
 									</div>
 									<div class="col-sm-4 text-left">
 										证件号码：
-										<span>123456789987654321</span>
+										<span>{{insuranceUser.userCard}}</span>
 									</div>
 									<div class="col-sm-4 text-left">
 									</div>
@@ -335,7 +335,7 @@
 							收件人:
 						</div>
 						<div class="col-sm-6 text-left">
-							<input type="text" name="" id="" class="form-control" placeholder="" value="张三">
+							<input type="text" name="" v-model="insuranceUser.userName" id="" class="form-control" placeholder="" value="">
 						</div>
 					</div>
 					<div class="row">
@@ -343,7 +343,7 @@
 							手机号:
 						</div>
 						<div class="col-sm-6 text-left">
-							<input type="number" name="" id="" class="form-control" placeholder="" value="">
+							<input type="number" name="" v-model="insuranceUser.userPhone" id="" class="form-control" placeholder="" value="">
 						</div>
 					</div>
 					<div class="s-lines-style"></div>
@@ -447,7 +447,7 @@ export default {
 		isInsuranceInsured:true,//判断是否为同投保人
 		distribution:false,//配送方式
 		insuranceUser:{//投保人(用户)
-			userId:'13',
+			userId:'',
 			userName:'',
 			userCard:'',
 			userAddress:'',
@@ -472,6 +472,7 @@ export default {
 		insuranceInserJiaoQiang:[],//交强险
 		insuranceInserCheChuan:[],//车船税
 		insuranceCarInfo:null,
+		userId:0,//用户id
 	};
   },
   watch: {
@@ -499,6 +500,24 @@ export default {
 				index2++;	
 		 }
 		this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);
+		this.userId=this.$route.query.userId;
+		this.getData();
+	},
+	//获取用户信息
+	getUserInfo(){
+		return new Promise((resolve,reject)=>{
+			this.axios.get(`/api/user/insuranceUser/selectUser/${this.userId}`,{
+           headers: {
+            		token: window.sessionStorage.getItem("token")
+                   }
+                   }).then(data=>{
+				this.insuranceUser=data.data.data;
+				console.log("获取到的用户信息",data.data.data);
+			});
+		})
+	},
+	async getData(){
+		await this.getUserInfo();
 	},
     init() {
       $(".panel-info .panel-collapse").on("shown.bs.collapse", function(e) {
@@ -521,11 +540,8 @@ export default {
 			return false;
 		}
 	this.addInfo();
-	if(!this.validVerift()){
-		return false;
-	}
-	  this.$router.push("pay");
-	  this.$router.push({
+	if (this.validVerift()) {
+		this.$router.push({
 		  name:"pay",
 		  path:"/pay",
 		  query:{
@@ -537,6 +553,7 @@ export default {
 			  insuranceCarInfo:JSON.stringify(this.insuranceCarInfo),//车辆信息
 		  }
 	  });
+	}
 	},
 	validVerift(){
 		 var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -553,7 +570,7 @@ export default {
 			return false;
 		}else{
 			if (!card.test(this.insuranceUser.userCard)) {
-				this.errorMessage("投保人身份证号码格式不正确");
+				this.errorMessage("身份证号码格式不正确");
 				return false;
 			}
 		}

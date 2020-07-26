@@ -363,7 +363,8 @@ export default {
       taocanPrice2: 0,
       taocanPrice3: 0,
       totalPriceShangYe: 0,
-      flagByTaoCanId: 0
+      flagByTaoCanId: 0,
+      userId:0,
       // totalMoney: 0
     };
   },
@@ -375,21 +376,9 @@ export default {
   methods: {
     getParams() {
       //取到路由带过来的参数
-      // var routerParams1 = this.$route.params.carInfoCard;
-      // //将数据放在当前组件的数据内
-      // this.carInfoCard = routerParams1;
-      // var routerParams2 = this.$route.params.carInfoOwner;
-      // this.carInfoOwner = routerParams2;
-      // var routerParams3 = this.$route.params.carInfoTransfer;
-      // this.carInfoTransfer = routerParams3;
-      // var routerParams4 = this.$route.params.carInfoFrameNo;
-      // this.carInfoFrameNo = routerParams4;
-      // var routerParams5 = this.$route.params.carInfoEnigneNumber;
-      // this.carInfoEnigneNumber = routerParams5;
-      // console.log("传过来的参数",this.$route.params.carInfoCard);
-      
       this.InsuranceCarInfo =JSON.parse(this.$route.query.InsuranceCarInfo);
-      console.log("传过来的参数",this.InsuranceCarInfo);
+      this.userId =this.$route.query.userId;
+      console.log("传过来的用户Id",this.userId);
       },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
@@ -430,9 +419,10 @@ export default {
           query: { 
             iiId: this.flagByTaoCanId,
             totalMoney: this.totalMoney,
-            InsuranceCarInfo:JSON.stringify(this.InsuranceCarInfo),
+            insuranceCarInfo:JSON.stringify(this.InsuranceCarInfo),
             insuranceInserIncludeOption:JSON.stringify(insuranceInserIncludeOption),
-            insuranceCarInfo:JSON.stringify(this.InsuranceCarInfo)
+            // insuranceCarInfo:JSON.stringify(this.InsuranceCarInfo)
+            userId:this.userId
             }
         });
       } else {
@@ -468,7 +458,6 @@ export default {
         })
         .then(data => {
           // this.carInsurs = data.data.data;
-          console.log("套餐1的数据",data.data);
           this.insuranceInserIncludeOption1 = data.data;
           let index = 0;
           let index2 = -3;
@@ -489,7 +478,6 @@ export default {
           }
           resolve(data.data);
           console.log("套餐1的金额为" + this.money1);
-
           // console.log("套餐清单1的值",this.insuranceInserIncludeOption1);
           // console.log("返回的数据", data.data.data);
         });
@@ -597,9 +585,9 @@ export default {
           )
           .then(data => {
             // this.carInsurs = data.data.data;
-            this.insuranceInserIncludeOption3 = data.data.data;
+            this.insuranceInserIncludeOption3 = data.data;
             this.flagByTaoCanId = this.insuranceInserIncludeOption3.iiId;
-            console.log("插入的套餐", data.data.data);
+            console.log("插入的套餐", data.data);
           });
       }
     },

@@ -17,17 +17,21 @@ props:{},
 data() {
 //这里存放数据
 return {
-        // id:"",
+        id:"",
 };
 },
 //监听属性 类似于data概念
 computed: {},
 //监控data中的数据变化
-watch: {},
+watch: {
+     $route: "getParams"
+},
 //方法集合
 methods: {
-    id(){
+    getParams(){
         this.id=this.$route.query.out_trade_no;
+        console.log("获取到的订单号",this.id,this.$route.query.total_amount);
+        
     },
 },
 //生命周期 - 创建完成（可以访问当前this实例）

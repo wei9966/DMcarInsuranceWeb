@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <my-header  v-if="show"></my-header>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 <script>
 export default {
     name: 'app',
+   
     data () {
       return {
         show: false

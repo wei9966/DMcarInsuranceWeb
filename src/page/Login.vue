@@ -101,6 +101,7 @@ export default {
       //       // this.$router.push('UserCenter')
       //       this.person.userId = data.data.data.userId;
       //       // console.log("后台返回的值",data.data);
+            this.valid();
             this.updatedlogin();
       //     });
       // } else {
@@ -134,6 +135,7 @@ export default {
         }
       });
     },
+    //获取金额
     getEvaluations(){
       return new Promise((resolve,reject)=>{
         this.axios.get('/api/policy/insuranceEvaluation/select').then(data=>{
@@ -142,9 +144,32 @@ export default {
         });
       })
     },
+    valid(){
+      let carInfoCardValid=/^(([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z](([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领][A-Z][A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳使领]))$/;
+      //车牌号码
+      if (!this.personnelInformation.personnelNewCarFlag) {
+          if (this.personnelInformation.personnelLicensePlate==''||this.personnelInformation.personnelLicensePlate==null) {
+            this.errorMessage("请输入您的车牌号码");
+            return false;
+        }else{
+            if(!carInfoCardValid.test(this.personnelInformation.personnelLicensePlate)){
+              this.errorMessage("您输入的车牌号不规范哦");
+              return false;
+          }
+        }
+      }
+    },
     async getAllData(){
      await this.getEvaluations();
-    }
+    },
+    errorMessage(data){
+        this.$message({
+           showClose: true,
+          message: `${data}`,
+          type: 'error',
+          duration:1500
+        });
+    },
   },
   created() {
     this.getAllData();
