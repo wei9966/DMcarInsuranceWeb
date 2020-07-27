@@ -14,7 +14,11 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import cardPath from "@/assets/timg.jpg"
+=======
+import cardPath from "@/assets/tim.jpg"
+>>>>>>> 68b3cd287fa306e1bf73a0d0664845588ac6611a
 export default {
 //import引入的组件需要注入到对象中才能使用
 components: {},

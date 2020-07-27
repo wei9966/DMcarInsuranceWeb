@@ -49,7 +49,7 @@
     </div>
     <footer class="foots">
       <p>车险出单平台 版权所有</p>
-      <p>Copyright@2017 Chexianchudanpingtai</p>
+      <p>Copyright@2020 Chexianchudanpingtai</p>
     </footer>
   </div>
 </template>

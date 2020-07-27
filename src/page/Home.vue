@@ -134,6 +134,14 @@
         <div class="row">
           <div class="col-sm-6 text-right">
             车辆类型：
+              <!-- <el-select v-model="value" filterable placeholder="请选择"> -->
+                <!-- <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select> -->
              <el-input
                 placeholder="请输入车辆类型"
                 v-model="InsuranceCarInfo.carInfoConfigurationModel"
@@ -257,7 +265,7 @@
     <div class="h_10"></div>
     <div class="s_main1080 s_next">
       <div class="next_btn">
-        <button type="submit" class="s-default" v-on:click="next">快速报价</button>
+        <button type="submit" class="s-default" v-on:click="next">快速下一页</button>
       </div>
     </div>
     <footer class="foot">
@@ -343,7 +351,9 @@ export default {
         ]
       },
       isShow: true
+      
     };
+    
   },
   mounted() {
     this.init();

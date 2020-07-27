@@ -215,7 +215,6 @@
 							地址：
 						</div>
 						<div class="col-sm-9 text-left">
-
 							<input type="text" name="" v-model="insuranceUser.userAddress" id="" class="form-control">
 						</div>
 					</div>
@@ -555,7 +554,7 @@ export default {
 		 var regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       //手机号
 		  var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-		  var card=/^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+		  var card=/^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;;
 			//校验数据
 		if (this.insuranceUser.userName==null||this.insuranceUser.userName=='') {
 			this.errorMessage("请输入投保人姓名");
