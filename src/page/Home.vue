@@ -265,7 +265,7 @@
     <div class="h_10"></div>
     <div class="s_main1080 s_next">
       <div class="next_btn">
-        <button type="submit" class="s-default" v-on:click="next">快速报价</button>
+        <button type="submit" class="s-default" v-on:click="next">快速下一页</button>
       </div>
     </div>
     <footer class="foot">
