@@ -3,7 +3,7 @@
 <body  class="card" :style="{backgroundImage: 'url(' + cardPath + ')' }">
 <div align="center" class="zf">
     <h1 >恭喜您！已完成付款！</h1>
-    </br>
+    <br>
     <!-- 订单号<input type="text" v-model="this.$route.query.out_trade_no" readonly="readonly"/></br> -->
 <h3> 您的订单号:<b>{{this.$route.query.out_trade_no}}</b></h3>
             <!-- 金额<input type="text" v-model="this.$route.query.total_amount" readonly="readonly"/></br> -->
@@ -14,11 +14,7 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import cardPath from "@/assets/timg.jpg"
-=======
-import cardPath from "@/assets/tim.jpg"
->>>>>>> 68b3cd287fa306e1bf73a0d0664845588ac6611a
 export default {
 //import引入的组件需要注入到对象中才能使用
 components: {},
