@@ -1,15 +1,20 @@
 <!--  -->
-<template>
-<div>
-    <h1 align="center">支付成功</h1>
+<template >
+<body  class="card" :style="{backgroundImage: 'url(' + cardPath + ')' }">
+<div align="center" class="zf">
+    <h1 >恭喜您！已完成付款！</h1>
+    </br>
     <!-- 订单号<input type="text" v-model="this.$route.query.out_trade_no" readonly="readonly"/></br> -->
- 订单号:<b>{{this.$route.query.out_trade_no}}</b></br>
+<h3> 您的订单号:<b>{{this.$route.query.out_trade_no}}</b></h3>
             <!-- 金额<input type="text" v-model="this.$route.query.total_amount" readonly="readonly"/></br> -->
- 金额:  <b>{{this.$route.query.total_amount}}</b>
+ <h3> 付款金额: <b>{{this.$route.query.total_amount}}</b>元</h3> 
+ <h3>支付方式：支付宝</h3>
 </div>
+</body>
 </template>
 
 <script>
+import cardPath from "@/assets/timg.jpg"
 export default {
 //import引入的组件需要注入到对象中才能使用
 components: {},
@@ -17,6 +22,7 @@ props:{},
 data() {
 //这里存放数据
 return {
+    cardPath: cardPath ,
         id:"",
 };
 },
@@ -53,5 +59,17 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style scoped>
-
+.zf{
+    background-color: white ;
+    filter:alpha(Opacity=80);
+    -moz-opacity:0.2;opacity: 0.6;
+    width: 40%;
+    position: relative;
+    left: 30%;
+    top: 15%;
+    padding: 30px;
+}
+b{
+    color: red;
+}
 </style>
