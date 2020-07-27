@@ -92,37 +92,13 @@ export default {
     //手机号验证
     next() {
       //手机号
-      // var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-      // if (this.getphone != "" && reg.test(this.getphone)) {
-      //   this.person.userPhone = this.getphone;
-      //   this.axios
-      //     .post("/api/user/insuranceUser/insert", this.person)
-      //     .then(data => {
-      //       // this.$router.push('UserCenter')
-      //       this.person.userId = data.data.data.userId;
-      //       // console.log("后台返回的值",data.data);
             if (!this.valid()) {
                 return;
             }
             this.updatedlogin();
-      //     });
-      // } else {
-      //   this.$message({
-      //     showClose: true,
-      //     message: "手机号格式错误或为空",
-      //     type: "error"
-      //   });
-      // }
     },
     //传值下一个页面
     updatedlogin() {
-      // this.$router.push({
-      //   name: "Home",
-      //   path: "/Home",
-      //   params: {
-      //     id: this.person.userId
-      //   }
-      // });
       if (this.personnelInformation.personnelNewCarFlag==true) {
           this.personnelInformation.personnelNewCarFlag=1;
       }else{
@@ -157,8 +133,12 @@ export default {
             if(!carInfoCardValid.test(this.personnelInformation.personnelLicensePlate)){
               this.errorMessage("您输入的车牌号不规范哦");
               return false;
+          }else{
+            return true;
           }
         }
+      }else{
+        return true;
       }
     },
     async getAllData(){

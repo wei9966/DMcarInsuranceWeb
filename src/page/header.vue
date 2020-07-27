@@ -43,37 +43,6 @@ export default {
     goindex: function(e) {
       this.$router.push(this.home);
     },
-    //获取Token状态
-    // getTokenstatus() {
-    //   //取token
-    //   let t = window.sessionStorage.getItem("token");
-    //   //调用验证TOKEN方法
-    //   this.axios
-    //     .get("/api/user/insuranceUser/admin", {
-    //       headers: {
-    //         token: `${t}`
-    //       }
-    //     })
-    //     .then(data => {
-    //       //返回200正确
-    //         this.tshow = false;
-    //         this.tokenstatus = 200;
-    //         this.user=data.data.user;
-    //         console.log("获取的对象",data.data.user);
-    //     })
-    //     .catch(data => {
-    //       console.log("错误code:", data.response.status);
-    //       //500Token异常或尚未登录
-    //       this.tshow = true;
-    //       this.tokenstatus = 500;
-    //       this.$router.push({ name: "sign" });
-    //       this.$message({
-    //         showClose: true,
-    //         message: "请重新登录！",
-    //         type: "error"
-    //       });
-    //     });
-    // }
     //退出登录
     loginOut(){
         window.sessionStorage.setItem("token",null);
@@ -93,7 +62,6 @@ export default {
     },
     getPersonMessge() {
       let redisKey=window.sessionStorage.getItem("redisKey");
-      console.log("缓存键",redisKey!='null',redisKey!=null,!(redisKey!=null || redisKey !='null'));
       if (redisKey!=null && redisKey !='null') {
           return new Promise((resolve,reject)=>{
             let token=window.sessionStorage.getItem("token");
@@ -104,12 +72,10 @@ export default {
                    }
                    })
           .then(data => {
-            console.log("redis获取的数据",data.data.data);
             if (data.data.data!=null) {
                 this.user = data.data.data;
             if (this.user.userId!=null||this.user.userId!='') {
                this.tshow=false;
-               console.log("当前登录的用户",this.user);
             }
              resolve(this.user);
             }else{
@@ -139,11 +105,8 @@ export default {
     
   },mounted() {
     this.getAlldata();
-    console.log("状态显示",this.tshow);
   },
   activated() {
-    this.getAlldata();
-    console.log("状态显示",this.tshow);
   },
 };
 </script>

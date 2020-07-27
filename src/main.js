@@ -32,7 +32,6 @@ Vue.config.productionTip = false
 Vue.component('my-header', header)
 /* eslint-disable no-new */
 router.beforeEach((to, from, next) => {
-  console.log("token是",window.sessionStorage.getItem("token"));
   let token = window.sessionStorage.getItem("token");
   let id=window.sessionStorage.getItem("userId");
   if (token ===null || token === '' || token=== 'null') {

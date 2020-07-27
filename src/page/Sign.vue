@@ -58,7 +58,7 @@
           @error="alert('error')"
           :type="3"
           :showButton="false"
-          :barSize="{width:'340px',height:'40px'}"
+          :barSize="{width:'355px',height:'40px'}"
           id="sg-zh-code"
           class="marT"
         ></Verify>
@@ -139,7 +139,6 @@ export default {
         //验证手机号是否是保险人员
         return new Promise((resolve,reject)=>{
             this.axios.get(`/api/user/loginUser/checkPhone/${this.getphone}`).then(data=>{
-            console.log("后台穿回来的状态码",data.data.code);
             resolve(data.data.code);
             return data.data.code;
         });
@@ -149,7 +148,6 @@ export default {
         //验证手机号是否是保险人员
         return new Promise((resolve,reject)=>{
             this.axios.get(`/api/user/loginUser/checkEmail/${this.getphone}`).then(data=>{
-            console.log("后台穿回来的状态码",data.data.code);
             resolve(data.data.code);
             return data.data.code;
         });
@@ -231,7 +229,6 @@ export default {
     //插件验证
     alert(text) {
       this.test = text;
-      console.log(this.test);
     },
     //登录
     Sign() {
@@ -318,7 +315,6 @@ export default {
                       })
                       .then(data => {
                         this.person.userId = data.data.data.userId;
-                        // this.getTokenstatus();
                         this.updateduc();
                       });
                   } else {
@@ -360,7 +356,6 @@ export default {
                       })
                       .then(data => {
                         this.person.userId = data.data.data.userId;
-                        console.log("查询到的数据", this.person.userId);
                         this.updateduc();
                       });
                   } else {
@@ -378,7 +373,7 @@ export default {
                   });
                 }
               });
-          } else if (nam.test(this.person.userName)) {
+          } else if (nam.test(this.getnumber)) {
             //用户名登录
             this.axios
               .get("/api/user/loginUser/nameLogin", {
@@ -401,7 +396,6 @@ export default {
                       })
                       .then(data => {
                         this.person.userId = data.data.data.userId;
-                        console.log("查询到的数据", this.person.userId);
                         this.updateduc();
                       });
                   } else {
@@ -444,14 +438,6 @@ export default {
               personnelId:this.personnelId
            }
            });
-  //  else{
-        //     this.$router.push({
-        //     name: "usercenter",
-        //    query: {
-        //       id: this.person.userId
-        //    }
-        //    });
-        // }
     },
     //将用户信息保存到redis
     insertRedis(){
@@ -461,7 +447,6 @@ export default {
                    }
                    }).then(data=>{
                      window.sessionStorage.setItem("redisKey",data.data.key)
-                console.log("传递回来的key",data.data.key);
             });
         });
     },
@@ -478,36 +463,6 @@ export default {
             });
         })
     },
-    //获取Token状态
-    // getTokenstatus() {
-    //   //取token
-    //   let t = window.sessionStorage.getItem("token");
-    //   console.log("取到的token:" + t);
-    //   //调用验证TOKEN方法
-    //   this.axios
-    //     .get("/api/user/insuranceUser/admin", {
-    //       headers: {
-    //         token: `${t}`
-    //       }
-    //     })
-    //     .then(data => {
-    //       //返回200正确
-    //       if (data.data.code == 200) {
-    //         this.tokenstatus = 200;
-    //       }
-    //     })
-    //     .catch(data => {
-    //       console.log("错误code:", data.response.status);
-    //       //500Token异常或尚未登录
-    //       this.tokenstatus = 500;
-    //       this.$router.push({ name: "sign" });
-    //       this.$message({
-    //         showClose: true,
-    //         message: "请重新登录！",
-    //         type: "error"
-    //       });
-    //     });
-    // },
    async getAllData(){
         await this.getPersonnel();
     }
