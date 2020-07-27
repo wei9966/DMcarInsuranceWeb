@@ -58,7 +58,7 @@
           @error="alert('error')"
           :type="3"
           :showButton="false"
-          :barSize="{width:'355px',height:'40px'}"
+          :barSize="{width:'300px',height:'40px'}"
           id="sg-zh-code"
           class="marT"
         ></Verify>

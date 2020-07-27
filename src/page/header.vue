@@ -62,6 +62,7 @@ export default {
     },
     getPersonMessge() {
       let redisKey=window.sessionStorage.getItem("redisKey");
+      console.log("缓存键",redisKey!='null',redisKey!=null,!(redisKey!=null || redisKey !='null'));
       if (redisKey!=null && redisKey !='null') {
           return new Promise((resolve,reject)=>{
             let token=window.sessionStorage.getItem("token");
@@ -72,6 +73,7 @@ export default {
                    }
                    })
           .then(data => {
+            console.log("redis获取的数据",data.data.data);
             if (data.data.data!=null) {
                 this.user = data.data.data;
             if (this.user.userId!=null||this.user.userId!='') {
@@ -90,6 +92,9 @@ export default {
               }
           });
         })
+      }else{
+          window.sessionStorage.setItem("redisKey",null);
+          window.sessionStorage.setItem("token",null);
       }
     },
     async getAlldata(){
@@ -118,7 +123,7 @@ export default {
 }
 .userPosition{
   position: absolute;
-  left: 82%;
+  left: 72%;
   top: 20px;
   color: black;
   text-decoration: none;

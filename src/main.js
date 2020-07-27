@@ -34,6 +34,7 @@ Vue.component('my-header', header)
 router.beforeEach((to, from, next) => {
   let token = window.sessionStorage.getItem("token");
   let id=window.sessionStorage.getItem("userId");
+  console.log(token ===null, token === '' , token=== 'null',token);
   if (token ===null || token === '' || token=== 'null') {
       if (!(to.path=='/login'||to.path=='/selectoffer'||to.path=='/sign')) {
           next('/sign');
@@ -44,7 +45,6 @@ router.beforeEach((to, from, next) => {
     if (to.path=='/sign') {//并且访问的地址是登录页面
       if (!(token===null || token==='')) {
         next({path:'/home',query: {
-          id: id
        }})
       }
     }else{

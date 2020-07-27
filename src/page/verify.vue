@@ -122,10 +122,6 @@
 										发动机号：
 										<span>{{insuranceCarInfo.carInfoEnigneNumber}}</span>
 									</div>
-									<div class="col-sm-4 text-left">
-										车价：
-										<span>76400.0</span>
-									</div>
 								</div>
 
 								<div class="row-s">

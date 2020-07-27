@@ -104,8 +104,9 @@ export default {
     getParams() {
       // 取到路由带过来的参数
       this.totalMoney =  this.$route.query.totalMoney;
+
       //赋值保单金额
-      this.insuranceInsurContract.icMoney=this.totalMoney;
+      this.insuranceInsurContract.icMoney=(this.totalMoney-950-420)*0.95+950+420;
       let user=JSON.parse(this.$route.query.insuranceUser);
       this.id=user.userId;
       this.payafter.id = this.id;

@@ -38,15 +38,6 @@
           </div>
         </div>
         <div class="s-lines-style"></div>
-        <div class="row s-span1">
-          <span>
-            所在省份：
-            <span>上海市</span> 协商价值：
-            <span>129900.0</span> 实际价值：
-            <span>129900.0</span> 交通违法系数：
-            <span>0.00</span>
-          </span>
-        </div>
         <div class="row s-selectingoffers-list">
           <div class="col-sm-3">
             <div class="title">
@@ -451,7 +442,7 @@ export default {
       return new Promise((resolve, reject)=>{
         this.axios
         .get("/api/carInsur/incloud/selectOne", {
-          params: { id: 1 }
+          params: { id: 2 }
         })
         .then(data => {
           // this.carInsurs = data.data.data;
@@ -479,7 +470,7 @@ export default {
       return new Promise((resolve,reject)=>{
         this.axios
         .get("/api/carInsur/incloud/selectOne", {
-          params: { id: 2 }
+          params: { id: 1 }
         })
         .then(data => {
           // this.carInsurs = data.data.data;
