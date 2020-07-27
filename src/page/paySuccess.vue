@@ -38,7 +38,6 @@ created() {
         this.axios.get(`/api/policy/insuranceInsurContract/get/contract/${this.this.$route.query.out_trade_no}`).then(data=>{
             console.log("根据订单号查询到的缓存的值",data.data);
         });
-        console.log("获取到的订单号",this.$route.query.total_amount);
 },
 //生命周期 - 挂载完成（可以访问DOM元素）
 mounted() {

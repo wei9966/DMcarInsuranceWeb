@@ -251,15 +251,10 @@ export default {
     },
      getParams() {
       this.insuranceUser=JSON.parse(this.$route.query.insuranceUser);//投保人
-      console.log("详情页面的用户",this.insuranceUser);
       this.insuranceCarInfo=JSON.parse(this.$route.query.insuranceCarInfo);//车辆信息
       this.insuranceInsured=this.$route.query.insuranceInsured;//被保险人
       this.insuranceInserIncludeOption=JSON.parse(this.$route.query.insuranceInserIncludeOption);//保险清单
       this.insuranceDrivingLicenseId=this.$route.query.insuranceDrivingLicense;//车主信息
-      console.log("投保人",this.insuranceUser);
-      console.log("被保险人",this.insuranceInsured);
-      console.log("保险清单",this.insuranceInserIncludeOption);
-      console.log("车主信息",this.insuranceDrivingLicenseId);
 
      },
      getIncludeMoney(){
@@ -276,7 +271,6 @@ export default {
 				index++;
 				index2++;	
          }
-         console.log("金额",this.money);
          this.totalMoney=(this.insuranceInserCheChuan.ciMoney+this.insuranceInserJiaoQiang.ciMoney)+(this.money*0.95);
          resolve(this.money);
         })
@@ -291,9 +285,7 @@ export default {
         .then(data => {
           this.carInsurs = data.data.data;
           this.len = this.carInsurs.length;
-          console.log("数据长度" + this.len);
           resolve(data.data.data);
-          // console.log("返回的数据", data.data.data);
         });
       });
 	},
@@ -332,7 +324,6 @@ export default {
         .then(data => {
           // this.carInsurs = data.data.data;
           this.insuranceDrivingLicense= data.data;
-          console.log("车主信息",this.insuranceDrivingLicense);
            resolve(data.data);
         });
       })

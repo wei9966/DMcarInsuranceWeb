@@ -340,7 +340,6 @@ export default {
     getParams() {
       //取到路由带过来的参数
        this.personnelInformation=JSON.parse(this.$route.query.personnelInformation);
-       console.log("传过来的客户预信息",this.personnelInformation);
       },
     init() {
       //   $("[name='my-checkbox']").bootstrapSwitch();
@@ -365,7 +364,6 @@ export default {
       this.personnelInformation.insuranceInserIncludeId=this.flagByTaoCanId;
           var insuranceInserIncludeOption=null;
           this.axios.post('/api/policy/insurancePersonnelInformation/insert',this.personnelInformation).then(data=>{
-              console.log("添加的预客户信息",data.data.data);
               personnelId=data.data.data.personnelId;
               this.$router.push({
                 path: "/sign",
@@ -404,7 +402,6 @@ export default {
         })
         .then(data => {
           // this.carInsurs = data.data.data;
-          console.log(data.data);
           
           let index = 0;
           let index2 = -3;
@@ -423,7 +420,6 @@ export default {
           }
           this.insuranceInserIncludeOption1 = data.data;
            resolve(data.data);
-          console.log("套餐1的金额为" + this.money1);
         });
       });
     },
@@ -453,7 +449,6 @@ export default {
           }
           this.insuranceInserIncludeOption2 = data.data;
            resolve(data.data);
-          console.log("套餐1的金额为" + this.money1);
         });
       });
     },
@@ -481,7 +476,6 @@ export default {
             index2++;
           }
           this.insuranceInserIncludeOption3 = data.data;
-          console.log("套餐3的金额为" + this.money3);
            resolve(data.data);
         });
       })
@@ -507,7 +501,6 @@ export default {
         index++;
         index2++;
       }
-      console.log("套餐3的金额为" + this.money3);
     },
     //获取交强险
     getinsuranceInserJiaoQiang() {

@@ -418,7 +418,6 @@ export default {
           this.InsuranceCarInfo
         )
         .then(data => {
-              console.log("添加后的车辆信息",data.data.data);
               this.insuranceCarInfoId=data.data.data.insuranceCarInfoId;
               this.InsuranceCarInfo=data.data.data;
               resolve(data.data.data);
@@ -437,7 +436,6 @@ export default {
               }
         )
         .then(data => {
-              console.log("添加后的用户信息",data.data.data);
               this.userId=data.data.data.userId;
               resolve(data);
         });

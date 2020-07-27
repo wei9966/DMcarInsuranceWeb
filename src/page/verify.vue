@@ -513,7 +513,6 @@ export default {
                    }
                    }).then(data=>{
 				this.insuranceUser=data.data.data;
-				console.log("获取到的用户信息",data.data.data);
 			});
 		})
 	},
@@ -541,7 +540,6 @@ export default {
 			return false;
 		}
 	await this.addUserInfomation();
-	console.log("车薪猪心id",this.insuranceDrivingLicenseId);
 	if (this.validVerift()) {
 		this.$router.push({
 		  name:"pay",
@@ -641,7 +639,6 @@ export default {
 	getClause(){
 		this.axios.get('/api/policy/insuranceClause/select').then(data=>{
 			this.insuranceClause=data.data.data;
-			console.log(this.insuranceClause);
 		});	
 	},
 	//获取所有商业险
@@ -655,7 +652,6 @@ export default {
           this.carInsurs = data.data.data;
           this.len = this.carInsurs.length;
           resolve(data.data.data);
-          // console.log("返回的数据", data.data.data);
         });
       });
 	},
@@ -690,20 +686,17 @@ export default {
 			//更新投保人
 		if (!this.isInsuranceInsured) {
 			this.axios.post('/api/policy/feign/user/update',this.insuranceUser).then(data=>{	
-				console.log("更新的投保人信息",data.data.data);
 			});
 		}
 		//添加被保险人
 		if (!this.isInsuranceInsured) {
 			this.axios.post('/api/policy/insuranceInsured/insertOne',this.insuranceInsured).then(data=>{
-				this.insuranceInsuredId=data.data.data.insuranceInsuredId.
-				console.log("添加的被保险人",data.data.data);
+				this.insuranceInsuredId=data.data.data.insuranceInsuredId;
 			});
 		}
 		//添加行驶证车主
 		this.axios.post('/api/policy/insuranceDrivingLicense/insertOne',this.insuranceDrivingLicense).then(data=>{
 				this.insuranceDrivingLicenseId=data.data.data.drivingLicenseId;
-				console.log("添加的行驶证车主",data.data.data);
 				resolve(data.data.data);
 			});
 		})
